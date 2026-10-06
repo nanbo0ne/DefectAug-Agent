@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Stack the confirmed inclusion lever on the best allocation: prefer_small sources for inclusion (0.418 vs 0.326 for downscale at identical allocation, and >= uniform at comparable allocations) at the proven 25/15/10 split should lift inclusion AP50 above 0.421 while patches/scratches stay at their best levels. Confirmed if mAP50 > 0.6154 with inclusion AP50 >= 0.42 and no class dropping >0.02.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Generalize the small-source lever: missed instances are smaller than the train median for every class (33 vs 90, 53 vs 85, 40 vs 73px) and low-size-tertile recall is worst for all, so prefer_small for patches and scratches too (same 25/15/10 allocation) should raise or hold their AP50 and beat C1 on mAP50. Confirmed if mAP50 >= C1 with patches AP50 >= 0.74 and scratches AP50 >= 0.67.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion saturation: inclusion AP50 is flat ~0.38-0.42 from 30 to 65 cumulative synthetics, so shifting 5 more images from inclusion to patches (20/20/10, keeping prefer_small for inclusion) should push patches AP50 toward >=0.75 (it gained 0.708->0.745 going 10->15) without dropping inclusion below 0.40, beating C1 on mAP50. Confirmed if mAP50 > C1 with patches AP50 >= 0.75 and inclusion AP50 >= 0.40.",
+   "allocation": {
+    "inclusion": 20,
+    "patches": 20,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Control this round = last kept plan (25/15/10 default, mAP 0.6154). Evidence so far: (1) inclusion AP50 is flat ~0.38-0.42 across 30-65 cumulative synthetics (30->0.357, 55->0.421, 60->0.379, 65->0.418), i.e. inclusion is saturating; (2) downscaling inclusion hurt (0.326) while prefer_small at default scale matched/beaten it (0.418) at identical allocation; (3) shifting 5 imgs inclusion->patches raised mAP (0.603->0.615); (4) scratches needs >=10. Miss analysis: ALL classes miss small instances (median missed 33/53/40px vs train medians 90/85/73px; low-size-tertile recall worst for all). So: C1 stacks the confirmed prefer_small inclusion lever on the best allocation; C2 tests whether prefer_small generalizes to patches/scratches; C3 tests inclusion saturation by shifting 5 more imgs to patches. No downscaling, scratches held at 10, no untested pools/overlap.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Stack the confirmed inclusion lever on the best allocation: prefer_small sources for inclusion (0.418 vs 0.326 for downscale at identical allocation, and >= uniform at comparable allocations) at the proven 25/15/10 split should lift inclusion AP50 above 0.421 while patches/scratches stay at their best levels. Confirmed if mAP50 > 0.6154 with inclusion AP50 >= 0.42 and no class dropping >0.02.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Generalize the small-source lever: missed instances are smaller than the train median for every class (33 vs 90, 53 vs 85, 40 vs 73px) and low-size-tertile recall is worst for all, so prefer_small for patches and scratches too (same 25/15/10 allocation) should raise or hold their AP50 and beat C1 on mAP50. Confirmed if mAP50 >= C1 with patches AP50 >= 0.74 and scratches AP50 >= 0.67.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion saturation: inclusion AP50 is flat ~0.38-0.42 from 30 to 65 cumulative synthetics, so shifting 5 more images from inclusion to patches (20/20/10, keeping prefer_small for inclusion) should push patches AP50 toward >=0.75 (it gained 0.708->0.745 going 10->15) without dropping inclusion below 0.40, beating C1 on mAP50. Confirmed if mAP50 > C1 with patches AP50 >= 0.75 and inclusion AP50 >= 0.40.\",\n      \"allocation\": {\"inclusion\": 20, \"patches\": 20, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 9599,
+     "prompt_tokens": 9534,
+     "total_tokens": 19133,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 24976,
+    "elapsed_seconds": 217.14,
+    "content": "{\n  \"analysis\": \"Control this round = last kept plan (25/15/10 default, mAP 0.6154). Evidence so far: (1) inclusion AP50 is flat ~0.38-0.42 across 30-65 cumulative synthetics (30->0.357, 55->0.421, 60->0.379, 65->0.418), i.e. inclusion is saturating; (2) downscaling inclusion hurt (0.326) while prefer_small at default scale matched/beaten it (0.418) at identical allocation; (3) shifting 5 imgs inclusion->patches raised mAP (0.603->0.615); (4) scratches needs >=10. Miss analysis: ALL classes miss small instances (median missed 33/53/40px vs train medians 90/85/73px; low-size-tertile recall worst for all). So: C1 stacks the confirmed prefer_small inclusion lever on the best allocation; C2 tests whether prefer_small generalizes to patches/scratches; C3 tests inclusion saturation by shifting 5 more imgs to patches. No downscaling, scratches held at 10, no untested pools/overlap.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Stack the confirmed inclusion lever on the best allocation: prefer_small sources for inclusion (0.418 vs 0.326 for downscale at identical allocation, and >= uniform at comparable allocations) at the proven 25/15/10 split should lift inclusion AP50 above 0.421 while patches/scratches stay at their best levels. Confirmed if mAP50 > 0.6154 with inclusion AP50 >= 0.42 and no class dropping >0.02.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Generalize the small-source lever: missed instances are smaller than the train median for every class (33 vs 90, 53 vs 85, 40 vs 73px) and low-size-tertile recall is worst for all, so prefer_small for patches and scratches too (same 25/15/10 allocation) should raise or hold their AP50 and beat C1 on mAP50. Confirmed if mAP50 >= C1 with patches AP50 >= 0.74 and scratches AP50 >= 0.67.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion saturation: inclusion AP50 is flat ~0.38-0.42 from 30 to 65 cumulative synthetics, so shifting 5 more images from inclusion to patches (20/20/10, keeping prefer_small for inclusion) should push patches AP50 toward >=0.75 (it gained 0.708->0.745 going 10->15) without dropping inclusion below 0.40, beating C1 on mAP50. Confirmed if mAP50 > C1 with patches AP50 >= 0.75 and inclusion AP50 >= 0.40.\",\n      \"allocation\": {\"inclusion\": 20, \"patches\": 20, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

@@ -1,0 +1,674 @@
+{
+ "condition": "agent_experiment_multi_round",
+ "seed": 1750467648,
+ "round": 3,
+ "proposal": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 55,
+  "patches": 22,
+  "scratches": 23
+ },
+ "source_capacity": {
+  "inclusion": 185,
+  "patches": 698,
+  "scratches": 1417
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "patches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_experiment",
+ "calls": [
+  {
+   "step": "design1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 9045,
+    "prompt_tokens": 9453,
+    "total_tokens": 18498,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 21430,
+   "elapsed_seconds": 183.41,
+   "content": "{\n  \"analysis\": \"Final round. Evidence so far: (1) inclusion AP is flat at ~0.46 for 25-30 images and default scale (0.4678 @25 default, R2 C4) slightly beats small scale (0.4629 @30 small, R2 C2) — small pastes did NOT fix small-inclusion misses; (2) patches AP responds to allocation: 17→0.791 (R1 C4) vs 10-12→0.749-0.773 (R2), and patches are the most starved class (only 22 synthetic so far); (3) scratches need small scale (0.793 @10 small vs ~0.66 default) and 10 small-scale images already reached the best scratches AP, so extra scratches allocation is the uncertain lever. Design: three candidates that split the 50-image budget differently around the proven base (same_class, uniform sources, 0.15 overlap, scratches small-scale): C1 keeps the kept allocation but fixes inclusion scale (30/10/10); C2 shifts 5 images to patches (25/15/10) — my best bet; C3 shifts 5 to scratches (25/10/15) as the unsure alternative. All within headroom (inclusion ≤50, patches ≤83, scratches ≤82) and cumulative caps (max 85/37/38 ≤105).\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+  },
+  {
+   "step": "choose1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 4932,
+    "prompt_tokens": 12786,
+    "total_tokens": 17718,
+    "prompt_tokens_details": {
+     "cached_tokens": 9449
+    }
+   },
+   "reasoning_chars": 13457,
+   "elapsed_seconds": 82.74,
+   "content": "{\n  \"analysis\": \"All four candidates fell below the pre-round mAP (0.6702), exposing that the R2-kept plan's 30 small-scale inclusion pastes were a liability that every R3 build inherits. The control (C4, repeating that plan) collapsed inclusion to 0.316, proving accumulated small inclusion pastes actively hurt. Default-scale inclusion beat small (C1 0.3813 > C4 0.316). C2 (25 default inclusion + 15 patches + 10 small scratches) won on BOTH mAP50 (0.6555, highest) and worst-class AP50 (0.5198, the round's best inclusion), so it clears the keep rule on mAP alone (next best C1 is 0.011 behind, >0.005). C3's extra small scratches (15) dropped scratches to 0.7547, confirming 10 small-scale scratches was the ceiling. C2's hypothesis was only half-confirmed (mAP highest, but patches 0.7271 < 0.77); the real win was inclusion jumping to 0.5198.\",\n  \"choice\": 2,\n  \"lesson\": \"Accumulated small-scale inclusion pastes are harmful: the C4 control (30+30 small) collapsed inclusion to 0.316, while default-scale inclusion is better (C1 0.3813) and C2's 25 default inclusion + 15 patches gave the best inclusion (0.5198) and mAP (0.6555). Scratches peaked at 10 small-scale images (0.793 in R2); adding more (15) hurt (0.7547). For any future run: cap small-scale inclusion, prefer default-scale inclusion, shift spare budget to patches, and do not over-allocate scratches.\"\n}"
+  }
+ ],
+ "design_errors": [],
+ "lab_table": [
+  {
+   "candidate": 1,
+   "control": false,
+   "hypothesis": "Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.",
+   "allocation_reached": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6445,
+    "map50_95": 0.3063,
+    "worst_class_ap50": 0.3813,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3813,
+      "recall": 0.3408,
+      "precision": 0.5775
+     },
+     "patches": {
+      "ap50": 0.782,
+      "recall": 0.7067,
+      "precision": 0.8765
+     },
+     "scratches": {
+      "ap50": 0.77,
+      "recall": 0.7692,
+      "precision": 0.7325
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0257,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0816,
+    "patches": 0.0275,
+    "scratches": -0.0232
+   }
+  },
+  {
+   "candidate": 2,
+   "control": false,
+   "hypothesis": "Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6555,
+    "map50_95": 0.3052,
+    "worst_class_ap50": 0.5198,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.5198,
+      "recall": 0.4207,
+      "precision": 0.7433
+     },
+     "patches": {
+      "ap50": 0.7271,
+      "recall": 0.6704,
+      "precision": 0.8482
+     },
+     "scratches": {
+      "ap50": 0.7196,
+      "recall": 0.6783,
+      "precision": 0.7967
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0147,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0569,
+    "patches": -0.0274,
+    "scratches": -0.0736
+   }
+  },
+  {
+   "candidate": 3,
+   "control": false,
+   "hypothesis": "Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 10,
+    "scratches": 15
+   },
+   "val": {
+    "map50": 0.6186,
+    "map50_95": 0.2979,
+    "worst_class_ap50": 0.3448,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3448,
+      "recall": 0.3814,
+      "precision": 0.6136
+     },
+     "patches": {
+      "ap50": 0.7564,
+      "recall": 0.7047,
+      "precision": 0.883
+     },
+     "scratches": {
+      "ap50": 0.7547,
+      "recall": 0.7212,
+      "precision": 0.7151
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0516,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.1181,
+    "patches": 0.0019,
+    "scratches": -0.0385
+   }
+  },
+  {
+   "candidate": 4,
+   "control": true,
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation_reached": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6136,
+    "map50_95": 0.2979,
+    "worst_class_ap50": 0.316,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.316,
+      "recall": 0.2905,
+      "precision": 0.6799
+     },
+     "patches": {
+      "ap50": 0.7452,
+      "recall": 0.6631,
+      "precision": 0.869
+     },
+     "scratches": {
+      "ap50": 0.7797,
+      "recall": 0.7212,
+      "precision": 0.7181
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0566,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.1469,
+    "patches": -0.0093,
+    "scratches": -0.0135
+   }
+  }
+ ],
+ "argmax_map50": 2,
+ "candidates": [
+  {
+   "hypothesis": "Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 10,
+    "scratches": 15
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "control": true,
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "kept": 2,
+ "lesson": "Accumulated small-scale inclusion pastes are harmful: the C4 control (30+30 small) collapsed inclusion to 0.316, while default-scale inclusion is better (C1 0.3813) and C2's 25 default inclusion + 15 patches gave the best inclusion (0.5198) and mAP (0.6555). Scratches peaked at 10 small-scale images (0.793 in R2); adding more (15) hurt (0.7547). For any future run: cap small-scale inclusion, prefer default-scale inclusion, shift spare budget to patches, and do not over-allocate scratches.",
+ "extra_trainings": 3,
+ "observation": {
+  "round_index": 3,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.43860536896556074,
+    "precision": 0.6015583543353752,
+    "ap50": 0.4628811784588017,
+    "ap50_95": 0.14521338064034825
+   },
+   "patches": {
+    "recall": 0.6760761736405532,
+    "precision": 0.8786926510228757,
+    "ap50": 0.7545393621812122,
+    "ap50_95": 0.41486233496081953
+   },
+   "scratches": {
+    "recall": 0.7978235490856894,
+    "precision": 0.6974114348224484,
+    "ap50": 0.7932460318913263,
+    "ap50_95": 0.34139858668423806
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.363,
+    "missed": 114,
+    "misclassified_as": {
+     "patches": 1,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.253,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.7,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.295,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.611,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.733,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.378,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.62,
+    "missed": 57,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.107,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 52.0,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.444,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.773,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.947,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.241,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.528,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.788,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.731,
+    "missed": 28,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.147,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 39.8,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.636,
+      "n": 77
+     },
+     "mid": {
+      "recall": 1.0,
+      "n": 19
+     },
+     "high": {
+      "recall": 1.0,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.667,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.78,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.778,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 55,
+   "patches": 22,
+   "scratches": 23
+  },
+  "headroom_this_round": {
+   "inclusion": 50,
+   "patches": 83,
+   "scratches": 82
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 60,
+    "accepted": 55,
+    "rejects": {
+     "no_placement": 5
+    }
+   },
+   "patches": {
+    "candidates": 24,
+    "accepted": 22,
+    "rejects": {
+     "no_placement": 2
+    }
+   },
+   "scratches": {
+    "candidates": 29,
+    "accepted": 23,
+    "rejects": {
+     "no_placement": 6
+    }
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 25,
+     "patches": 12,
+     "scratches": 13
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.44692737430167595,
+      "ap50": 0.4603542378818857
+     },
+     "patches": {
+      "recall": 0.6933333333333334,
+      "ap50": 0.7476766470233506
+     },
+     "scratches": {
+      "recall": 0.6826923076923077,
+      "ap50": 0.7189567440007738
+     }
+    }
+   },
+   {
+    "round": 2,
+    "allocation": {
+     "inclusion": 30,
+     "patches": 10,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.43860536896556074,
+      "ap50": 0.4628811784588017
+     },
+     "patches": {
+      "recall": 0.6760761736405532,
+      "ap50": 0.7545393621812122
+     },
+     "scratches": {
+      "recall": 0.7978235490856894,
+      "ap50": 0.7932460318913263
+     }
+    }
+   }
+  ]
+ }
+}

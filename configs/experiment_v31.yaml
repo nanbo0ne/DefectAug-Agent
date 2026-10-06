@@ -1,0 +1,247 @@
+experiment:
+  id: defectaug_sd900_v3_1
+  research_title_zh: 面向小样本目标检测的检测器反馈闭环智能体数据增强方法
+  research_title_en: Detector-Feedback Closed-Loop Agentic Data Augmentation for Few-Shot Object Detection
+  protocol_version: 3.1
+  # draft -> frozen_final only after smoke runs and pytest pass, before any
+  # final-tag run.  The test gate refuses to open unless frozen_final.
+  status: frozen_final
+  frozen_at: 2026-10-04
+  extends: configs/experiment_v3.yaml   # frozen; its final val runs are reused unchanged
+  # v3.1 (2026-10-04, user decision): the v3 agent lost on val, so the agent is
+  # redesigned and developed on the TUNING seed only (val; never a final seed,
+  # never test): vision tools (missed-instance montages, source montages,
+  # generation preview with one revision) + per-class source selection.
+  # Baselines are the v3 final runs (unchanged).  Test is still untouched.
+  # Pre-registered v3.1 hypothesis (fixed at the v3.1 freeze, before any final31 run):
+  #   H1: agent_experiment_multi_round > formula_multi_round on v3 test mAP50,
+  #       paired over the 5 final seeds (paired t-test and sign test reported).
+  hypothesis_primary: agent_experiment_multi_round_gt_formula_multi_round_test_map50_paired_5_seeds
+  hypothesis_primary_v3_kept: agent_multi_round_gt_formula_multi_round_test_map50_paired_5_seeds
+  # v3.1 final plan (2026-10-04, user decision "方案1": freeze, then 5 final seeds).
+  #   Agent under test: agent_experiment_multi_round (scripts/run_conditions_v31e.py),
+  #   developed on the tuning seed only (tags dev, dev100, dev_exp, dev_exp2; val only).
+  #   Key secondary (same test, paired, Holm with the endpoints below):
+  #     agent_experiment_multi_round vs formula_tuned_multi_round and vs uniform_fixed (mAP50).
+  #   Compute disclosure: agent_experiment trains 4 detectors per round (3 candidates +
+  #   control) where every other condition trains 1; reported with the results.
+  #   Execution host: 192.168.31.102 (RTX PRO 6000 Blackwell), same code and pinned
+  #   package versions (requirements-lock-v31.txt, torch 2.11.0+cu128, ultralytics 8.4.123).
+  #   Every v3.1 final condition, baselines included, is re-run there under tag final31
+  #   so all compared runs share one machine; v3 final runs (local laptop 4090) are
+  #   kept as they are and never mixed with v3.1 runs.
+  #   Ablations (same tag, run after the primary set): agent_multi_round (text agent,
+  #   no lab), agent_vision_multi_round (vision, no lab).
+  final_run_conditions: [real_only, real_only_repeat_matched, uniform_fixed, formula_one_shot,
+                         formula_multi_round, formula_tuned_multi_round, agent_experiment_multi_round]
+  ablation_conditions: [agent_multi_round, agent_vision_multi_round]
+  # Secondary endpoints, pre-registered 2026-10-03 before freeze (user decision).
+  # v3.1: each is agent_experiment_multi_round vs formula_multi_round and vs
+  # formula_tuned_multi_round,
+  # final-round model, v3 test, paired over the 5 final seeds (paired t-test +
+  # sign test).  Reported as secondary; Holm correction across the 4 endpoints.
+  hypotheses_secondary:
+    - worst_class_ap50_higher       # min over classes of per-class AP50
+    - inclusion_ap50_higher
+    - inclusion_recall_higher
+    - interclass_ap50_std_lower     # std of the 3 per-class AP50 values
+  # seed = sha256(label)[:4] little-endian & 0x7FFFFFFF
+  seed_labels: ["defectaug-v3|train-seed|0", "defectaug-v3|train-seed|1", "defectaug-v3|train-seed|2",
+                "defectaug-v3|train-seed|3", "defectaug-v3|train-seed|4"]
+  final_seeds: [1057047533, 562453141, 979960960, 1750467648, 1686439348]
+  # Formula-weight tuning runs use a separate seed, never a final seed.
+  tuning_seed_label: defectaug-v3|tuning-seed
+  tuning_seed: 207185262
+
+dataset:
+  splits_dir: data/splits/v3
+  split_summary: data/splits/v3/split_v3_summary.json
+  yaml: configs/dataset_sd900_3class_v3.yaml
+  content_lock: data/manifests/dataset_content_lock_v3.json
+  content_lock_sha256: 18c3b8f052e70837e5784b0ca1fdf478c6dc632206d36965f55db6d3ddbdae5b
+  split_sha256:
+    train_fewshot: 4069e82e845b3bfe9a57c96a6a6db5b921310ef8e12eecc1369c0c4b703719f5
+    val: f294a33d48aca86afd9490822fb09b54bfa1b2467ecd27d630b62e23449462e2
+    test: 1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90
+  classes: [inclusion, patches, scratches]
+  real_fewshot_images: {inclusion: 10, patches: 30, scratches: 60}
+  val_images_per_primary_class: 50
+  test_images_per_primary_class: 50
+  test_locked: true
+  # v3 test drawn from v2 unused; v1 and v2 tests are retired from every v3 role.
+  retired_test_manifests: [data/splits/v3/retired_test_v1.txt, data/splits/v3/retired_test_v2.txt]
+  generation_sources: train_fewshot_only
+
+detector:
+  package: ultralytics
+  package_version: 8.4.123
+  model: yolo11n.pt
+  pretrained_sha256: 0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1
+  imgsz: 640
+  epochs_per_round: 100
+  batch: 16
+  workers: 4
+  deterministic: true
+  early_stopping: false
+  pretrained_start_each_run: true
+  optimizer: SGD
+  lr0: 0.01
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  amp: true
+  eval_weights: best.pt
+
+generation:
+  formal_generator: patch_copy_gauss5
+  generator_script: scripts/run_synth_generation_v3.py
+  accepted_budget_total: 150
+  fairness_unit: accepted_images
+  candidate_budget_total_max: 450
+  candidate_budget_equal_ceiling_across_methods: true
+  # v3 change 3: raised from 12/8 so inclusion (10 sources) is no longer
+  # saturated: capacity 10*24 = 240 > cumulative cap 105.
+  max_candidates_per_source: 36
+  max_accepted_derivatives_per_source: 24
+  shortfall_policy: top_up_within_round_ceiling_else_fail
+  exhausted_class_policy: freeze_and_reproject_with_shared_project
+  placement_fixed:
+    rotations_deg: [0, 90, 180, 270]
+    flips: [horizontal, vertical]
+    placement_attempts: 1024
+  feather:
+    ring_radius_px: 5
+    sigma_px: 2.5
+
+# v3 change 1: per-class generation parameters, one action space for every
+# augmented condition (src/defectaug/gen_params.py).  Agent proposals are
+# validated strictly (retry on violation, then fall back to the formula rule);
+# formula proposals are clamped by the same module.
+generation_params:
+  module: src/defectaug/gen_params.py
+  scale_range_bounds: [0.30, 1.40]
+  min_scale_span: 0.20
+  target_pool: [same_class, any_class]
+  source_weighting: [uniform, prefer_small, prefer_large]   # weight ∝ (size/median)^∓1
+  max_overlap_bounds: [0.00, 0.30]
+  default: {scale_min: 0.60, scale_max: 1.40, target_pool: same_class,
+            source_weighting: uniform, max_overlap: 0.15}     # = v2 behaviour
+  scale_also_capped_by_geometric_feasibility: true
+
+quality_control:
+  status: enforced
+  core_pixels_unchanged_after_feather: true
+  pixels_beyond_mask_dilated_by_ring_unchanged: true
+  inside_mask_changed_fraction_min: 0.50
+  min_source_component_pixels: 32
+  min_inserted_pixels: 16
+  human_review_fraction: 0.0
+
+allocation_constraints:
+  maximum_fraction_per_class: 0.70
+  final_minimum_per_class: 10
+  infeasible_proposal: validate_then_retry_then_deterministic_project
+
+# v3 change 2: per-instance val miss analysis (scripts/val_miss_analysis_v3.py),
+# conf 0.25, IoU 0.5 greedy matching; size/contrast tertile edges from train only.
+# Fed to the agent and to the formula parameter rule alike.
+miss_analysis:
+  script: scripts/val_miss_analysis_v3.py
+  conf: 0.25
+  iou_match: 0.5
+  split: val
+
+formula_policy:
+  recall_weight: 0.50
+  ap50_weight: 0.30
+  rarity_weight: 0.20
+  allocation: largest_remainder
+  params_rule: defectaug.gen_params.formula_params   # fixed rule, inputs from miss_analysis
+
+# v3 change 6: strong baseline.  Same proposer and parameter rule as
+# formula_multi_round; only the quota weights are chosen on val with the
+# tuning seed (never a final seed, never test).  Selection metric: round-3
+# val mAP50; ties -> lower grid index.
+formula_tuned_policy:
+  tuning_seed: 207185262
+  selection_metric: final_round_val_map50
+  grid:   # (recall, ap50, rarity)
+    - [0.50, 0.30, 0.20]
+    - [0.80, 0.10, 0.10]
+    - [0.30, 0.30, 0.40]
+    - [0.20, 0.70, 0.10]
+  selected: [0.80, 0.10, 0.10]   # grid index 1, chosen on tuning-seed val
+
+agent_policy:
+  # Backend (2026-10-03, user decision): user-run llama.cpp server on the LAN,
+  # alias lens-main, serving the same Qwen3.8-27B-Q5_K_M.gguf as v2 (checked via
+  # /v1/models).  No API key.  Every agent condition/seed uses this one backend.
+  model: lens-main
+  weights: Qwen3.8-27B-Q5_K_M.gguf
+  host: 192.168.31.47 (user-run llama.cpp, no API key)
+  endpoint: http://192.168.31.47:18182/v1
+  # v2 r2/r3 first attempts were often truncated at 4096 (finish_reason=length).
+  max_tokens: 12288
+  temperature: 0.0
+  max_attempts_per_round: 3
+  # Every reply's served_model must equal `model`; a mismatch aborts the run.
+  require_served_model_match: true
+  action: [per_class_quota, per_class_generation_params]
+  observation: [per_class_val_metrics, val_miss_analysis, allocation_history,
+                params_history, quality_receipts, headroom, action_space]
+  invalid_params_fallback: formula_params_rule
+
+# v3.1 vision agent (src/defectaug/vision_agent.py, vision_tools.py).
+agent_vision_policy:
+  model: lens-main              # Qwen3.8-27B-Q5_K_M + mmproj-Qwen3.8-27B-BF16 (vision)
+  endpoint: http://192.168.31.47:18182/v1
+  max_tokens: 16000             # thinking budget; server ignores reasoning_effort
+  reasoning_effort_requested: xhigh
+  max_attempts_per_step: 3
+  missed_tiles_per_class: 24
+  preview: true
+  preview_per_class: 6
+  tools: [missed_val_montage, train_source_montage, generation_preview_one_revision]
+  action_extra: per_class_source_whitelist   # 'sources' field, [] = all train sources
+  invalid_fallback: formula_params_rule
+
+# v3.1 experimenting agent (2026-10-04, user decision; scripts/run_conditions_v31e.py).
+# Same tools as agent_vision (no preview) + a lab: each round the agent designs
+# K candidate plans as hypotheses, every candidate is generated in its own
+# scratch pool and trained/evaluated on val (run seed, full epochs), the agent
+# keeps one and writes a lesson into a notebook shown in later rounds.
+# Extra compute: K-1 trainings per round (reported).  Val only, never test.
+agent_experiment_policy:
+  model: lens-main
+  endpoint: http://192.168.31.47:18182/v1
+  candidates_per_round: 3
+  parallel_trainings: 1                      # amendment 1 (see protocol_freeze_v31.json): host RAM, not VRAM, limits concurrency; execution only
+  control_arm: true                          # lab adds a control candidate (r1 default recipe, later: repeat last kept plan)
+  trial_epochs: same_as_detector.epochs_per_round
+  kept_candidate_becomes_round_model: true   # no retraining of the kept candidate
+  selection: agent_choice                    # argmax val mAP50 only if the reply is unusable
+  memory: lab_notebook                       # hypotheses, results, kept, lesson per round
+  invalid_fallback: formula_proposal_and_params_rule
+
+conditions:
+  - {name: real_only,                 rounds: 1, augmented: false}
+  - {name: real_only_repeat_matched,  rounds: 1, augmented: false,
+     train_manifest: data/splits/v3/train_fewshot_repeat_matched.txt,
+     train_manifest_sha256: 56a557a45f0dd99393dddf9803253926cc3a37813a12be0025517d68a3fc1077,
+     dataset_yaml: configs/dataset_sd900_3class_realmatch_v3.yaml,
+     content_lock: data/manifests/dataset_content_lock_realmatch_v3.json,
+     content_lock_sha256: 20a59a9bc8da28bbf04f6e51c572656eeaca09b3c41fd6c56166d3b8b2e1ae64}
+  - {name: uniform_fixed,             rounds: 1, augmented: true, proposer: uniform, params: default}
+  - {name: formula_one_shot,          rounds: 1, augmented: true, proposer: formula, params: formula_rule}
+  - {name: formula_multi_round,       rounds: 3, augmented: true, proposer: formula, params: formula_rule}
+  - {name: formula_tuned_multi_round, rounds: 3, augmented: true, proposer: formula_tuned, params: formula_rule}
+  - {name: agent_multi_round,         rounds: 3, augmented: true, proposer: agent, params: agent}
+  - {name: agent_vision_multi_round,  rounds: 3, augmented: true, proposer: agent_vision, params: agent_vision}
+  - {name: agent_experiment_multi_round, rounds: 3, augmented: true, proposer: agent_experiment, params: agent_experiment}
+
+final_test_access:
+  enabled: true
+  required_experiment_status: frozen_final
+  unlock_token: FINAL_TEST_EVALUATION
+  audit_log: reports/test_access_audit_v31.jsonl

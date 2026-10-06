@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv*/
+runs/
+models/
+*.pt
+data/canonical/
+data/raw/
+data/external/
+data/synthetic/

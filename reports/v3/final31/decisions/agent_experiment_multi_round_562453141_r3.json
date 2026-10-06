@@ -1,0 +1,674 @@
+{
+ "condition": "agent_experiment_multi_round",
+ "seed": 562453141,
+ "round": 3,
+ "proposal": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 60,
+  "patches": 20,
+  "scratches": 20
+ },
+ "source_capacity": {
+  "inclusion": 180,
+  "patches": 700,
+  "scratches": 1420
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "patches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_experiment",
+ "calls": [
+  {
+   "step": "design1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 11443,
+    "prompt_tokens": 9372,
+    "total_tokens": 20815,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 31230,
+   "elapsed_seconds": 266.03,
+   "content": "{\n  \"analysis\": \"Round 2 left two near-tied recipes: default inclusion 30/10/10 (mAP50 0.6334, patches 0.780, inclusion 0.457) vs small inclusion 0.3-0.7 30/10/10 (0.6303, inclusion 0.493 but patches -0.085). Inclusion is still the weakest class (112 missed, low-tertile recall 0.288, median missed 33px vs 90.5px train). prefer_small sources and any_class backgrounds were proven losses, so both are avoided. Final-round design: (A) repeat the default-scale recipe that held the mAP50 lead; (B) push small inclusion from 30 to 40 (headroom 45) to test the marginal value of more small inclusions vs starving patches/scratches to 5; (C) under small inclusion, add small patches 0.4-0.8 to recover the patches dip (missed patches median 54.6px, low-tertile recall 0.578; Round 1 small patches were not harmful to patches). The lab control repeats the kept small-inclusion 30/10/10 plan, so A/B/C each differ from it in one factor.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.\",\n      \"allocation\": {\"inclusion\": 40, \"patches\": 5, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+  },
+  {
+   "step": "choose1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1246,
+    "prompt_tokens": 12794,
+    "total_tokens": 14040,
+    "prompt_tokens_details": {
+     "cached_tokens": 9368
+    }
+   },
+   "reasoning_chars": 2120,
+   "elapsed_seconds": 42.13,
+   "content": "{\n  \"analysis\": \"Candidate 1 (default-scale inclusion 30/10/10) decisively wins: mAP50 0.6614, +0.0311 over the prior model and +0.0367 over the next-best (candidate 3, 0.6247) — well beyond the ~0.03 noise band. It also posted the best scratches (0.757) and a competitive inclusion (0.4896, essentially tied with the small-inclusion 0.493). My hypothesis was confirmed: the default 0.6-1.4 recipe extended the mAP50 lead rather than the small-inclusion variant. Candidate 2 (push inclusion to 40) was a clear loss — inclusion AP50 actually fell to 0.4101 and mAP50 dropped, so 30 is the sweet spot and starving patches/scratches to 5 hurt the whole. Candidate 3 (small patches) did recover the patches dip (0.8005, best patches) but at the cost of inclusion (0.4521) and scratches (0.6213), a net mAP50 loss. The default recipe is the strongest final model.\",\n  \"choice\": 1,\n  \"lesson\": \"Default-scale inclusion (0.6-1.4) at 30/10/10 is the best recipe: it extended mAP50 to 0.6614 with the best scratches (0.757) and competitive inclusion (0.490), beating the small-inclusion variant. Pushing inclusion to 40 (candidate 2) backfired — inclusion AP50 fell to 0.410 and mAP50 dropped, so 30 is the sweet spot and 5/5 starvation of the other classes is not worth it. Small patches (candidate 3) recovered patches (0.800) but cost inclusion and scratches, a net loss; the default recipe is the final bet.\"\n}"
+  }
+ ],
+ "design_errors": [],
+ "lab_table": [
+  {
+   "candidate": 1,
+   "control": false,
+   "hypothesis": "Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.",
+   "allocation_reached": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6614,
+    "map50_95": 0.3078,
+    "worst_class_ap50": 0.4896,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4896,
+      "recall": 0.4788,
+      "precision": 0.5725
+     },
+     "patches": {
+      "ap50": 0.7374,
+      "recall": 0.6467,
+      "precision": 0.7444
+     },
+     "scratches": {
+      "ap50": 0.757,
+      "recall": 0.7788,
+      "precision": 0.6317
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0311,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0034,
+    "patches": 0.0419,
+    "scratches": 0.0547
+   }
+  },
+  {
+   "candidate": 2,
+   "control": false,
+   "hypothesis": "Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.",
+   "allocation_reached": {
+    "inclusion": 40,
+    "patches": 5,
+    "scratches": 5
+   },
+   "val": {
+    "map50": 0.6187,
+    "map50_95": 0.3,
+    "worst_class_ap50": 0.4101,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4101,
+      "recall": 0.3687,
+      "precision": 0.5774
+     },
+     "patches": {
+      "ap50": 0.7703,
+      "recall": 0.7137,
+      "precision": 0.7484
+     },
+     "scratches": {
+      "ap50": 0.6757,
+      "recall": 0.6731,
+      "precision": 0.6266
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0116,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0829,
+    "patches": 0.0748,
+    "scratches": -0.0266
+   }
+  },
+  {
+   "candidate": 3,
+   "control": false,
+   "hypothesis": "Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.",
+   "allocation_reached": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6247,
+    "map50_95": 0.2897,
+    "worst_class_ap50": 0.4521,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4521,
+      "recall": 0.3855,
+      "precision": 0.6474
+     },
+     "patches": {
+      "ap50": 0.8005,
+      "recall": 0.7083,
+      "precision": 0.8034
+     },
+     "scratches": {
+      "ap50": 0.6213,
+      "recall": 0.6635,
+      "precision": 0.6553
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0056,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0409,
+    "patches": 0.105,
+    "scratches": -0.081
+   }
+  },
+  {
+   "candidate": 4,
+   "control": true,
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation_reached": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6178,
+    "map50_95": 0.2904,
+    "worst_class_ap50": 0.4335,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4335,
+      "recall": 0.4022,
+      "precision": 0.6422
+     },
+     "patches": {
+      "ap50": 0.7998,
+      "recall": 0.7896,
+      "precision": 0.8144
+     },
+     "scratches": {
+      "ap50": 0.62,
+      "recall": 0.6346,
+      "precision": 0.612
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0125,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0595,
+    "patches": 0.1043,
+    "scratches": -0.0823
+   }
+  }
+ ],
+ "argmax_map50": 1,
+ "candidates": [
+  {
+   "hypothesis": "Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.",
+   "allocation": {
+    "inclusion": 40,
+    "patches": 5,
+    "scratches": 5
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "control": true,
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "kept": 1,
+ "lesson": "Default-scale inclusion (0.6-1.4) at 30/10/10 is the best recipe: it extended mAP50 to 0.6614 with the best scratches (0.757) and competitive inclusion (0.490), beating the small-inclusion variant. Pushing inclusion to 40 (candidate 2) backfired — inclusion AP50 fell to 0.410 and mAP50 dropped, so 30 is the sweet spot and 5/5 starvation of the other classes is not worth it. Small patches (candidate 3) recovered patches (0.800) but cost inclusion and scratches, a net loss; the default recipe is the final bet.",
+ "extra_trainings": 3,
+ "observation": {
+  "round_index": 3,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.37988826815642457,
+    "precision": 0.6854899259998389,
+    "ap50": 0.4930296965399924,
+    "ap50_95": 0.20183130302955124
+   },
+   "patches": {
+    "recall": 0.638133925226416,
+    "precision": 0.7736796804321365,
+    "ap50": 0.6954742886849163,
+    "ap50_95": 0.38416370142634815
+   },
+   "scratches": {
+    "recall": 0.6538461538461539,
+    "precision": 0.720340917040888,
+    "ap50": 0.7023301190264457,
+    "ap50_95": 0.2750969203192739
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.374,
+    "missed": 112,
+    "misclassified_as": {
+     "patches": 1,
+     "scratches": 1
+    },
+    "false_positives_per_image": 0.347,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.1,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.288,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.722,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.8,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.39,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.66,
+    "missed": 51,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.34,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 54.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.578,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.773,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.789,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.483,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.5,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.788,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.635,
+    "missed": 38,
+    "misclassified_as": {
+     "inclusion": 1,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.227,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 40.9,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.506,
+      "n": 77
+     },
+     "mid": {
+      "recall": 1.0,
+      "n": 19
+     },
+     "high": {
+      "recall": 1.0,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.533,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.683,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.778,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 60,
+   "patches": 20,
+   "scratches": 20
+  },
+  "headroom_this_round": {
+   "inclusion": 45,
+   "patches": 85,
+   "scratches": 85
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 67,
+    "accepted": 60,
+    "rejects": {
+     "no_placement": 7
+    }
+   },
+   "patches": {
+    "candidates": 23,
+    "accepted": 20,
+    "rejects": {
+     "no_placement": 3
+    }
+   },
+   "scratches": {
+    "candidates": 23,
+    "accepted": 20,
+    "rejects": {
+     "no_placement": 3
+    }
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 30,
+     "patches": 10,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.3240223463687151,
+      "ap50": 0.32928254278841007
+     },
+     "patches": {
+      "recall": 0.7,
+      "ap50": 0.7923748758819473
+     },
+     "scratches": {
+      "recall": 0.5961538461538461,
+      "ap50": 0.6021787927437545
+     }
+    }
+   },
+   {
+    "round": 2,
+    "allocation": {
+     "inclusion": 30,
+     "patches": 10,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.37988826815642457,
+      "ap50": 0.4930296965399924
+     },
+     "patches": {
+      "recall": 0.638133925226416,
+      "ap50": 0.6954742886849163
+     },
+     "scratches": {
+      "recall": 0.6538461538461539,
+      "ap50": 0.7023301190264457
+     }
+    }
+   }
+  ]
+ }
+}

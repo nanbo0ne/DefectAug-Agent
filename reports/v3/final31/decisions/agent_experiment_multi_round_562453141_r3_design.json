@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.",
+   "allocation": {
+    "inclusion": 40,
+    "patches": 5,
+    "scratches": 5
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Round 2 left two near-tied recipes: default inclusion 30/10/10 (mAP50 0.6334, patches 0.780, inclusion 0.457) vs small inclusion 0.3-0.7 30/10/10 (0.6303, inclusion 0.493 but patches -0.085). Inclusion is still the weakest class (112 missed, low-tertile recall 0.288, median missed 33px vs 90.5px train). prefer_small sources and any_class backgrounds were proven losses, so both are avoided. Final-round design: (A) repeat the default-scale recipe that held the mAP50 lead; (B) push small inclusion from 30 to 40 (headroom 45) to test the marginal value of more small inclusions vs starving patches/scratches to 5; (C) under small inclusion, add small patches 0.4-0.8 to recover the patches dip (missed patches median 54.6px, low-tertile recall 0.578; Round 1 small patches were not harmful to patches). The lab control repeats the kept small-inclusion 30/10/10 plan, so A/B/C each differ from it in one factor.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.\",\n      \"allocation\": {\"inclusion\": 40, \"patches\": 5, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 11443,
+     "prompt_tokens": 9372,
+     "total_tokens": 20815,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 31230,
+    "elapsed_seconds": 266.03,
+    "content": "{\n  \"analysis\": \"Round 2 left two near-tied recipes: default inclusion 30/10/10 (mAP50 0.6334, patches 0.780, inclusion 0.457) vs small inclusion 0.3-0.7 30/10/10 (0.6303, inclusion 0.493 but patches -0.085). Inclusion is still the weakest class (112 missed, low-tertile recall 0.288, median missed 33px vs 90.5px train). prefer_small sources and any_class backgrounds were proven losses, so both are avoided. Final-round design: (A) repeat the default-scale recipe that held the mAP50 lead; (B) push small inclusion from 30 to 40 (headroom 45) to test the marginal value of more small inclusions vs starving patches/scratches to 5; (C) under small inclusion, add small patches 0.4-0.8 to recover the patches dip (missed patches median 54.6px, low-tertile recall 0.578; Round 1 small patches were not harmful to patches). The lab control repeats the kept small-inclusion 30/10/10 plan, so A/B/C each differ from it in one factor.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Default-scale inclusion repeat: the Round-2 control recipe (default 0.6-1.4 inclusion, 30/10/10) had the highest mAP50 (0.6334) and best patches (0.780); the small-inclusion gain in inclusion AP50 (+0.036) was offset by the patches cost (-0.085). Repeating the default recipe in round 3 on the cumulative set should hold or extend the mAP50 lead. Confirmed if mAP50 >= 0.6334 with patches AP50 >= 0.75 and inclusion AP50 >= 0.45.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion-cap push: inclusion is still the worst class (AP50 0.493, low-tertile recall 0.288, 112 missed at ~33px) and small-scale 0.3-0.7 pastes are the proven lever for it; inclusion AP50 rose with every +30 small inclusions (0.329 -> 0.457 -> 0.493), so spending more of the 45 headroom (40 vs 30) should lift inclusion further, and the small reduction of patches/scratches to 5 each is tolerable since both sit near 0.70. Confirmed if inclusion AP50 > 0.50 and mAP50 beats the small-inclusion 30/10/10 control; if it loses, 30 is the sweet spot and allocation balance matters more than I thought.\",\n      \"allocation\": {\"inclusion\": 40, \"patches\": 5, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Small-patches recovery: under small inclusion, patches AP50 dropped to 0.695 (vs 0.780 with default inclusion) because small inclusion pastes resemble small patches; missed patches are small (median 54.6px, low-tertile recall 0.578, n=90) and Round 1 showed 0.4-0.8x patches were not harmful to patches (0.785 vs 0.765 control). Adding small patches should sharpen the patch/inclusion boundary and recover the dip while keeping the inclusion gain. Confirmed if patches AP50 > 0.74, inclusion AP50 > 0.48, and mAP50 > 0.6334; if patches stay < 0.72, small patches do not fix the interaction and the default recipe (A) is the safer final bet.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

@@ -1,0 +1,3 @@
+D:\AI Paper\DefectAug-Agent-GG38\data\canonical\images\all\patches_101.jpg
+D:\AI Paper\DefectAug-Agent-GG38\data\canonical\images\all\patches_105.jpg
+D:\AI Paper\DefectAug-Agent-GG38\data\canonical\images\all\scratches_228.jpg

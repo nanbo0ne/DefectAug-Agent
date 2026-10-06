@@ -1,0 +1,532 @@
+{
+ "condition": "agent_vision_multi_round",
+ "seed": 1750467648,
+ "round": 1,
+ "proposal": {
+  "inclusion": 25,
+  "patches": 10,
+  "scratches": 15
+ },
+ "final": {
+  "inclusion": 25,
+  "patches": 10,
+  "scratches": 15
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.35,
+   "scale_max": 0.95,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "inclusion_11",
+    "inclusion_50",
+    "inclusion_99",
+    "inclusion_100",
+    "inclusion_106",
+    "inclusion_131",
+    "inclusion_150",
+    "inclusion_268",
+    "inclusion_277",
+    "inclusion_297"
+   ]
+  },
+  "patches": {
+   "scale_min": 0.4,
+   "scale_max": 1.0,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "patches_14",
+    "patches_106",
+    "patches_161",
+    "patches_164",
+    "patches_219",
+    "patches_241",
+    "patches_251",
+    "patches_272",
+    "patches_65",
+    "patches_70",
+    "patches_82",
+    "patches_86",
+    "patches_96",
+    "patches_240",
+    "patches_39",
+    "patches_63",
+    "patches_94"
+   ]
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "scratches_19",
+    "scratches_20",
+    "scratches_200",
+    "scratches_201",
+    "scratches_203",
+    "scratches_76",
+    "scratches_91",
+    "scratches_96",
+    "scratches_193",
+    "scratches_103",
+    "scratches_112",
+    "scratches_133",
+    "scratches_134",
+    "scratches_149",
+    "scratches_169",
+    "scratches_170",
+    "scratches_179",
+    "scratches_180",
+    "scratches_181",
+    "scratches_182",
+    "scratches_184",
+    "scratches_185",
+    "scratches_187",
+    "scratches_191",
+    "scratches_192"
+   ]
+  }
+ },
+ "params_source": "agent_vision",
+ "calls": [
+  {
+   "step": "plan1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 6911,
+    "prompt_tokens": 4355,
+    "total_tokens": 11266,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 15665,
+   "elapsed_seconds": 155.64,
+   "content": "{\n  \"analysis\": \"Round 1 baseline: inclusion is catastrophic (recall ~0.10-0.15, 161/179 missed), scratches weak (0.47, 55 missed), patches decent (0.66, 51 missed). Miss profiles are consistent: small + low-contrast. Inclusion misses are tiny (median 37px vs 90px train) faint thin streaks; scratches misses are short thin bright lines (42px vs 73px); patches misses are small dark blobs (50px vs 85px). So plan: shift all classes toward smaller paste scales with prefer_small weighting, and allocate the bulk of the 50-image budget to inclusion while keeping scratches and patches fed (shared detector).\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n  \"params\": {\n    \"inclusion\": {\n      \"scale_min\": 0.35,\n      \"scale_max\": 0.95,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [11, 150, 287, 100, 106, 131, 268, 277]\n    },\n    \"patches\": {\n      \"scale_min\": 0.40,\n      \"scale_max\": 1.00,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [14, 106, 161, 164, 219, 241, 251, 272, 65, 70, 82, 86, 96, 240, 39, 63, 94]\n    },\n    \"scratches\": {\n      \"scale_min\": 0.30,\n      \"scale_max\": 0.80,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [19, 20, 200, 201, 203, 76, 91, 96, 193, 103, 112, 133, 134, 149, 169, 170, 179, 180, 181, 182, 184, 185, 187, 191, 192]\n    }\n  },\n  \"rationale\": \"Inclusion gets 25/50 because its recall is near zero and misses are dominated by small (37px) low-contrast thin streaks: I selected the faint/thin streak sources (11, 150, 287 plus thin dark streaks 100, 106, 131, 268, 277) and scaled 0.35-0.95 with prefer_small so pastes land in the 30-90px band the detector currently fails on. Scratches (15) target short thin bright lines: thin-line sources only (avoiding the thick bright weld-like streaks that don't match the faint misses), scale 0.30-0.80 to hit the ~42px missed size. Patches (10) keep the class fed with small dark/faint blobs (incl. faint small sources 240, 39, 63, 94) at 0.40-1.00. Same-class backgrounds keep pastes realistic; max_overlap 0.15 avoids clutter. All classes stay >=10 and no class exceeds the 105 cap.\"\n}"
+  },
+  {
+   "step": "plan2",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 2556,
+    "prompt_tokens": 5364,
+    "total_tokens": 7920,
+    "prompt_tokens_details": {
+     "cached_tokens": 4351
+    }
+   },
+   "reasoning_chars": 3669,
+   "elapsed_seconds": 41.86,
+   "content": "{\n  \"analysis\": \"Round 1 baseline: inclusion catastrophic (recall ~0.10-0.15, 161/179 missed), scratches weak (0.47, 55 missed), patches decent (0.66, 51 missed). Miss profiles are small + low-contrast: inclusion misses are tiny (median 37px vs 90px train) faint thin streaks; scratches misses are short thin bright lines (42px vs 73px); patches misses are small dark blobs (50px vs 85px). Plan: shift all classes to smaller paste scales with prefer_small weighting, allocate the bulk of the 50-image budget to inclusion while keeping scratches and patches fed (shared detector). Corrected inclusion source list to valid IDs (287 -> 297).\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n  \"params\": {\n    \"inclusion\": {\n      \"scale_min\": 0.35,\n      \"scale_max\": 0.95,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [11, 50, 99, 100, 106, 131, 150, 268, 277, 297]\n    },\n    \"patches\": {\n      \"scale_min\": 0.40,\n      \"scale_max\": 1.00,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [14, 106, 161, 164, 219, 241, 251, 272, 65, 70, 82, 86, 96, 240, 39, 63, 94]\n    },\n    \"scratches\": {\n      \"scale_min\": 0.30,\n      \"scale_max\": 0.80,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [19, 20, 200, 201, 203, 76, 91, 96, 193, 103, 112, 133, 134, 149, 169, 170, 179, 180, 181, 182, 184, 185, 187, 191, 192]\n    }\n  },\n  \"rationale\": \"Inclusion gets 25/50 because recall is near zero and misses are dominated by small (37px) low-contrast thin streaks: I use all valid thin-streak sources (incl. bright thin streak 297 for the few bright misses) and scale 0.35-0.95 with prefer_small so pastes land in the 30-90px band the detector fails on. Scratches (15) target short thin bright lines: thin-line sources only (avoiding thick weld-like streaks), scale 0.30-0.80 to hit the ~42px missed size. Patches (10) keep the class fed with small dark/faint blobs (incl. faint small sources 240, 39, 63, 94) at 0.40-1.00. Same-class backgrounds keep pastes realistic; max_overlap 0.15 avoids clutter. All classes stay >=10 and no class exceeds the 105 cap.\"\n}"
+  },
+  {
+   "step": "revise1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1585,
+    "prompt_tokens": 6726,
+    "total_tokens": 8311,
+    "prompt_tokens_details": {
+     "cached_tokens": 5360
+    }
+   },
+   "reasoning_chars": 3192,
+   "elapsed_seconds": 30.1,
+   "content": "{\n  \"analysis\": \"Preview check vs misses: inclusion pastes are thin faint streaks (vertical + a few horizontal) on gray/white backgrounds, matching the tiny (37px) low-contrast streak misses; sizes land in the 30-90px band. Patches pastes are compact dark blobs on gray/white, matching the 50px dark-blob misses. Scratches pastes are short thin bright vertical lines on gray, matching the 42px thin bright-line misses. All pastes look realistic (feathered, plausible contrast), none wasted on a class, none unrealistically large or thick. Plan is sound; repeat unchanged.\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n  \"params\": {\n    \"inclusion\": {\n      \"scale_min\": 0.35,\n      \"scale_max\": 0.95,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [11, 50, 99, 100, 106, 131, 150, 268, 277, 297]\n    },\n    \"patches\": {\n      \"scale_min\": 0.40,\n      \"scale_max\": 1.00,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [14, 106, 161, 164, 219, 241, 251, 272, 65, 70, 82, 86, 96, 240, 39, 63, 94]\n    },\n    \"scratches\": {\n      \"scale_min\": 0.30,\n      \"scale_max\": 0.80,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15,\n      \"sources\": [19, 20, 200, 201, 203, 76, 91, 96, 193, 103, 112, 133, 134, 149, 169, 170, 179, 180, 181, 182, 184, 185, 187, 191, 192]\n    }\n  },\n  \"rationale\": \"Previews confirm the pastes match the missed-defect appearance per class: thin faint streaks for inclusion, compact dark blobs for patches, short thin bright lines for scratches, all at the small scales the detector currently fails on. Same-class backgrounds keep them realistic; max_overlap 0.15 avoids clutter. Inclusion keeps the largest share (25) given near-zero recall; scratches 15 and patches 10 keep the shared detector fed. All classes >=10 and within the 105 cap. Repeating the validated plan.\"\n}"
+  }
+ ],
+ "plans": [
+  {
+   "step": "plan",
+   "plan": {
+    "analysis": "Round 1 baseline: inclusion catastrophic (recall ~0.10-0.15, 161/179 missed), scratches weak (0.47, 55 missed), patches decent (0.66, 51 missed). Miss profiles are small + low-contrast: inclusion misses are tiny (median 37px vs 90px train) faint thin streaks; scratches misses are short thin bright lines (42px vs 73px); patches misses are small dark blobs (50px vs 85px). Plan: shift all classes to smaller paste scales with prefer_small weighting, allocate the bulk of the 50-image budget to inclusion while keeping scratches and patches fed (shared detector). Corrected inclusion source list to valid IDs (287 -> 297).",
+    "allocation": {
+     "inclusion": 25,
+     "patches": 10,
+     "scratches": 15
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.35,
+      "scale_max": 0.95,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       50,
+       99,
+       100,
+       106,
+       131,
+       150,
+       268,
+       277,
+       297
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 1.0,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       14,
+       106,
+       161,
+       164,
+       219,
+       241,
+       251,
+       272,
+       65,
+       70,
+       82,
+       86,
+       96,
+       240,
+       39,
+       63,
+       94
+      ]
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       19,
+       20,
+       200,
+       201,
+       203,
+       76,
+       91,
+       96,
+       193,
+       103,
+       112,
+       133,
+       134,
+       149,
+       169,
+       170,
+       179,
+       180,
+       181,
+       182,
+       184,
+       185,
+       187,
+       191,
+       192
+      ]
+     }
+    },
+    "rationale": "Inclusion gets 25/50 because recall is near zero and misses are dominated by small (37px) low-contrast thin streaks: I use all valid thin-streak sources (incl. bright thin streak 297 for the few bright misses) and scale 0.35-0.95 with prefer_small so pastes land in the 30-90px band the detector fails on. Scratches (15) target short thin bright lines: thin-line sources only (avoiding thick weld-like streaks), scale 0.30-0.80 to hit the ~42px missed size. Patches (10) keep the class fed with small dark/faint blobs (incl. faint small sources 240, 39, 63, 94) at 0.40-1.00. Same-class backgrounds keep pastes realistic; max_overlap 0.15 avoids clutter. All classes stay >=10 and no class exceeds the 105 cap."
+   }
+  },
+  {
+   "step": "revise",
+   "plan": {
+    "analysis": "Preview check vs misses: inclusion pastes are thin faint streaks (vertical + a few horizontal) on gray/white backgrounds, matching the tiny (37px) low-contrast streak misses; sizes land in the 30-90px band. Patches pastes are compact dark blobs on gray/white, matching the 50px dark-blob misses. Scratches pastes are short thin bright vertical lines on gray, matching the 42px thin bright-line misses. All pastes look realistic (feathered, plausible contrast), none wasted on a class, none unrealistically large or thick. Plan is sound; repeat unchanged.",
+    "allocation": {
+     "inclusion": 25,
+     "patches": 10,
+     "scratches": 15
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.35,
+      "scale_max": 0.95,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       50,
+       99,
+       100,
+       106,
+       131,
+       150,
+       268,
+       277,
+       297
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 1.0,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       14,
+       106,
+       161,
+       164,
+       219,
+       241,
+       251,
+       272,
+       65,
+       70,
+       82,
+       86,
+       96,
+       240,
+       39,
+       63,
+       94
+      ]
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       19,
+       20,
+       200,
+       201,
+       203,
+       76,
+       91,
+       96,
+       193,
+       103,
+       112,
+       133,
+       134,
+       149,
+       169,
+       170,
+       179,
+       180,
+       181,
+       182,
+       184,
+       185,
+       187,
+       191,
+       192
+      ]
+     }
+    },
+    "rationale": "Previews confirm the pastes match the missed-defect appearance per class: thin faint streaks for inclusion, compact dark blobs for patches, short thin bright lines for scratches, all at the small scales the detector currently fails on. Same-class backgrounds keep them realistic; max_overlap 0.15 avoids clutter. Inclusion keeps the largest share (25) given near-zero recall; scratches 15 and patches 10 keep the shared detector fed. All classes >=10 and within the 105 cap. Repeating the validated plan."
+   }
+  }
+ ],
+ "revised": false,
+ "observation": {
+  "round_index": 1,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.1452513966480447,
+    "precision": 0.4592148738569847,
+    "ap50": 0.14156967737207363,
+    "ap50_95": 0.04996183395275692
+   },
+   "patches": {
+    "recall": 0.7056231031427361,
+    "precision": 0.8279131545503832,
+    "ap50": 0.7744112965027369,
+    "ap50_95": 0.42899760677354604
+   },
+   "scratches": {
+    "recall": 0.5489017953020595,
+    "precision": 0.6407921566498445,
+    "ap50": 0.5832791323232429,
+    "ap50_95": 0.2321505613202987
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.101,
+    "missed": 161,
+    "misclassified_as": {
+     "patches": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.14,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 37.4,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.021,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.389,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.533,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.105,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.66,
+    "missed": 51,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.1,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 50.1,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.511,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.818,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.921,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.31,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.611,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.8,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.471,
+    "missed": 55,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.127,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.312,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.267,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.561,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.778,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 0,
+   "patches": 0,
+   "scratches": 0
+  },
+  "headroom_this_round": {
+   "inclusion": 105,
+   "patches": 105,
+   "scratches": 105
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   }
+  },
+  "history": []
+ }
+}

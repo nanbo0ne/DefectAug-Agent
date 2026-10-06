@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Misses concentrate in the small size tertile for every class, so shrinking paste scale to 0.3-0.7 (covering the 25-60px missed range) should raise small-instance recall and mAP. Confirmed if inclusion AP50 jumps well above 0.18 and low-tertile recall improves vs control; if flat, scale is not the lever.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion's low AP50 (0.18) may be data scarcity (10 real images) rather than scale. Doubling its allocation (25/12/13) at the default scale should lift inclusion AP without hurting the other classes. Confirmed if inclusion AP50 rises more than in candidate 1/control while patches/scratches hold.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 12,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Scratches have the highest FP rate (0.22/img) and low-contrast instances are missed everywhere; pasting onto any_class backgrounds adds texture diversity and co-occurring defects, improving precision/robustness. Confirmed if precision (esp. scratches) improves vs control without recall loss.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"All three classes miss small instances (low size-tertile recall 0.03/0.34/0.34; median missed 37-51px vs train median 73-90px). Inclusion is weakest (AP50 0.18, only 10 real images). Scratches have the highest FP rate (0.22/img). Round 1 tests three single-factor levers vs the balanced default control: (1) small scale range, (2) inclusion-heavy allocation, (3) cross-class background pool.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Misses concentrate in the small size tertile for every class, so shrinking paste scale to 0.3-0.7 (covering the 25-60px missed range) should raise small-instance recall and mAP. Confirmed if inclusion AP50 jumps well above 0.18 and low-tertile recall improves vs control; if flat, scale is not the lever.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion's low AP50 (0.18) may be data scarcity (10 real images) rather than scale. Doubling its allocation (25/12/13) at the default scale should lift inclusion AP without hurting the other classes. Confirmed if inclusion AP50 rises more than in candidate 1/control while patches/scratches hold.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches have the highest FP rate (0.22/img) and low-contrast instances are missed everywhere; pasting onto any_class backgrounds adds texture diversity and co-occurring defects, improving precision/robustness. Confirmed if precision (esp. scratches) improves vs control without recall loss.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 4584,
+     "prompt_tokens": 5519,
+     "total_tokens": 10103,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 12657,
+    "elapsed_seconds": 151.3,
+    "content": "{\n  \"analysis\": \"All three classes miss small instances (low size-tertile recall 0.03/0.34/0.34; median missed 37-51px vs train median 73-90px). Inclusion is weakest (AP50 0.18, only 10 real images). Scratches have the highest FP rate (0.22/img). Round 1 tests three single-factor levers vs the balanced default control: (1) small scale range, (2) inclusion-heavy allocation, (3) cross-class background pool.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Misses concentrate in the small size tertile for every class, so shrinking paste scale to 0.3-0.7 (covering the 25-60px missed range) should raise small-instance recall and mAP. Confirmed if inclusion AP50 jumps well above 0.18 and low-tertile recall improves vs control; if flat, scale is not the lever.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion's low AP50 (0.18) may be data scarcity (10 real images) rather than scale. Doubling its allocation (25/12/13) at the default scale should lift inclusion AP without hurting the other classes. Confirmed if inclusion AP50 rises more than in candidate 1/control while patches/scratches hold.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches have the highest FP rate (0.22/img) and low-contrast instances are missed everywhere; pasting onto any_class backgrounds adds texture diversity and co-occurring defects, improving precision/robustness. Confirmed if precision (esp. scratches) improves vs control without recall loss.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

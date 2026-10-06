@@ -1,0 +1,47 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 79,
+   "patches": 34,
+   "scratches": 37
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.66,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "patches": {
+    "scale_min": 0.352,
+    "scale_max": 0.852,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "scratches": {
+    "scale_min": 0.318,
+    "scale_max": 0.818,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.2542763055163468,
+    "ap50": 0.26929060762768664
+   },
+   "patches": {
+    "recall": 0.64,
+    "ap50": 0.7485031545298696
+   },
+   "scratches": {
+    "recall": 0.6634615384615384,
+    "ap50": 0.7131467590520849
+   }
+  }
+ }
+]

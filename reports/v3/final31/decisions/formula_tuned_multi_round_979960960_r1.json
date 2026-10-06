@@ -1,0 +1,60 @@
+{
+ "condition": "formula_tuned_multi_round",
+ "seed": 979960960,
+ "round": 1,
+ "proposal": {
+  "inclusion": 27,
+  "patches": 11,
+  "scratches": 12
+ },
+ "final": {
+  "inclusion": 27,
+  "patches": 11,
+  "scratches": 12
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.66,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  },
+  "patches": {
+   "scale_min": 0.34,
+   "scale_max": 0.84,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  },
+  "scratches": {
+   "scale_min": 0.305,
+   "scale_max": 0.805,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  }
+ },
+ "params_source": "formula_rule",
+ "scores": {
+  "inclusion": 0.8375365549216479,
+  "patches": 0.3573785579958832,
+  "scratches": 0.38338874975239806
+ },
+ "weights": [
+  0.8,
+  0.1,
+  0.1
+ ]
+}

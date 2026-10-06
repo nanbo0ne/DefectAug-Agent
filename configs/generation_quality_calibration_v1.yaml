@@ -1,0 +1,90 @@
+version: 1
+status: preregistered_before_new_outputs
+created_at: 2026-08-21
+scope: engineering_calibration_only
+
+data_rules:
+  allowed_split: train_fewshot
+  forbidden_split: test
+  primary_source: scratches_20
+  replication_source: scratches_286
+  seed: 20260823
+
+prompts:
+  baseline: >-
+    Monochrome close-up inspection image of hot-rolled steel. Inside the supplied
+    mask, resynthesize one realistic narrow elongated scratch at the existing
+    location and scale; preserve steel grain, viewpoint and illumination.
+  strict: >-
+    Preserve the existing monochrome hot-rolled steel background, camera viewpoint,
+    illumination and fine steel grain. Inside the supplied mask only, replace the
+    existing defect with one natural manufacturing scratch: a narrow, broken,
+    irregular, low-contrast abrasion groove with uneven width and intensity, aligned
+    with the long axis of the mask. Fine steel grain must remain visible through and
+    beside the scratch. The result must look like incidental surface damage, not an
+    engraved, etched, carved, woven, braided, herringbone, decorative or repeated
+    pattern; not a smooth bright stripe, glowing line, painted line, seam, crack,
+    trench or geometric shape.
+  negative: >-
+    text, letters, symbols, watermark, frame, border, collage, multiple defects,
+    changed background, changed illumination, colored object, foreign object,
+    engraved, etched, carved, woven, braided, herringbone, decorative pattern,
+    repeated pattern, smooth stripe, bright band, glowing line, painted line, seam,
+    crack, trench, block edge, staircase edge, geometric pattern
+  sdxl_short_strict: >-
+    Monochrome hot-rolled steel inspection image. In the mask only, create one
+    narrow irregular low-contrast natural scratch; preserve steel grain, lighting,
+    viewpoint and scale. No engraving, etching, weaving, repeated pattern, bright
+    band, seam, crack, trench, block edge or changed background.
+
+phase_1_primary_source:
+  qwen:
+    fixed: {steps: 20, cfg: 2.5, shift: 3.1, mask_expand: 0, mask_blur: 1}
+    variants:
+      - {id: qwen_baseline_c100, prompt: baseline, control_strength: 1.0}
+      - {id: qwen_strict_c100, prompt: strict, control_strength: 1.0}
+      - {id: qwen_strict_c070, prompt: strict, control_strength: 0.7}
+  sdxl:
+    fixed: {steps: 25, guidance: 8.0, width: 1024, height: 1024, padding_mask_crop: null}
+    variants:
+      - {id: sdxl_baseline_s099, prompt: baseline, strength: 0.99}
+      - {id: sdxl_strict_s099, prompt: strict, strength: 0.99}
+      - {id: sdxl_strict_s065, prompt: strict, strength: 0.65}
+      - {id: sdxl_strict_s045, prompt: strict, strength: 0.45}
+
+phase_2_replication_rule:
+  rule: >-
+    For each generator, replicate only the phase-1 variant with the best semantic
+    engineering review on scratches_286. If no phase-1 variant is semantically
+    acceptable, do not select a winner and do not claim that generator passed.
+  tie_break_order:
+    - no_forbidden_artifact
+    - realistic_scratch_morphology
+    - sufficient_nontrivial_change
+    - lower_boundary_seam
+
+sdxl_prompt_limit_correction:
+  status: preregistered_after_observing_truncation_warning
+  reason: baseline strict prompt exceeded the SDXL CLIP 77-token limit and was truncated
+  source: scratches_20
+  seed: 20260824
+  variants:
+    - {id: sdxl_short_strict_s099, prompt: sdxl_short_strict, strength: 0.99}
+    - {id: sdxl_short_strict_s065, prompt: sdxl_short_strict, strength: 0.65}
+  interpretation: >-
+    These two variants test whether a concise prompt changes the SDXL result. They
+    remain calibration evidence only and cannot retroactively validate the truncated
+    strict variants.
+
+acceptance:
+  hard_requirements:
+    - input hashes match the frozen manifest
+    - final composite changes zero pixels outside the binary mask
+    - effective changes remain aligned with the YOLO box
+    - no engraved, etched, woven, repeated, bright-band or staircase artifact
+    - defect is a plausible narrow irregular steel scratch
+    - change is nontrivial and is not merely an unchanged copy of the source defect
+  decision_scope: >-
+    This calibration can reject zero-shot routes or nominate parameters for a larger
+    blind gate. It cannot by itself freeze a formal three-class generator or provide
+    paper results.

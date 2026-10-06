@@ -1,0 +1,137 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 26,
+   "patches": 12,
+   "scratches": 12
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.66,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "patches": {
+    "scale_min": 0.352,
+    "scale_max": 0.852,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "scratches": {
+    "scale_min": 0.318,
+    "scale_max": 0.818,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.2964728278475863,
+    "ap50": 0.3402345093806923
+   },
+   "patches": {
+    "recall": 0.6533333333333333,
+    "ap50": 0.7186810097401404
+   },
+   "scratches": {
+    "recall": 0.7211538461538461,
+    "ap50": 0.7520755646861685
+   }
+  }
+ },
+ {
+  "round": 2,
+  "allocation": {
+   "inclusion": 28,
+   "patches": 14,
+   "scratches": 8
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.622,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "patches": {
+    "scale_min": 0.385,
+    "scale_max": 0.885,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "scratches": {
+    "scale_min": 0.3,
+    "scale_max": 0.798,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.29608938547486036,
+    "ap50": 0.3283856534562184
+   },
+   "patches": {
+    "recall": 0.7329089600922909,
+    "ap50": 0.7964028980121312
+   },
+   "scratches": {
+    "recall": 0.625,
+    "ap50": 0.6177896713653487
+   }
+  }
+ },
+ {
+  "round": 3,
+  "allocation": {
+   "inclusion": 27,
+   "patches": 11,
+   "scratches": 12
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.623,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "patches": {
+    "scale_min": 0.333,
+    "scale_max": 0.833,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   },
+   "scratches": {
+    "scale_min": 0.348,
+    "scale_max": 0.848,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.24581005586592178,
+    "ap50": 0.22224799576637827
+   },
+   "patches": {
+    "recall": 0.7222582609398992,
+    "ap50": 0.7753572119732894
+   },
+   "scratches": {
+    "recall": 0.6442307692307693,
+    "ap50": 0.6735214892956838
+   }
+  }
+ }
+]

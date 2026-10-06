@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Small-paste-scale hypothesis: misses concentrate in the low size tertile, so shrinking pastes to the missed size range (inclusion 0.3-0.7x, patches/scratches 0.4-0.8x) should raise small-instance recall. Confirmed if mAP50 beats the balanced/default control, especially inclusion AP50 and low-tertile recall, without a precision collapse.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation hypothesis: inclusion is the starved, worst class (10 real images, AP50 0.179, 148 missed), so at the default scale range, shifting 30 of 50 images to inclusion should lift inclusion AP50 most. Confirmed if inclusion AP50 rises substantially and overall mAP50 beats the balanced control; if not, allocation balance matters less than scale.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Combination hypothesis: if small scale and inclusion-heavy allocation both help, their combination should be the round's best (additive effects). Confirmed if it has the highest mAP50; if it underperforms A or B, the two factors interact negatively and I should not stack them in later rounds.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 12,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.4,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"All three classes fail mostly on small instances: inclusion low-size-tertile recall is 0.075 (146/179 in that tertile, missed median 34.7px vs train median 90.5px), patches 0.467 (51 vs 85px), scratches 0.403 (42 vs 73px). Inclusion is also the starved class (10 real images, AP50 0.179). Round 1 runs a 2x2 factorial vs the balanced/default control: (A) small paste scale only, (B) inclusion-heavy allocation only, (C) both. Scale ranges are set so the expected paste size matches the missed-defect medians (inclusion ~0.3-0.7x, patches/scratches ~0.4-0.8x). Background pool, overlap and source weighting are held at defaults to isolate the two factors.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Small-paste-scale hypothesis: misses concentrate in the low size tertile, so shrinking pastes to the missed size range (inclusion 0.3-0.7x, patches/scratches 0.4-0.8x) should raise small-instance recall. Confirmed if mAP50 beats the balanced/default control, especially inclusion AP50 and low-tertile recall, without a precision collapse.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation hypothesis: inclusion is the starved, worst class (10 real images, AP50 0.179, 148 missed), so at the default scale range, shifting 30 of 50 images to inclusion should lift inclusion AP50 most. Confirmed if inclusion AP50 rises substantially and overall mAP50 beats the balanced control; if not, allocation balance matters less than scale.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Combination hypothesis: if small scale and inclusion-heavy allocation both help, their combination should be the round's best (additive effects). Confirmed if it has the highest mAP50; if it underperforms A or B, the two factors interact negatively and I should not stack them in later rounds.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 6113,
+     "prompt_tokens": 5533,
+     "total_tokens": 11646,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 17113,
+    "elapsed_seconds": 158.18,
+    "content": "{\n  \"analysis\": \"All three classes fail mostly on small instances: inclusion low-size-tertile recall is 0.075 (146/179 in that tertile, missed median 34.7px vs train median 90.5px), patches 0.467 (51 vs 85px), scratches 0.403 (42 vs 73px). Inclusion is also the starved class (10 real images, AP50 0.179). Round 1 runs a 2x2 factorial vs the balanced/default control: (A) small paste scale only, (B) inclusion-heavy allocation only, (C) both. Scale ranges are set so the expected paste size matches the missed-defect medians (inclusion ~0.3-0.7x, patches/scratches ~0.4-0.8x). Background pool, overlap and source weighting are held at defaults to isolate the two factors.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Small-paste-scale hypothesis: misses concentrate in the low size tertile, so shrinking pastes to the missed size range (inclusion 0.3-0.7x, patches/scratches 0.4-0.8x) should raise small-instance recall. Confirmed if mAP50 beats the balanced/default control, especially inclusion AP50 and low-tertile recall, without a precision collapse.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation hypothesis: inclusion is the starved, worst class (10 real images, AP50 0.179, 148 missed), so at the default scale range, shifting 30 of 50 images to inclusion should lift inclusion AP50 most. Confirmed if inclusion AP50 rises substantially and overall mAP50 beats the balanced control; if not, allocation balance matters less than scale.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.60, \"scale_max\": 1.40, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Combination hypothesis: if small scale and inclusion-heavy allocation both help, their combination should be the round's best (additive effects). Confirmed if it has the highest mAP50; if it underperforms A or B, the two factors interact negatively and I should not stack them in later rounds.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

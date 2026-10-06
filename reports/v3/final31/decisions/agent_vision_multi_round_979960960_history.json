@@ -1,0 +1,271 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 24,
+   "patches": 14,
+   "scratches": 12
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.4,
+    "scale_max": 1.0,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_50",
+     "inclusion_99",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131",
+     "inclusion_150",
+     "inclusion_268",
+     "inclusion_277"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "patches_14",
+     "patches_39",
+     "patches_63",
+     "patches_64",
+     "patches_94",
+     "patches_106",
+     "patches_161",
+     "patches_251"
+    ]
+   },
+   "scratches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.26832749732536465,
+    "ap50": 0.2886444598624348
+   },
+   "patches": {
+    "recall": 0.6266666666666667,
+    "ap50": 0.7674515115003384
+   },
+   "scratches": {
+    "recall": 0.6153846153846154,
+    "ap50": 0.6556626661464198
+   }
+  }
+ },
+ {
+  "round": 2,
+  "allocation": {
+   "inclusion": 26,
+   "patches": 12,
+   "scratches": 12
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.8,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_150",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_50",
+     "inclusion_99"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.3,
+    "scale_max": 0.8,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "patches_39",
+     "patches_94",
+     "patches_63",
+     "patches_64",
+     "patches_62",
+     "patches_106",
+     "patches_14",
+     "patches_153",
+     "patches_161",
+     "patches_164"
+    ]
+   },
+   "scratches": {
+    "scale_min": 0.3,
+    "scale_max": 0.8,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_19",
+     "scratches_20",
+     "scratches_191",
+     "scratches_192",
+     "scratches_193",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_35",
+     "scratches_36",
+     "scratches_37",
+     "scratches_41",
+     "scratches_42",
+     "scratches_43",
+     "scratches_44",
+     "scratches_52",
+     "scratches_53",
+     "scratches_57",
+     "scratches_58",
+     "scratches_72",
+     "scratches_76",
+     "scratches_96",
+     "scratches_98"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.329608938547486,
+    "ap50": 0.3975857442413943
+   },
+   "patches": {
+    "recall": 0.6333333333333333,
+    "ap50": 0.7607603537701519
+   },
+   "scratches": {
+    "recall": 0.5865384615384616,
+    "ap50": 0.6579792020878383
+   }
+  }
+ },
+ {
+  "round": 3,
+  "allocation": {
+   "inclusion": 20,
+   "patches": 15,
+   "scratches": 15
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_150",
+     "inclusion_297",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_50",
+     "inclusion_99"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "patches_106",
+     "patches_14",
+     "patches_161",
+     "patches_164",
+     "patches_219",
+     "patches_240",
+     "patches_251",
+     "patches_65",
+     "patches_96",
+     "patches_103",
+     "patches_182",
+     "patches_241"
+    ]
+   },
+   "scratches": {
+    "scale_min": 0.5,
+    "scale_max": 1.0,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_112",
+     "scratches_133",
+     "scratches_134",
+     "scratches_169",
+     "scratches_170",
+     "scratches_179",
+     "scratches_180",
+     "scratches_181",
+     "scratches_182",
+     "scratches_184",
+     "scratches_185",
+     "scratches_187",
+     "scratches_19",
+     "scratches_191",
+     "scratches_192",
+     "scratches_193",
+     "scratches_20",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_289",
+     "scratches_35",
+     "scratches_36",
+     "scratches_37",
+     "scratches_41",
+     "scratches_42",
+     "scratches_43",
+     "scratches_44",
+     "scratches_52",
+     "scratches_53",
+     "scratches_57",
+     "scratches_58",
+     "scratches_72",
+     "scratches_76",
+     "scratches_91",
+     "scratches_96"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.3128491620111732,
+    "ap50": 0.3617037491609868
+   },
+   "patches": {
+    "recall": 0.6898749932883209,
+    "ap50": 0.7676322206895445
+   },
+   "scratches": {
+    "recall": 0.6730769230769231,
+    "ap50": 0.6508648008661353
+   }
+  }
+ }
+]

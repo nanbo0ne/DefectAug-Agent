@@ -1,0 +1,622 @@
+{
+ "condition": "agent_experiment_multi_round",
+ "seed": 1057047533,
+ "round": 2,
+ "proposal": {
+  "inclusion": 24,
+  "patches": 13,
+  "scratches": 13
+ },
+ "final": {
+  "inclusion": 24,
+  "patches": 13,
+  "scratches": 13
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 17,
+  "patches": 17,
+  "scratches": 16
+ },
+ "source_capacity": {
+  "inclusion": 223,
+  "patches": 703,
+  "scratches": 1424
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "patches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_experiment",
+ "calls": [
+  {
+   "step": "design1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 8319,
+    "prompt_tokens": 7350,
+    "total_tokens": 15669,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 21382,
+   "elapsed_seconds": 255.77,
+   "content": "{\n  \"analysis\": \"Round 1 showed small scale (0.3-0.7) is the dominant lever: patches jumped 0.713->0.791, but inclusion stayed flat (0.355) and scratches dropped 0.714->0.667. Miss analysis of the kept model: inclusion misses are overwhelmingly tiny (median 33.8px vs 90.5px train; 146/179 in low tertile, recall 0.178) - the 0.3-0.7 pastes (~27-63px) are still larger than the missed median, so inclusion may need even smaller pastes (0.3-0.5 -> ~27-45px). Inclusion may also be data-starved (10 real images) - round 1's inclusion-heavy test was confounded by default scale, so retest allocation at the known-good small scale. Scratches: the 0.047 AP drop vs control exceeds the noise band, suggesting small pastes of thin lines hurt; missed scratches (median 41.8px) sit between the two tested ranges, so probe a mid scale 0.5-1.0. Three one-factor tests vs the kept plan: (1) inclusion scale 0.3-0.5, (2) inclusion-heavy allocation 24/13/13, (3) scratch scale 0.5-1.0. All keep same_class pool (any_class hurt inclusion badly in R1).\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Inclusion misses center on ~34px instances, smaller than the 0.3-0.7 pastes produced in R1 (which left inclusion AP flat at 0.355). Shrinking inclusion pastes to 0.3-0.5 (~27-45px from ~90px sources) should match the missed size band and lift inclusion AP50 above ~0.40 with improved low-tertile recall; if inclusion AP drops instead, 0.3-0.7 was already the sweet spot and scale is not the inclusion lever.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.5, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion is data-starved (10 real images, AP 0.355, recall 0.25) and R1's inclusion-heavy test was confounded by using default scale. Shifting budget to inclusion (24/13/13) while keeping the proven 0.3-0.7 small scale should raise inclusion AP50 above ~0.40 without dropping patches/scratches by more than ~0.03; if inclusion stays ~0.35, allocation is not the lever and the problem is purely scale/appearance.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratch AP fell 0.714->0.667 when pastes shrank to 0.3-0.7 (beyond the ~0.03 noise band), suggesting very small thin-line pastes are unlearnable noise, yet missed scratches (median 41.8px) are small. A mid scale 0.5-1.0 (~36-73px from ~73px sources) should recover scratch AP50 toward ~0.71 while keeping patches/inclusion at their proven 0.3-0.7; if scratches do not recover, the R1 drop was noise and per-class scale tuning is unnecessary.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.5, \"scale_max\": 1.0, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+  },
+  {
+   "step": "choose1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 3654,
+    "prompt_tokens": 10490,
+    "total_tokens": 14144,
+    "prompt_tokens_details": {
+     "cached_tokens": 7346
+    }
+   },
+   "reasoning_chars": 8900,
+   "elapsed_seconds": 78.16,
+   "content": "{\n  \"analysis\": \"Candidate 2 (inclusion-heavy 24/13/13 at 0.3-0.7) hit the best mAP 0.625 and best worst-class AP 0.3845, with inclusion recall jumping 0.307->0.363 — confirming inclusion is data-limited, not scale-limited. Candidate 1 (inclusion 0.3-0.5) was nearly tied (0.6205) but with a lower worst-class AP (0.3786), so shrinking pastes smaller did not clearly beat 0.3-0.7. Candidate 3 (scratch 0.5-1.0) was clearly worse (mAP 0.593, scratch AP 0.657 did not recover), refuting the 'small pastes hurt scratches' hypothesis. The control (repeat of R1) gave 0.591 with large per-class swings (patches 0.79->0.71, inclusion 0.35->0.41), confirming ~0.05-0.08 single-run noise. Candidates 2 and 1 are within 0.005 mAP of the best, so the tie-break (higher worst-class AP50) selects candidate 2.\",\n  \"choice\": 2,\n  \"lesson\": \"Inclusion-heavy allocation (24/13/13) at small scale 0.3-0.7 gave the best mAP (0.625) and best worst-class AP (0.3845) with inclusion recall up to 0.363 — inclusion is data-limited, so keep feeding it. Scratch mid-scale 0.5-1.0 was clearly worse (mAP 0.593, scratch AP did not recover), refuting 'small pastes hurt scratches' — keep scratches at 0.3-0.7. The control (repeat R1) swung wildly (patches 0.79->0.71, inclusion 0.35->0.41) at mAP 0.591, so per-class deltas under ~0.05 are noise; in the final round build on inclusion-heavy + 0.3-0.7 and avoid untested extreme allocations.\"\n}"
+  }
+ ],
+ "design_errors": [],
+ "lab_table": [
+  {
+   "candidate": 1,
+   "control": false,
+   "hypothesis": "Inclusion misses center on ~34px instances, smaller than the 0.3-0.7 pastes produced in R1 (which left inclusion AP flat at 0.355). Shrinking inclusion pastes to 0.3-0.5 (~27-45px from ~90px sources) should match the missed size band and lift inclusion AP50 above ~0.40 with improved low-tertile recall; if inclusion AP drops instead, 0.3-0.7 was already the sweet spot and scale is not the inclusion lever.",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.6205,
+    "map50_95": 0.2963,
+    "worst_class_ap50": 0.3786,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3786,
+      "recall": 0.3112,
+      "precision": 0.7077
+     },
+     "patches": {
+      "ap50": 0.7699,
+      "recall": 0.7067,
+      "precision": 0.8261
+     },
+     "scratches": {
+      "ap50": 0.7129,
+      "recall": 0.6538,
+      "precision": 0.7254
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0164,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0237,
+    "patches": -0.0209,
+    "scratches": 0.0462
+   }
+  },
+  {
+   "candidate": 2,
+   "control": false,
+   "hypothesis": "Inclusion is data-starved (10 real images, AP 0.355, recall 0.25) and R1's inclusion-heavy test was confounded by using default scale. Shifting budget to inclusion (24/13/13) while keeping the proven 0.3-0.7 small scale should raise inclusion AP50 above ~0.40 without dropping patches/scratches by more than ~0.03; if inclusion stays ~0.35, allocation is not the lever and the problem is purely scale/appearance.",
+   "allocation_reached": {
+    "inclusion": 24,
+    "patches": 13,
+    "scratches": 13
+   },
+   "val": {
+    "map50": 0.625,
+    "map50_95": 0.299,
+    "worst_class_ap50": 0.3845,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3845,
+      "recall": 0.3632,
+      "precision": 0.5857
+     },
+     "patches": {
+      "ap50": 0.7851,
+      "recall": 0.7308,
+      "precision": 0.7795
+     },
+     "scratches": {
+      "ap50": 0.7055,
+      "recall": 0.6827,
+      "precision": 0.6144
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0209,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0296,
+    "patches": -0.0057,
+    "scratches": 0.0388
+   }
+  },
+  {
+   "candidate": 3,
+   "control": false,
+   "hypothesis": "Scratch AP fell 0.714->0.667 when pastes shrank to 0.3-0.7 (beyond the ~0.03 noise band), suggesting very small thin-line pastes are unlearnable noise, yet missed scratches (median 41.8px) are small. A mid scale 0.5-1.0 (~36-73px from ~73px sources) should recover scratch AP50 toward ~0.71 while keeping patches/inclusion at their proven 0.3-0.7; if scratches do not recover, the R1 drop was noise and per-class scale tuning is unnecessary.",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.5928,
+    "map50_95": 0.2843,
+    "worst_class_ap50": 0.3707,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3707,
+      "recall": 0.3003,
+      "precision": 0.6268
+     },
+     "patches": {
+      "ap50": 0.7508,
+      "recall": 0.6867,
+      "precision": 0.8611
+     },
+     "scratches": {
+      "ap50": 0.6568,
+      "recall": 0.6193,
+      "precision": 0.7046
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0113,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0158,
+    "patches": -0.04,
+    "scratches": -0.0099
+   }
+  },
+  {
+   "candidate": 4,
+   "control": true,
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.5914,
+    "map50_95": 0.2862,
+    "worst_class_ap50": 0.407,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.407,
+      "recall": 0.3296,
+      "precision": 0.6601
+     },
+     "patches": {
+      "ap50": 0.711,
+      "recall": 0.626,
+      "precision": 0.8467
+     },
+     "scratches": {
+      "ap50": 0.6563,
+      "recall": 0.6346,
+      "precision": 0.718
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0127,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0521,
+    "patches": -0.0798,
+    "scratches": -0.0104
+   }
+  }
+ ],
+ "argmax_map50": 2,
+ "candidates": [
+  {
+   "hypothesis": "Inclusion misses center on ~34px instances, smaller than the 0.3-0.7 pastes produced in R1 (which left inclusion AP flat at 0.355). Shrinking inclusion pastes to 0.3-0.5 (~27-45px from ~90px sources) should match the missed size band and lift inclusion AP50 above ~0.40 with improved low-tertile recall; if inclusion AP drops instead, 0.3-0.7 was already the sweet spot and scale is not the inclusion lever.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.5,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion is data-starved (10 real images, AP 0.355, recall 0.25) and R1's inclusion-heavy test was confounded by using default scale. Shifting budget to inclusion (24/13/13) while keeping the proven 0.3-0.7 small scale should raise inclusion AP50 above ~0.40 without dropping patches/scratches by more than ~0.03; if inclusion stays ~0.35, allocation is not the lever and the problem is purely scale/appearance.",
+   "allocation": {
+    "inclusion": 24,
+    "patches": 13,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Scratch AP fell 0.714->0.667 when pastes shrank to 0.3-0.7 (beyond the ~0.03 noise band), suggesting very small thin-line pastes are unlearnable noise, yet missed scratches (median 41.8px) are small. A mid scale 0.5-1.0 (~36-73px from ~73px sources) should recover scratch AP50 toward ~0.71 while keeping patches/inclusion at their proven 0.3-0.7; if scratches do not recover, the R1 drop was noise and per-class scale tuning is unnecessary.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.5,
+     "scale_max": 1.0,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "control": true,
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "kept": 2,
+ "lesson": "Inclusion-heavy allocation (24/13/13) at small scale 0.3-0.7 gave the best mAP (0.625) and best worst-class AP (0.3845) with inclusion recall up to 0.363 — inclusion is data-limited, so keep feeding it. Scratch mid-scale 0.5-1.0 was clearly worse (mAP 0.593, scratch AP did not recover), refuting 'small pastes hurt scratches' — keep scratches at 0.3-0.7. The control (repeat R1) swung wildly (patches 0.79->0.71, inclusion 0.35->0.41) at mAP 0.591, so per-class deltas under ~0.05 are noise; in the final round build on inclusion-heavy + 0.3-0.7 and avoid untested extreme allocations.",
+ "extra_trainings": 3,
+ "observation": {
+  "round_index": 2,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.30681852561383455,
+    "precision": 0.6623236042281133,
+    "ap50": 0.35485304358755393,
+    "ap50_95": 0.12338495053403116
+   },
+   "patches": {
+    "recall": 0.7066666666666667,
+    "precision": 0.8403850435286793,
+    "ap50": 0.7908088635832529,
+    "ap50_95": 0.45864167536420963
+   },
+   "scratches": {
+    "recall": 0.625,
+    "precision": 0.6648193047314614,
+    "ap50": 0.6667137319645897,
+    "ap50_95": 0.2678767144540468
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.246,
+    "missed": 135,
+    "misclassified_as": {
+     "patches": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.16,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.8,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.178,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.389,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.733,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.256,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.687,
+    "missed": 47,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.087,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 49.0,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.556,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.818,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.921,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.414,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.639,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.8,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.567,
+    "missed": 45,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.173,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.8,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.429,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 1.0,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.467,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.683,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.556,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 17,
+   "patches": 17,
+   "scratches": 16
+  },
+  "headroom_this_round": {
+   "inclusion": 88,
+   "patches": 88,
+   "scratches": 89
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 17,
+    "accepted": 17,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 17,
+    "accepted": 17,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 17,
+    "accepted": 16,
+    "rejects": {
+     "no_placement": 1
+    }
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 17,
+     "patches": 17,
+     "scratches": 16
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.30681852561383455,
+      "ap50": 0.35485304358755393
+     },
+     "patches": {
+      "recall": 0.7066666666666667,
+      "ap50": 0.7908088635832529
+     },
+     "scratches": {
+      "recall": 0.625,
+      "ap50": 0.6667137319645897
+     }
+    }
+   }
+  ]
+ }
+}

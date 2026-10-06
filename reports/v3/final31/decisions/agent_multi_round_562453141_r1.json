@@ -1,0 +1,288 @@
+{
+ "condition": "agent_multi_round",
+ "seed": 562453141,
+ "round": 1,
+ "proposal": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  },
+  "patches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15
+  }
+ },
+ "params_source": "agent",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response": {
+    "content": "{\n  \"allocation\": {\n    \"inclusion\": 30,\n    \"patches\": 10,\n    \"scratches\": 10\n  },\n  \"params\": {\n    \"inclusion\": {\n      \"scale_min\": 0.3,\n      \"scale_max\": 0.8,\n      \"target_pool\": \"any_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15\n    },\n    \"patches\": {\n      \"scale_min\": 0.4,\n      \"scale_max\": 0.9,\n      \"target_pool\": \"any_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15\n    },\n    \"scratches\": {\n      \"scale_min\": 0.3,\n      \"scale_max\": 0.8,\n      \"target_pool\": \"any_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.15\n    }\n  },\n  \"rationale\": \"Prioritize small, low-contrast missed instances: heavy inclusion augmentation with small scales and diverse backgrounds, plus targeted small patch and scratch samples.\"\n}",
+    "usage": {
+     "completion_tokens": 2556,
+     "prompt_tokens": 2177,
+     "total_tokens": 4733,
+     "prompt_tokens_details": {
+      "cached_tokens": 247
+     }
+    },
+    "finish_reason": "stop",
+    "served_model": "lens-main",
+    "reasoning_chars": 7716,
+    "elapsed_seconds": 64.911
+   },
+   "prompt": "OBSERVATION (JSON):\n{\n \"round_index\": 1,\n \"total_rounds\": 3,\n \"round_budget\": 50,\n \"total_budget\": 150,\n \"real_fewshot_images\": {\n  \"inclusion\": 10,\n  \"patches\": 30,\n  \"scratches\": 60\n },\n \"previous_validation\": {\n  \"inclusion\": {\n   \"recall\": 0.2011173184357542,\n   \"precision\": 0.5035672176805799,\n   \"ap50\": 0.1790301596087617,\n   \"ap50_95\": 0.057641538947687386\n  },\n  \"patches\": {\n   \"recall\": 0.6246737401872103,\n   \"precision\": 0.776303625878664,\n   \"ap50\": 0.7130651126351712,\n   \"ap50_95\": 0.4274352508298448\n  },\n  \"scratches\": {\n   \"recall\": 0.6057692307692307,\n   \"precision\": 0.7154626686396078,\n   \"ap50\": 0.5653728780063545,\n   \"ap50_95\": 0.21770344433331207\n  }\n },\n \"previous_val_miss_analysis\": {\n  \"inclusion\": {\n   \"gt_instances\": 179,\n   \"recall\": 0.173,\n   \"missed\": 148,\n   \"misclassified_as\": {\n    \"patches\": 1,\n    \"scratches\": 0\n   },\n   \"false_positives_per_image\": 0.153,\n   \"train_median_size_px\": 90.5,\n   \"median_missed_size_px\": 34.7,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.075,\n     \"n\": 146\n    },\n    \"mid\": {\n     \"recall\": 0.556,\n     \"n\": 18\n    },\n    \"high\": {\n     \"recall\": 0.667,\n     \"n\": 15\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.18,\n     \"n\": 172\n    },\n    \"mid\": {\n     \"recall\": 0.0,\n     \"n\": 4\n    },\n    \"high\": {\n     \"recall\": 0.0,\n     \"n\": 3\n    }\n   }\n  },\n  \"patches\": {\n   \"gt_instances\": 150,\n   \"recall\": 0.613,\n   \"missed\": 58,\n   \"misclassified_as\": {\n    \"inclusion\": 0,\n    \"scratches\": 0\n   },\n   \"false_positives_per_image\": 0.1,\n   \"train_median_size_px\": 85.1,\n   \"median_missed_size_px\": 51.0,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.467,\n     \"n\": 90\n    },\n    \"mid\": {\n     \"recall\": 0.773,\n     \"n\": 22\n    },\n    \"high\": {\n     \"recall\": 0.868,\n     \"n\": 38\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.276,\n     \"n\": 29\n    },\n    \"mid\": {\n     \"recall\": 0.556,\n     \"n\": 36\n    },\n    \"high\": {\n     \"recall\": 0.753,\n     \"n\": 85\n    }\n   }\n  },\n  \"scratches\": {\n   \"gt_instances\": 104,\n   \"recall\": 0.538,\n   \"missed\": 48,\n   \"misclassified_as\": {\n    \"inclusion\": 0,\n    \"patches\": 0\n   },\n   \"false_positives_per_image\": 0.12,\n   \"train_median_size_px\": 73.3,\n   \"median_missed_size_px\": 41.6,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.403,\n     \"n\": 77\n    },\n    \"mid\": {\n     \"recall\": 0.947,\n     \"n\": 19\n    },\n    \"high\": {\n     \"recall\": 0.875,\n     \"n\": 8\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.444,\n     \"n\": 45\n    },\n    \"mid\": {\n     \"recall\": 0.659,\n     \"n\": 41\n    },\n    \"high\": {\n     \"recall\": 0.5,\n     \"n\": 18\n    }\n   }\n  }\n },\n \"allocated_so_far\": {\n  \"inclusion\": 0,\n  \"patches\": 0,\n  \"scratches\": 0\n },\n \"headroom_this_round\": {\n  \"inclusion\": 105,\n  \"patches\": 105,\n  \"scratches\": 105\n },\n \"default_params\": {\n  \"scale_min\": 0.6,\n  \"scale_max\": 1.4,\n  \"target_pool\": \"same_class\",\n  \"source_weighting\": \"uniform\",\n  \"max_overlap\": 0.15\n },\n \"quality_receipts\": {\n  \"inclusion\": {\n   \"candidates\": 0,\n   \"accepted\": 0,\n   \"rejects\": {}\n  },\n  \"patches\": {\n   \"candidates\": 0,\n   \"accepted\": 0,\n   \"rejects\": {}\n  },\n  \"scratches\": {\n   \"candidates\": 0,\n   \"accepted\": 0,\n   \"rejects\": {}\n  }\n },\n \"history\": []\n}\n\nCONSTRAINTS (checked by code; a violating plan is rejected):\n- Round 1 of 3. Allocate exactly 50 new images in total.\n- No class may exceed headroom_this_round: {\"inclusion\": 105, \"patches\": 105, \"scratches\": 105}.\n- Cumulative per-class total can never exceed 105; after the last round every class needs >= 10.\n- params, per class: 0.3 <= scale_min < scale_max <= 1.4, scale_max - scale_min >= 0.2; target_pool in ['same_class', 'any_class']; source_weighting in ['uniform', 'prefer_small', 'prefer_large']; 0.0 <= max_overlap <= 0.3.\n- scale multiplies the source defect size; scales above what fits the image are capped.\n- Respond with one JSON object only, schema:\n  {\"allocation\": {\"inclusion\": int, \"patches\": int, \"scratches\": int},\n   \"params\": {\"<class>\": {\"scale_min\": float, \"scale_max\": float, \"target_pool\": str,\n              \"source_weighting\": str, \"max_overlap\": float}, ... all three classes},\n   \"rationale\": \"short string\"}",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "any_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15
+    },
+    "patches": {
+     "scale_min": 0.4,
+     "scale_max": 0.9,
+     "target_pool": "any_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "any_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15
+    }
+   }
+  }
+ ],
+ "rationale": "Prioritize small, low-contrast missed instances: heavy inclusion augmentation with small scales and diverse backgrounds, plus targeted small patch and scratch samples.",
+ "observation": {
+  "round_index": 1,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.2011173184357542,
+    "precision": 0.5035672176805799,
+    "ap50": 0.1790301596087617,
+    "ap50_95": 0.057641538947687386
+   },
+   "patches": {
+    "recall": 0.6246737401872103,
+    "precision": 0.776303625878664,
+    "ap50": 0.7130651126351712,
+    "ap50_95": 0.4274352508298448
+   },
+   "scratches": {
+    "recall": 0.6057692307692307,
+    "precision": 0.7154626686396078,
+    "ap50": 0.5653728780063545,
+    "ap50_95": 0.21770344433331207
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.173,
+    "missed": 148,
+    "misclassified_as": {
+     "patches": 1,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.153,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 34.7,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.075,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.556,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.667,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.18,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.613,
+    "missed": 58,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.1,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 51.0,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.467,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.773,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.868,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.276,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.556,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.753,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.538,
+    "missed": 48,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.12,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.403,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.444,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.659,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.5,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 0,
+   "patches": 0,
+   "scratches": 0
+  },
+  "headroom_this_round": {
+   "inclusion": 105,
+   "patches": 105,
+   "scratches": 105
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   }
+  },
+  "history": []
+ }
+}

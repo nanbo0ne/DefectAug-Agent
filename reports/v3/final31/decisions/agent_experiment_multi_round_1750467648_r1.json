@@ -1,0 +1,571 @@
+{
+ "condition": "agent_experiment_multi_round",
+ "seed": 1750467648,
+ "round": 1,
+ "proposal": {
+  "inclusion": 25,
+  "patches": 12,
+  "scratches": 13
+ },
+ "final": {
+  "inclusion": 25,
+  "patches": 12,
+  "scratches": 13
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "patches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_experiment",
+ "calls": [
+  {
+   "step": "design1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 5587,
+    "prompt_tokens": 5533,
+    "total_tokens": 11120,
+    "prompt_tokens_details": {
+     "cached_tokens": 572
+    }
+   },
+   "reasoning_chars": 15862,
+   "elapsed_seconds": 129.94,
+   "content": "{\n  \"analysis\": \"Misses are dominated by small instances in every class: inclusion low-size recall 0.02 (146/179 val instances), scratches 0.31, patches 0.51; missed medians ~37-50px vs train medians ~73-90px. Missed inclusions look like small dark vertical streaks, which is exactly what the thin streak sources (100/106/131/268/277/50) become when downscaled. So round 1 tests three single-factor hypotheses against the lab's balanced default control: (1) shrink paste scale to 0.3-0.8 for all classes (scale hypothesis), (2) shift budget to the weakest class, inclusion 25/12/13 at default scale (allocation hypothesis), (3) paste onto any_class backgrounds for more texture diversity (background hypothesis). Whichever factor wins gets combined in round 2; caps (105/class) and the >=10/class floor leave ample room.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+  },
+  {
+   "step": "choose1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 2054,
+    "prompt_tokens": 8185,
+    "total_tokens": 10239,
+    "prompt_tokens_details": {
+     "cached_tokens": 5529
+    }
+   },
+   "reasoning_chars": 5414,
+   "elapsed_seconds": 61.93,
+   "content": "{\n  \"analysis\": \"C2 (inclusion-heavy 25/12/13 at default scale) won decisively: mAP50 0.6423 and best worst-class AP50 (inclusion 0.4604), so the allocation hypothesis is strongly confirmed — feeding the weakest class is the dominant lever. C1 (small scale 0.3-0.8, balanced) was a clear second (0.5911): small pastes lifted inclusion (+0.15) and scratches (+0.16) but less than allocation did, so the scale hypothesis is only partially confirmed. C3 (any_class backgrounds) failed (0.5034, scratches fell to 0.52), rejecting the background-diversity hypothesis — same_class backgrounds are better. Control (0.5601) shows any synthetic helps, but C2's targeted allocation is the real driver. C2 leads C1 by 0.051 mAP50, well outside the 0.005 tie band, so no worst-class tiebreak is needed.\",\n  \"choice\": 2,\n  \"lesson\": \"Allocation to the weakest class is the dominant lever: 25 inclusion images at default scale pushed inclusion AP50 to 0.46 and mAP50 to 0.642, beating both small-scale (C1) and any_class backgrounds (C3, which hurt scratches). Small scale (0.3-0.8) also helped inclusion and scratches, so next round combine heavy inclusion allocation WITH small scale and keep same_class backgrounds.\"\n}"
+  }
+ ],
+ "design_errors": [],
+ "lab_table": [
+  {
+   "candidate": 1,
+   "control": false,
+   "hypothesis": "Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.5911,
+    "map50_95": 0.2766,
+    "worst_class_ap50": 0.2916,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.2916,
+      "recall": 0.257,
+      "precision": 0.5976
+     },
+     "patches": {
+      "ap50": 0.7353,
+      "recall": 0.64,
+      "precision": 0.8139
+     },
+     "scratches": {
+      "ap50": 0.7464,
+      "recall": 0.7098,
+      "precision": 0.7953
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0913,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.15,
+    "patches": -0.0391,
+    "scratches": 0.1631
+   }
+  },
+  {
+   "candidate": 2,
+   "control": false,
+   "hypothesis": "Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 12,
+    "scratches": 13
+   },
+   "val": {
+    "map50": 0.6423,
+    "map50_95": 0.2961,
+    "worst_class_ap50": 0.4604,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4604,
+      "recall": 0.4469,
+      "precision": 0.5867
+     },
+     "patches": {
+      "ap50": 0.7477,
+      "recall": 0.6933,
+      "precision": 0.843
+     },
+     "scratches": {
+      "ap50": 0.719,
+      "recall": 0.6827,
+      "precision": 0.6683
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.1425,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.3188,
+    "patches": -0.0267,
+    "scratches": 0.1357
+   }
+  },
+  {
+   "candidate": 3,
+   "control": false,
+   "hypothesis": "Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.5034,
+    "map50_95": 0.2455,
+    "worst_class_ap50": 0.2775,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.2775,
+      "recall": 0.2399,
+      "precision": 0.6613
+     },
+     "patches": {
+      "ap50": 0.7104,
+      "recall": 0.6533,
+      "precision": 0.8042
+     },
+     "scratches": {
+      "ap50": 0.5223,
+      "recall": 0.5673,
+      "precision": 0.6197
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0036,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.1359,
+    "patches": -0.064,
+    "scratches": -0.061
+   }
+  },
+  {
+   "candidate": 4,
+   "control": true,
+   "hypothesis": "CONTROL (added by the lab): default generation recipe, balanced allocation.",
+   "allocation_reached": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "val": {
+    "map50": 0.5601,
+    "map50_95": 0.2602,
+    "worst_class_ap50": 0.2581,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.2581,
+      "recall": 0.2402,
+      "precision": 0.5744
+     },
+     "patches": {
+      "ap50": 0.791,
+      "recall": 0.6533,
+      "precision": 0.8948
+     },
+     "scratches": {
+      "ap50": 0.6311,
+      "recall": 0.6442,
+      "precision": 0.6787
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0603,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.1165,
+    "patches": 0.0166,
+    "scratches": 0.0478
+   }
+  }
+ ],
+ "argmax_map50": 2,
+ "candidates": [
+  {
+   "hypothesis": "Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 12,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "CONTROL (added by the lab): default generation recipe, balanced allocation.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "control": true,
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "kept": 2,
+ "lesson": "Allocation to the weakest class is the dominant lever: 25 inclusion images at default scale pushed inclusion AP50 to 0.46 and mAP50 to 0.642, beating both small-scale (C1) and any_class backgrounds (C3, which hurt scratches). Small scale (0.3-0.8) also helped inclusion and scratches, so next round combine heavy inclusion allocation WITH small scale and keep same_class backgrounds.",
+ "extra_trainings": 3,
+ "observation": {
+  "round_index": 1,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.1452513966480447,
+    "precision": 0.4592148738569847,
+    "ap50": 0.14156967737207363,
+    "ap50_95": 0.04996183395275692
+   },
+   "patches": {
+    "recall": 0.7056231031427361,
+    "precision": 0.8279131545503832,
+    "ap50": 0.7744112965027369,
+    "ap50_95": 0.42899760677354604
+   },
+   "scratches": {
+    "recall": 0.5489017953020595,
+    "precision": 0.6407921566498445,
+    "ap50": 0.5832791323232429,
+    "ap50_95": 0.2321505613202987
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.101,
+    "missed": 161,
+    "misclassified_as": {
+     "patches": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.14,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 37.4,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.021,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.389,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.533,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.105,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.66,
+    "missed": 51,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.1,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 50.1,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.511,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.818,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.921,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.31,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.611,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.8,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.471,
+    "missed": 55,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.127,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.312,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.267,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.561,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.778,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 0,
+   "patches": 0,
+   "scratches": 0
+  },
+  "headroom_this_round": {
+   "inclusion": 105,
+   "patches": 105,
+   "scratches": 105
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   }
+  },
+  "history": []
+ }
+}

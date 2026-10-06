@@ -1,0 +1,8 @@
+path: D:/AI Paper/DefectAug-Agent-GG38
+train: D:/AI Paper/DefectAug-Agent-GG38/data/synthetic/v3/dev32/agent_coder_ds_trial_3_112058642/train_manifest_r2.txt
+val: D:/AI Paper/DefectAug-Agent-GG38/data/splits/v3/val.txt
+test: D:/AI Paper/DefectAug-Agent-GG38/data/splits/v3/test.txt
+names:
+  0: inclusion
+  1: patches
+  2: scratches

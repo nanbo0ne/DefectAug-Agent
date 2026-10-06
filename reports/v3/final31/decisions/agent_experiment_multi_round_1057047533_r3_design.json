@@ -1,0 +1,136 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Missed inclusions (median 34px, 146/179 in low tertile) are small vertical dark streaks/blobs; the large irregular source 99 is a poor match. Restricting inclusion pastes to the 8 small/vertical sources (11, 150, 50, 268, 277, 100, 106, 131) at the proven 0.3-0.7 scale should lift inclusion AP50 above ~0.40 and mAP above 0.625; if inclusion AP stays ~0.38, appearance-matched source selection is not the lever.",
+   "allocation": {
+    "inclusion": 24,
+    "patches": 13,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": [
+      "inclusion_11",
+      "inclusion_150",
+      "inclusion_50",
+      "inclusion_268",
+      "inclusion_277",
+      "inclusion_100",
+      "inclusion_106",
+      "inclusion_131"
+     ]
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "R2 tested 0.3-0.5 with balanced allocation (0.6205) and 0.3-0.7 with heavy allocation (0.625) separately; the missing cell is 0.3-0.5 + heavy. Since missed inclusions center at ~34px (0.3-0.5 of ~90px sources = 27-45px), tightening the inclusion scale band while keeping the proven 24/13/13 allocation should raise inclusion AP50 toward 0.40+; if it merely ties the control, 0.3-0.7 was already the sweet spot and scale is not the remaining inclusion lever.",
+   "allocation": {
+    "inclusion": 24,
+    "patches": 13,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.5,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Missed patches (49px vs 85px train median) and scratches (40px vs 73px) are also systematically smaller than what uniform-source pastes produce, so biasing both classes toward smaller sources (prefer_small) at the proven 0.3-0.7 scale should improve their low-tertile recall and lift patches/scratches AP50 above 0.785/0.705 without touching the proven inclusion recipe; if either class drops by >0.03, small-source bias is harmful and uniform weighting stays.",
+   "allocation": {
+    "inclusion": 24,
+    "patches": 13,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Final round. Kept backbone (R2 C2, mAP 0.625): 24/13/13 inclusion-heavy, same_class, 0.3-0.7, max_overlap 0.15. Miss analysis shows a consistent cross-class signal: missed instances are systematically smaller than train medians (inclusion 34 vs 90px, patches 49 vs 85px, scratches 40 vs 73px) and low-tertile recall is worst for inclusion (0.219, n=146). Proven: small scale, same_class, inclusion-heavy. Refuted: any_class backgrounds, scratch mid-scale 0.5-1.0. Untested: source-size bias and appearance-matched source selection. All 3 candidates keep the proven backbone and change one factor each: (1) inclusion pastes restricted to the small vertical streak/blob sources that visually match the missed inclusions (excluding the large irregular 99); (2) the missing 2x2 cell — inclusion 0.3-0.5 (27-45px, tightest match to the 34px missed band) combined with the proven heavy allocation; (3) prefer_small source weighting for patches and scratches to push their pastes into the missed size band. Control (repeat of kept plan) is the baseline to beat.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Missed inclusions (median 34px, 146/179 in low tertile) are small vertical dark streaks/blobs; the large irregular source 99 is a poor match. Restricting inclusion pastes to the 8 small/vertical sources (11, 150, 50, 268, 277, 100, 106, 131) at the proven 0.3-0.7 scale should lift inclusion AP50 above ~0.40 and mAP above 0.625; if inclusion AP stays ~0.38, appearance-matched source selection is not the lever.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [11, 150, 50, 268, 277, 100, 106, 131]},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"R2 tested 0.3-0.5 with balanced allocation (0.6205) and 0.3-0.7 with heavy allocation (0.625) separately; the missing cell is 0.3-0.5 + heavy. Since missed inclusions center at ~34px (0.3-0.5 of ~90px sources = 27-45px), tightening the inclusion scale band while keeping the proven 24/13/13 allocation should raise inclusion AP50 toward 0.40+; if it merely ties the control, 0.3-0.7 was already the sweet spot and scale is not the remaining inclusion lever.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.5, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Missed patches (49px vs 85px train median) and scratches (40px vs 73px) are also systematically smaller than what uniform-source pastes produce, so biasing both classes toward smaller sources (prefer_small) at the proven 0.3-0.7 scale should improve their low-tertile recall and lift patches/scratches AP50 above 0.785/0.705 without touching the proven inclusion recipe; if either class drops by >0.03, small-source bias is harmful and uniform weighting stays.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 9049,
+     "prompt_tokens": 9456,
+     "total_tokens": 18505,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 23444,
+    "elapsed_seconds": 277.07,
+    "content": "{\n  \"analysis\": \"Final round. Kept backbone (R2 C2, mAP 0.625): 24/13/13 inclusion-heavy, same_class, 0.3-0.7, max_overlap 0.15. Miss analysis shows a consistent cross-class signal: missed instances are systematically smaller than train medians (inclusion 34 vs 90px, patches 49 vs 85px, scratches 40 vs 73px) and low-tertile recall is worst for inclusion (0.219, n=146). Proven: small scale, same_class, inclusion-heavy. Refuted: any_class backgrounds, scratch mid-scale 0.5-1.0. Untested: source-size bias and appearance-matched source selection. All 3 candidates keep the proven backbone and change one factor each: (1) inclusion pastes restricted to the small vertical streak/blob sources that visually match the missed inclusions (excluding the large irregular 99); (2) the missing 2x2 cell — inclusion 0.3-0.5 (27-45px, tightest match to the 34px missed band) combined with the proven heavy allocation; (3) prefer_small source weighting for patches and scratches to push their pastes into the missed size band. Control (repeat of kept plan) is the baseline to beat.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Missed inclusions (median 34px, 146/179 in low tertile) are small vertical dark streaks/blobs; the large irregular source 99 is a poor match. Restricting inclusion pastes to the 8 small/vertical sources (11, 150, 50, 268, 277, 100, 106, 131) at the proven 0.3-0.7 scale should lift inclusion AP50 above ~0.40 and mAP above 0.625; if inclusion AP stays ~0.38, appearance-matched source selection is not the lever.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [11, 150, 50, 268, 277, 100, 106, 131]},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"R2 tested 0.3-0.5 with balanced allocation (0.6205) and 0.3-0.7 with heavy allocation (0.625) separately; the missing cell is 0.3-0.5 + heavy. Since missed inclusions center at ~34px (0.3-0.5 of ~90px sources = 27-45px), tightening the inclusion scale band while keeping the proven 24/13/13 allocation should raise inclusion AP50 toward 0.40+; if it merely ties the control, 0.3-0.7 was already the sweet spot and scale is not the remaining inclusion lever.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.5, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Missed patches (49px vs 85px train median) and scratches (40px vs 73px) are also systematically smaller than what uniform-source pastes produce, so biasing both classes toward smaller sources (prefer_small) at the proven 0.3-0.7 scale should improve their low-tertile recall and lift patches/scratches AP50 above 0.785/0.705 without touching the proven inclusion recipe; if either class drops by >0.03, small-source bias is harmful and uniform weighting stays.\",\n      \"allocation\": {\"inclusion\": 24, \"patches\": 13, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

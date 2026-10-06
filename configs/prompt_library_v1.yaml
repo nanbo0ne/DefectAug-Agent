@@ -1,0 +1,22 @@
+base: >-
+  Keep the hot-rolled steel surface, illumination, camera viewpoint, grayscale tone,
+  and all content outside the supplied mask unchanged. Replace only the masked region
+  with one realistic {class_description} defect. The defect must follow the original
+  surface texture, scale and lighting, with natural boundaries and no text, symbols,
+  extra objects, frames, seams or repeated patterns.
+
+classes:
+  inclusion:
+    description: dark irregular non-metallic inclusion embedded in the steel, with short spots or streaks
+    allowed_modifiers: [faint, medium_contrast, strong, compact, short_streak]
+  patches:
+    description: irregular mottled patch defect with broad but natural material variation
+    allowed_modifiers: [faint, medium_contrast, strong, compact, broad]
+  scratches:
+    description: narrow elongated abrasion groove following the steel surface
+    allowed_modifiers: [faint, medium_contrast, strong, horizontal, vertical, diagonal]
+
+negative: >-
+  text, letters, symbols, watermark, frame, border, seam, collage, repeated pattern,
+  colored object, foreign object, changed background, changed illumination
+

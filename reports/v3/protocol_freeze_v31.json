@@ -1,0 +1,47 @@
+{
+ "frozen_at": "2026-10-04T15:39:53+0800",
+ "protocol": "configs/experiment_v31.yaml",
+ "protocol_sha256": "d52180d91c9aa70e9e309ac2e1a28a5bdc3488e281946aa553cf02c978b0c461",
+ "code_sha256": {
+  "configs/experiment_v3.yaml": "159374d192ac56bda8fd0dd0704b64a94cbb703dee39363149364d4f8b0ff953",
+  "src/defectaug/gen_params.py": "bd59ec43d192c2514618756c5ed8e8a023f05a40c7006e10243d5a7447cc14a4",
+  "src/defectaug/allocation.py": "f0c00752479b7f054dc42ad567e5e4bb78308e5c81fae2edffd1c16aef083df1",
+  "src/defectaug/policy.py": "b4650542fae5ad0476d01637c25814102015156c15d51c8a04eb214fa31bc847",
+  "src/defectaug/patch_copy.py": "b0f11df619fbbbc33b3a4fd79ffc1b33396bf0327215396c98d848fe68bc5f0f",
+  "src/defectaug/data_lock.py": "2aee70b2e939a4649f7141ae9383f75c2a0977d4bedca7de335dd15a0e122e6d",
+  "src/defectaug/test_access.py": "e55a2777d61d7746a0b00d1227b8347f383f70f195bf57d29f3bc51c1c17dffd",
+  "src/defectaug/vision_agent.py": "1032ffec064ed1c9dd555e490f5da0e1c98fe95a50e8d4e3b77e3c9f2f9d8377",
+  "src/defectaug/vision_tools.py": "6c2b776f2e6781d07662a59a68a0284475f5dd0e5bb090d5479707905cbf8687",
+  "scripts/run_conditions_v3.py": "0c0f506407586c979f186ee62d71ac3fcfa9fde434de35968f5e6fb99504381f",
+  "scripts/run_conditions_v31.py": "49f64d6e49d921b13c036261f8bf0513b07c4cbc18c715269e9080c71b9a257e",
+  "scripts/run_conditions_v31e.py": "c90d2206277053e3f8a02a28f8ae8a9b7a4ab2b2b64d69fc38624a00b0f693c4",
+  "scripts/run_synth_generation_v3.py": "3c64c5b2ec8becb5d1153d82ec159d79011ac0db589c2864491410217c937671",
+  "scripts/run_synth_generation_v31.py": "c798835d218101a951acfaacd1c8c170f8d538fd6c86120adc3411da5e1e1749",
+  "scripts/val_miss_analysis_v3.py": "516c6e39db467f9a4146fd191bf24c6a939f229761f50e47f8646837888d768e",
+  "scripts/val_miss_analysis_v31.py": "c9a362954ffe1cf2a82b9ff1b341b641963f3ce491465e772038974f454652b7",
+  "scripts/build_synth_dataset.py": "43a83ed7574539ddd3b6366883185fc8d2f77c47153c0108d16d486153557d80",
+  "scripts/train_yolo.py": "d20c52b1c6964aff85ae508c36b82ed3057b984b9ac4ddce94fe402172fc006d",
+  "scripts/evaluate_yolo.py": "2c03a49d381d5e19acb566d0d539d26964509d71c37275d93a2623d5a9a4c767",
+  "scripts/agent_decide.py": "9557e4dc3278b49bda9247c913f5c937fbdc8fbb46aa27fbe843993a18708bc2",
+  "data/splits/v3/train_fewshot.txt": "4069e82e845b3bfe9a57c96a6a6db5b921310ef8e12eecc1369c0c4b703719f5",
+  "data/splits/v3/val.txt": "f294a33d48aca86afd9490822fb09b54bfa1b2467ecd27d630b62e23449462e2",
+  "data/splits/v3/test.txt": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+  "data/manifests/dataset_content_lock_v3.json": "18c3b8f052e70837e5784b0ca1fdf478c6dc632206d36965f55db6d3ddbdae5b",
+  "data/manifests/dataset_content_lock_realmatch_v3.json": "20a59a9bc8da28bbf04f6e51c572656eeaca09b3c41fd6c56166d3b8b2e1ae64",
+  "requirements-lock-v31.txt": "0d758d3510030f473033d0988ac622912976e13b0afd80758cc0c62e128d2d62",
+  "yolo11n.pt": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "at": "2026-10-04T15:47:13+0800",
+   "change": "agent_experiment_policy.parallel_trainings 4 -> 1 (also: launcher runs per-seed tasks on 3 workers)",
+   "reason": "execution host RAM: one training commits ~22 GB (main 9.3 GB + 9 loader workers), other processes ~40 GB, commit limit 109 GB, so 4 concurrent trainings would exhaust commit. Execution-only: a single training's result does not depend on how many run concurrently.",
+   "outcomes_existing_at_amendment": [
+    "final31 real_only s1057047533 val (independent of this parameter)"
+   ],
+   "protocol_sha256_before": "c98ce92c2b19688057d5318a8e675998aef8def5631843435ed240710e057788",
+   "protocol_sha256_after": "d52180d91c9aa70e9e309ac2e1a28a5bdc3488e281946aa553cf02c978b0c461"
+  }
+ ]
+}

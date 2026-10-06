@@ -1,0 +1,222 @@
+experiment:
+  id: defectaug_sd900_v1
+  research_title_zh: 面向小样本目标检测的检测器反馈闭环智能体数据增强方法
+  research_title_en: Detector-Feedback Closed-Loop Agentic Data Augmentation for Few-Shot Object Detection
+  validation_domain: long_tailed_few_shot_industrial_defect_detection
+  protocol_version: 0.2
+  status: frozen_final
+  seed_split: 20260820
+  final_seeds: [20260820, 20260821, 20260822]
+
+dataset:
+  yaml: configs/dataset_sd900_3class_v1.yaml
+  content_lock: data/manifests/dataset_content_lock_v1.json
+  classes: [inclusion, patches, scratches]
+  real_fewshot_images:
+    inclusion: 10
+    patches: 30
+    scratches: 60
+  val_images_per_primary_class: 50
+  test_images_per_primary_class: 50
+  test_locked: true
+  generation_sources: train_fewshot_only
+
+detector:
+  package: ultralytics
+  package_version: 8.4.123
+  model: yolo11n.pt
+  task: detect
+  imgsz: 640
+  final_epochs: 100
+  proxy_epochs: 30
+  batch: 16
+  device: 0
+  workers: 4
+  deterministic: true
+  early_stopping: false
+  pretrained_start_each_final_run: true
+  pretrained_sha256: 0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1
+  optimizer: SGD
+  lr0: 0.01
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  amp: true
+
+generation:
+  accepted_budget_total: 150
+  agent_rounds: 3
+  accepted_budget_per_round: 50
+  fairness_unit: accepted_images
+  # The accepted budget remains the primary comparison unit, but every method
+  # also receives the same finite candidate ceiling.  A condition that cannot
+  # reach B within this ceiling fails the frozen generation protocol.
+  candidate_budget_total_max: 450
+  candidate_budget_per_round_max: 150
+  candidate_budget_equal_ceiling_across_methods: true
+  candidate_budget_is_reported: true
+  max_candidates_per_source: 12
+  # Eight keeps the pilot formula's possible 70/150 Inclusion allocation
+  # feasible with ten Inclusion sources while still preventing one-source
+  # domination.
+  max_accepted_derivatives_per_source: 8
+  source_selection: deterministic_round_robin
+  controlled_candidates: [patch_copy_gauss5]
+  # Frozen 2026-09-19: real-defect mask-guided Copy-Paste + ring-5 Gaussian
+  # boundary feather.  See docs/14_正式生成工具与自动审核决策_v1.md.
+  formal_generator: patch_copy_gauss5
+  # Filled only after the three-class confirmation.  Values are Agent tool IDs;
+  # once present, validate_agent_plan.py rejects any different tool choice.
+  formal_tools_by_class:
+    inclusion: patch_copy_gauss5
+    patches: patch_copy_gauss5
+    scratches: patch_copy_gauss5
+  fast_gate_only: qwen_rapid_aio_v18
+  source_mode: same_location_same_class_resynthesis
+  preserve_outside_mask_by_hard_composite: true
+  prompt_library: configs/prompt_library_v1.yaml
+  pilot:
+    # Scratches is an engineering gate for getting both pipelines runnable.  It
+    # is not representative enough to freeze the formal generator by itself.
+    engineering_class: scratches
+    purpose: engineering_gate_only
+    source_manifest: data/manifests/pilot_scratches_v1.csv  # legacy source-only list
+    frozen_job_manifest: data/manifests/generation_jobs_scratch_gate_v1.csv
+    frozen_job_manifest_sha256: 72b32055f4dd18d982c57fa4898e6ac2120d206f1a4131e9742f151377a995a2
+    sources_per_generator: 10
+    seeds_per_source: 3
+    candidates_per_generator: 30
+    replenish_rejections: false
+    blind_human_review: true
+  three_class_confirmation:
+    required_before_generator_freeze: true
+    classes: [inclusion, patches, scratches]
+    frozen_job_manifest: data/manifests/generation_jobs_three_class_confirmation_v1.csv
+    frozen_job_manifest_sha256: 2aa36699efcf7bd8b94a7f59ef686d8cb6bd088e404e6a052a83a12982a6b85d
+    sources_per_class: 5
+    seeds_per_source: 2
+    candidates_per_class_per_generator: 10
+    candidates_per_generator: 30
+    replenish_rejections: false
+    blind_human_review: true
+    selection_metrics: [macro_mean_valid_candidate_rate, worst_class_valid_candidate_rate]
+    # A class-specific generator/tool mapping is allowed only if it is frozen
+    # here and then shared unchanged by Uniform, Formula and Agent conditions.
+    class_tool_mapping_shared_across_methods: true
+
+formula_policy:
+  recall_weight: 0.50
+  ap50_weight: 0.30
+  rarity_weight: 0.20
+  minimum_per_class: 10
+  maximum_fraction_per_class: 0.70
+  allocation: largest_remainder
+  rounds: 1
+
+formula_multiround_policy:
+  # Same transparent formula, recomputed after each proxy-validation round.
+  # This isolates the benefit of repeated feedback from the benefit of an LLM.
+  recall_weight: 0.50
+  ap50_weight: 0.30
+  rarity_weight: 0.20
+  minimum_per_active_class: 0
+  maximum_fraction_per_class: 0.70
+  allocation: largest_remainder
+  rounds: 3
+  accepted_budget_per_round: 50
+
+optimization_exposure_control:
+  enabled: true
+  condition: real_only_repeat_matched
+  target_train_rows: 250  # 100 real rows + B=150 synthetic rows
+  construction: deterministic_cyclic_repeat_of_real_rows
+  same_epochs_as_augmented_conditions: true
+  train_manifest: data/splits/v1/train_fewshot_repeat_matched.txt
+  train_manifest_sha256: 56a557a45f0dd99393dddf9803253926cc3a37813a12be0025517d68a3fc1077
+  dataset_yaml: configs/dataset_sd900_3class_realmatch_v1.yaml
+  content_lock: data/manifests/dataset_content_lock_realmatch_v1.json
+  content_lock_sha256: 317da3b03c808e6e4f1541d7eab67ad42f2d0924602cdc09a1510abb739fe6e2
+
+agent_policy:
+  round_budget: 50
+  total_budget: 150
+  rounds: 3
+  final_minimum_per_class: 10
+  maximum_fraction_per_class: 0.70
+  max_seeds_per_action: 3
+  max_retries_per_seed: 2
+  implemented_tools: [patch_copy_gauss5]
+
+final_test_access:
+  enabled: true
+  required_experiment_status: frozen_final
+  unlock_token: FINAL_TEST_EVALUATION
+  audit_log: reports/test_access_audit.jsonl
+
+quality_control:
+  # During the engineering gate, automatic measurements are diagnostics rather
+  # than acceptance thresholds.  Corruption, empty masks, hash mismatches and
+  # nonzero composite changes outside the mask remain hard invariants in code.
+  status: calibrate_in_pilot_then_freeze
+  thresholds_enforced: false
+  outside_mask_changed_pixel_fraction_max: 0.0
+  inside_mask_changed_pixel_fraction_min: null
+  changed_region_mask_iou_min: null
+  # Calibrated on the raw generator output.  The changed-region IoU is only a
+  # diagnostic after hard compositing because it then degenerates toward
+  # inside-mask coverage.
+  raw_output_metrics_required: true
+  composite_metrics_required: true
+  boundary_seam_excess_max: null
+  source_mask_xml_iou_min: 0.50
+  semantic_auto_acceptance_threshold: null
+  class_semantic_score_min: null
+  material_consistency_score_min: null
+  label_alignment_score_min: null
+  perceptual_near_duplicate_threshold: null
+  # Amended 2026-09-19 per project-owner decision: the operational loop is
+  # fully automatic.  Sample quality is judged by hard code invariants plus
+  # downstream detector utility, not by human review.  Labels are derived
+  # from transformed real masks, so no manual annotation is required.
+  # See docs/14_正式生成工具与自动审核决策_v1.md.
+  pilot_human_review_fraction: 0.0
+  formal_accepted_human_review_fraction: 0.0
+  formal_blinded_human_review: false
+  formal_second_reviewer_fraction: 0.0
+  formal_second_reviewer_sampling: none
+  reviewer_disagreement_requires_adjudication: false
+
+conditions:
+  main:
+    - real_only
+    - formula_one_shot
+    - agent_multi_round
+  required_scientific_control:
+    - uniform_fixed
+    - formula_multi_round
+    - real_only_repeat_matched
+  reference_only:
+    - full_real_upper_bound
+
+reporting:
+  detector_metrics:
+    - map50
+    - map50_95
+    - macro_recall
+    - macro_precision
+    - per_class_ap50
+    - per_class_recall
+    - worst_class_ap50
+    - class_ap50_std
+  system_metrics:
+    - candidate_images
+    - accepted_images
+    - rejection_rate
+    - label_correction_rate
+    - generation_seconds_per_accepted_image
+    - proxy_training_seconds
+    - final_training_seconds
+    - peak_vram_mib
+    - agent_tokens
+    - agent_cost_cny

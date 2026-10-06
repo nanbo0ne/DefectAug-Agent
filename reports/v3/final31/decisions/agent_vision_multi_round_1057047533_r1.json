@@ -1,0 +1,379 @@
+{
+ "condition": "agent_vision_multi_round",
+ "seed": 1057047533,
+ "round": 1,
+ "proposal": {
+  "inclusion": 20,
+  "patches": 15,
+  "scratches": 15
+ },
+ "final": {
+  "inclusion": 20,
+  "patches": 15,
+  "scratches": 15
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 1.0,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "inclusion_11",
+    "inclusion_150",
+    "inclusion_268",
+    "inclusion_277",
+    "inclusion_50",
+    "inclusion_100",
+    "inclusion_106",
+    "inclusion_131"
+   ]
+  },
+  "patches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_vision",
+ "calls": [
+  {
+   "step": "plan1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 4918,
+    "prompt_tokens": 4341,
+    "total_tokens": 9259,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 15110,
+   "elapsed_seconds": 426.53,
+   "content": "{\n  \"analysis\": \"Misses are dominated by the small-size tertile in every class (inclusion low-tertile recall 0.034, patches 0.344, scratches 0.338) and by low contrast. Missed medians (37/51/42 px) are far below train medians (90/85/73 px), so the model simply has not seen small defects. Inclusion is the weakest class (recall 0.19, 158/179 missed; thin faint vertical streaks and dots). Scratches also show low precision (0.47, 0.22 FP/img) and miss thin short lines. Patches are healthiest but still miss small dark blobs. No prior rounds, so start from the size gap.\",\n  \"allocation\": {\"inclusion\": 20, \"patches\": 15, \"scratches\": 15},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 1.00, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 150, 268, 277, 50, 100, 106, 131]},\n    \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n  },\n  \"rationale\": \"Redirect synthetic mass to the small-defect regime the model misses: prefer_small sources plus sub-1.0 scales yield pastes near the missed sizes (inclusion 0.3-1.0 also covers the weak mid tertile). Inclusion gets the largest share (20) as the worst class, with sources chosen to match the missed thin streaks/dots (excluding the bright-on-white 287 and blob-like 99). Patches and scratches get 15 each to lift small-defect recall without starving the shared detector; any_class backgrounds add texture diversity.\"\n}"
+  },
+  {
+   "step": "revise1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 2494,
+    "prompt_tokens": 5350,
+    "total_tokens": 7844,
+    "prompt_tokens_details": {
+     "cached_tokens": 4337
+    }
+   },
+   "reasoning_chars": 7139,
+   "elapsed_seconds": 251.65,
+   "content": "The preview matches the missed defects well: inclusions are thin, faint streaks (vertical and horizontal) at small-to-medium scale, matching the missed thin streaks/dots; patches are compact dark blobs at small scale, matching the missed small dark patches; scratches are thin lines (bright and dark, vertical and horizontal) at small scale, matching the missed thin lines. Sizes sit in the small regime the model currently fails on, and the pastes look realistic on the steel backgrounds. No class is starved or over-allocated. Repeating the same plan.\n\n{\n  \"analysis\": \"Preview confirms the plan: inclusion pastes are thin faint streaks (small scale) matching the missed thin streaks/dots; patches are compact dark blobs at small scale matching missed small patches; scratches are thin lines at small scale matching missed thin lines. Sizes land in the small tertile the model misses; looks are realistic. No revision needed.\",\n  \"allocation\": {\"inclusion\": 20, \"patches\": 15, \"scratches\": 15},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 1.00, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 150, 268, 277, 50, 100, 106, 131]},\n    \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n  },\n  \"rationale\": \"Preview pastes look right in size and appearance for all three classes and target the small-defect gap. Inclusion gets the largest share (20) as the worst class with sources matching the missed thin streaks/dots; patches and scratches get 15 each to lift small-defect recall without starving the shared detector. Keeping the same plan.\"\n}"
+  }
+ ],
+ "plans": [
+  {
+   "step": "plan",
+   "plan": {
+    "analysis": "Misses are dominated by the small-size tertile in every class (inclusion low-tertile recall 0.034, patches 0.344, scratches 0.338) and by low contrast. Missed medians (37/51/42 px) are far below train medians (90/85/73 px), so the model simply has not seen small defects. Inclusion is the weakest class (recall 0.19, 158/179 missed; thin faint vertical streaks and dots). Scratches also show low precision (0.47, 0.22 FP/img) and miss thin short lines. Patches are healthiest but still miss small dark blobs. No prior rounds, so start from the size gap.",
+    "allocation": {
+     "inclusion": 20,
+     "patches": 15,
+     "scratches": 15
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 1.0,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       150,
+       268,
+       277,
+       50,
+       100,
+       106,
+       131
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "rationale": "Redirect synthetic mass to the small-defect regime the model misses: prefer_small sources plus sub-1.0 scales yield pastes near the missed sizes (inclusion 0.3-1.0 also covers the weak mid tertile). Inclusion gets the largest share (20) as the worst class, with sources chosen to match the missed thin streaks/dots (excluding the bright-on-white 287 and blob-like 99). Patches and scratches get 15 each to lift small-defect recall without starving the shared detector; any_class backgrounds add texture diversity."
+   }
+  },
+  {
+   "step": "revise",
+   "plan": {
+    "analysis": "Preview confirms the plan: inclusion pastes are thin faint streaks (small scale) matching the missed thin streaks/dots; patches are compact dark blobs at small scale matching missed small patches; scratches are thin lines at small scale matching missed thin lines. Sizes land in the small tertile the model misses; looks are realistic. No revision needed.",
+    "allocation": {
+     "inclusion": 20,
+     "patches": 15,
+     "scratches": 15
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 1.0,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       150,
+       268,
+       277,
+       50,
+       100,
+       106,
+       131
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "rationale": "Preview pastes look right in size and appearance for all three classes and target the small-defect gap. Inclusion gets the largest share (20) as the worst class with sources matching the missed thin streaks/dots; patches and scratches get 15 each to lift small-defect recall without starving the shared detector. Keeping the same plan."
+   }
+  }
+ ],
+ "revised": false,
+ "observation": {
+  "round_index": 1,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.18994413407821228,
+    "precision": 0.5446577584609691,
+    "ap50": 0.1835137041776933,
+    "ap50_95": 0.07268037680698833
+   },
+   "patches": {
+    "recall": 0.64,
+    "precision": 0.8064841350314966,
+    "ap50": 0.7442735013111474,
+    "ap50_95": 0.4259423434522108
+   },
+   "scratches": {
+    "recall": 0.5192307692307693,
+    "precision": 0.4736696784671613,
+    "ap50": 0.5250674979747733,
+    "ap50_95": 0.2084913138479912
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.117,
+    "missed": 158,
+    "misclassified_as": {
+     "patches": 0,
+     "scratches": 1
+    },
+    "false_positives_per_image": 0.093,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 37.1,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.034,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.333,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.667,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.122,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.533,
+    "missed": 70,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.073,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 51.2,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.344,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.864,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.789,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.31,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.444,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.647,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.5,
+    "missed": 52,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.22,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.338,
+      "n": 77
+     },
+     "mid": {
+      "recall": 1.0,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.289,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.659,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.667,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 0,
+   "patches": 0,
+   "scratches": 0
+  },
+  "headroom_this_round": {
+   "inclusion": 105,
+   "patches": 105,
+   "scratches": 105
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   }
+  },
+  "history": []
+ }
+}

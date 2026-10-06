@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 12,
+    "scratches": 13
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Misses are dominated by small instances in every class: inclusion low-size recall 0.02 (146/179 val instances), scratches 0.31, patches 0.51; missed medians ~37-50px vs train medians ~73-90px. Missed inclusions look like small dark vertical streaks, which is exactly what the thin streak sources (100/106/131/268/277/50) become when downscaled. So round 1 tests three single-factor hypotheses against the lab's balanced default control: (1) shrink paste scale to 0.3-0.8 for all classes (scale hypothesis), (2) shift budget to the weakest class, inclusion 25/12/13 at default scale (allocation hypothesis), (3) paste onto any_class backgrounds for more texture diversity (background hypothesis). Whichever factor wins gets combined in round 2; caps (105/class) and the >=10/class floor leave ample room.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 5587,
+     "prompt_tokens": 5533,
+     "total_tokens": 11120,
+     "prompt_tokens_details": {
+      "cached_tokens": 572
+     }
+    },
+    "reasoning_chars": 15862,
+    "elapsed_seconds": 129.94,
+    "content": "{\n  \"analysis\": \"Misses are dominated by small instances in every class: inclusion low-size recall 0.02 (146/179 val instances), scratches 0.31, patches 0.51; missed medians ~37-50px vs train medians ~73-90px. Missed inclusions look like small dark vertical streaks, which is exactly what the thin streak sources (100/106/131/268/277/50) become when downscaled. So round 1 tests three single-factor hypotheses against the lab's balanced default control: (1) shrink paste scale to 0.3-0.8 for all classes (scale hypothesis), (2) shift budget to the weakest class, inclusion 25/12/13 at default scale (allocation hypothesis), (3) paste onto any_class backgrounds for more texture diversity (background hypothesis). Whichever factor wins gets combined in round 2; caps (105/class) and the >=10/class floor leave ample room.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Scale hypothesis: the near-zero recall on small instances means the detector has never seen small pastes; generating small pastes (0.3-0.8x) for all classes should raise low-size recall and mAP, especially for inclusion. Confirmed if C1 beats control, with the largest gain in inclusion AP50.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation hypothesis: inclusion is far behind (AP50 0.14 vs 0.77/0.58), so concentrating budget on it (25 images) at default scale should lift overall mAP more than a balanced split. Confirmed if C2 beats control and C1 on inclusion AP50 without collapsing the other classes.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 12, \"scratches\": 13},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Background hypothesis: pasting defects onto any_class backgrounds exposes the detector to more surface texture diversity (e.g., inclusions on scratch-textured plates), improving generalization at default scale. Confirmed if C3 beats control with no class dropping; if inclusion drops, cross-class backgrounds are harmful for it.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

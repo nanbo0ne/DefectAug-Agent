@@ -1,0 +1,80 @@
+protocol:
+  id: real_only_final_v1
+  purpose: formal_real_only_group_before_locked_final_test
+  created_at: 2026-08-25
+  status: frozen_for_train_and_validation
+
+data:
+  train_split: train_fewshot
+  train_images: 100
+  train_class_counts:
+    inclusion: 10
+    patches: 30
+    scratches: 60
+  validation_split: val
+  validation_images: 150
+  validation_images_per_primary_class: 50
+  test_in_bundle: false
+  source_content_lock_sha256: e00ffcb9f53cd9fff646dc3973767d43979ee6a9527ad2d73d51ff5f936e3599
+  generated_portable_yaml: configs/dataset_real_only_v1.yaml
+  generated_portable_lock: data/manifests/dataset_real_only_trainval_lock_v1.json
+
+detector:
+  implementation: ultralytics
+  implementation_version: 8.4.123
+  initial_weights: yolo11n.pt
+  initial_weights_sha256: 0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1
+  epochs: 100
+  imgsz: 640
+  batch: 16
+  optimizer: SGD
+  lr0: 0.01
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  amp: true
+  patience: 0
+  deterministic: true
+  workers: 4
+  seeds: [20260820, 20260821, 20260822]
+  native_augmentation:
+    hsv_h: 0.0
+    hsv_s: 0.0
+    hsv_v: 0.20
+    degrees: 5.0
+    translate: 0.05
+    scale: 0.20
+    shear: 0.0
+    perspective: 0.0
+    flipud: 0.0
+    fliplr: 0.5
+    mosaic: 0.0
+    mixup: 0.0
+    copy_paste: 0.0
+
+evaluation:
+  split: val
+  conf: 0.001
+  iou: 0.7
+  max_det: 300
+  locked_test_access: forbidden
+
+reporting:
+  aggregate_over_seeds: true
+  metrics:
+    - precision
+    - recall
+    - map50
+    - map50_95
+    - per_class_ap50
+    - per_class_recall
+    - worst_class_ap50
+    - class_metric_std
+  preserve:
+    - launch_metadata
+    - best_and_last_weights
+    - results_csv
+    - independent_validation_metrics
+    - environment_versions
+

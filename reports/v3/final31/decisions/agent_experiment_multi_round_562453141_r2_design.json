@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Source-size-matching hypothesis: missed inclusions are small (median 33.8px) while train sources average 90.5px; weighting smaller inclusion sources (prefer_small) at default scale should shift the paste size distribution toward the missed range without the downscaling artifacts that may have hurt the round-1 small-scale combo. Confirmed if inclusion AP50 > 0.335 and mAP50 > 0.5746 with scratches holding >= 0.59.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Scratches background-diversity hypothesis: the inclusion-heavy allocation cost scratches ~0.04 AP50 (0.643 balanced vs 0.602 heavy); pasting scratches onto any_class backgrounds (cleaner/more varied contexts) should recover part of that loss without giving up inclusion allocation. Confirmed if scratches AP50 >= 0.62 with inclusion AP50 unchanged (~0.33) and mAP50 > 0.5746.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Inclusion small-scale isolation (uncertain alternative): round 1 showed small scale helped inclusion in the balanced setting but the all-small heavy-allocation combo was worse; this tests small scale for inclusion ONLY (0.3-0.7, same as round 1) with patches/scratches at default. Confirmed if inclusion AP50 > 0.335 and low-tertile recall rises; if it ties/loses to control, smallness is ruled out for inclusion under heavy allocation and round 3 should focus on allocation/backgrounds.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Kept model (30/10/10, default scale) = 0.5746; inclusion (0.329) is the bottleneck, misses are small (median 33.8px vs 90.5px train). Round 1 showed small scale helped inclusion only in the balanced setting (+0.031) but under inclusion-heavy allocation the all-small combo gave inclusion 0.3163 — so smallness under heavy allocation is genuinely uncertain. Scratches paid ~0.04 for the inclusion-heavy allocation (0.643→0.602). This round I isolate one factor per candidate vs the control (30/10/10 default): (1) match inclusion source size to the missed distribution via prefer_small weighting (no downscaling artifacts), (2) recover scratches via any_class backgrounds (lesson probe), (3) clean isolation of inclusion small scale 0.3-0.7 with scratches/patches at default. If C1/C3 both fail, smallness is ruled out for round 3 and I push allocation/backgrounds instead.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Source-size-matching hypothesis: missed inclusions are small (median 33.8px) while train sources average 90.5px; weighting smaller inclusion sources (prefer_small) at default scale should shift the paste size distribution toward the missed range without the downscaling artifacts that may have hurt the round-1 small-scale combo. Confirmed if inclusion AP50 > 0.335 and mAP50 > 0.5746 with scratches holding >= 0.59.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches background-diversity hypothesis: the inclusion-heavy allocation cost scratches ~0.04 AP50 (0.643 balanced vs 0.602 heavy); pasting scratches onto any_class backgrounds (cleaner/more varied contexts) should recover part of that loss without giving up inclusion allocation. Confirmed if scratches AP50 >= 0.62 with inclusion AP50 unchanged (~0.33) and mAP50 > 0.5746.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion small-scale isolation (uncertain alternative): round 1 showed small scale helped inclusion in the balanced setting but the all-small heavy-allocation combo was worse; this tests small scale for inclusion ONLY (0.3-0.7, same as round 1) with patches/scratches at default. Confirmed if inclusion AP50 > 0.335 and low-tertile recall rises; if it ties/loses to control, smallness is ruled out for inclusion under heavy allocation and round 3 should focus on allocation/backgrounds.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 11383,
+     "prompt_tokens": 7387,
+     "total_tokens": 18770,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 35219,
+    "elapsed_seconds": 309.95,
+    "content": "{\n  \"analysis\": \"Kept model (30/10/10, default scale) = 0.5746; inclusion (0.329) is the bottleneck, misses are small (median 33.8px vs 90.5px train). Round 1 showed small scale helped inclusion only in the balanced setting (+0.031) but under inclusion-heavy allocation the all-small combo gave inclusion 0.3163 — so smallness under heavy allocation is genuinely uncertain. Scratches paid ~0.04 for the inclusion-heavy allocation (0.643→0.602). This round I isolate one factor per candidate vs the control (30/10/10 default): (1) match inclusion source size to the missed distribution via prefer_small weighting (no downscaling artifacts), (2) recover scratches via any_class backgrounds (lesson probe), (3) clean isolation of inclusion small scale 0.3-0.7 with scratches/patches at default. If C1/C3 both fail, smallness is ruled out for round 3 and I push allocation/backgrounds instead.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Source-size-matching hypothesis: missed inclusions are small (median 33.8px) while train sources average 90.5px; weighting smaller inclusion sources (prefer_small) at default scale should shift the paste size distribution toward the missed range without the downscaling artifacts that may have hurt the round-1 small-scale combo. Confirmed if inclusion AP50 > 0.335 and mAP50 > 0.5746 with scratches holding >= 0.59.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches background-diversity hypothesis: the inclusion-heavy allocation cost scratches ~0.04 AP50 (0.643 balanced vs 0.602 heavy); pasting scratches onto any_class backgrounds (cleaner/more varied contexts) should recover part of that loss without giving up inclusion allocation. Confirmed if scratches AP50 >= 0.62 with inclusion AP50 unchanged (~0.33) and mAP50 > 0.5746.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Inclusion small-scale isolation (uncertain alternative): round 1 showed small scale helped inclusion in the balanced setting but the all-small heavy-allocation combo was worse; this tests small scale for inclusion ONLY (0.3-0.7, same as round 1) with patches/scratches at default. Confirmed if inclusion AP50 > 0.335 and low-tertile recall rises; if it ties/loses to control, smallness is ruled out for inclusion under heavy allocation and round 3 should focus on allocation/backgrounds.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

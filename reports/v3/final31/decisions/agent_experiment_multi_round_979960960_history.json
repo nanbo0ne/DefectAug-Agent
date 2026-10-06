@@ -1,0 +1,146 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 30,
+   "patches": 10,
+   "scratches": 10
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "patches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.3963125395052767,
+    "ap50": 0.35692354404521187
+   },
+   "patches": {
+    "recall": 0.6433693743431182,
+    "ap50": 0.7082960136495713
+   },
+   "scratches": {
+    "recall": 0.6730769230769231,
+    "ap50": 0.7287134235213035
+   }
+  }
+ },
+ {
+  "round": 2,
+  "allocation": {
+   "inclusion": 25,
+   "patches": 15,
+   "scratches": 10
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "patches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.3760462474163105,
+    "ap50": 0.42125873952984005
+   },
+   "patches": {
+    "recall": 0.6866666666666666,
+    "ap50": 0.7450251225720936
+   },
+   "scratches": {
+    "recall": 0.6826923076923077,
+    "ap50": 0.6800645958403088
+   }
+  }
+ },
+ {
+  "round": 3,
+  "allocation": {
+   "inclusion": 20,
+   "patches": 20,
+   "scratches": 10
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "patches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "same_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.3776854808005358,
+    "ap50": 0.40646057991303153
+   },
+   "patches": {
+    "recall": 0.6906931063578129,
+    "ap50": 0.7450931698750392
+   },
+   "scratches": {
+    "recall": 0.7211538461538461,
+    "ap50": 0.7585425370837335
+   }
+  }
+ }
+]

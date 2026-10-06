@@ -1,0 +1,672 @@
+{
+ "condition": "agent_experiment_multi_round",
+ "seed": 1686439348,
+ "round": 3,
+ "proposal": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 50,
+  "patches": 30,
+  "scratches": 20
+ },
+ "source_capacity": {
+  "inclusion": 190,
+  "patches": 690,
+  "scratches": 1420
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "patches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_experiment",
+ "calls": [
+  {
+   "step": "design1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 5375,
+    "prompt_tokens": 9353,
+    "total_tokens": 14728,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 13128,
+   "elapsed_seconds": 116.31,
+   "content": "{\n  \"analysis\": \"Final round: control will repeat the proven 25/15/10 @ 0.3-0.7/same_class/uniform/0.15 (mAP 0.6116). Inclusion (AP 0.35) is the only weak class; round 2 showed 0.3-0.5 too small, prefer_small-all-classes hurt scratches, and 30/10/10 allocation hurt. So I keep the proven allocation and patches/scratches recipe, and test three single-factor inclusion nudges: (A) widen inclusion scale to 0.3-0.8 to cover mid-size misses (mid-tertile recall only 0.50); (B) scope prefer_small to inclusion only, since round 2 showed it lifted inclusion AP (0.384 vs 0.352) while the damage was to scratches, which I now protect; (C) raise inclusion max_overlap to 0.30 to create clustered multi-blob pastes matching clustered missed inclusions (val imgs 6, 10, 15) - the uncertain alternative. If none beats control, keep control.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Mid-size inclusions are under-covered (mid-tertile recall 0.50 vs high 0.80) and 0.3-0.5 was too small while 0.3-0.7 worked; widening inclusion scale to 0.3-0.8 adds mid-size pastes (~63-72px from ~90px sources) without touching the small end. Confirmed if inclusion AP50 > 0.36 and mAP50 >= 0.61 vs control; if inclusion drops, the upper end is irrelevant and 0.3-0.7 stands.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Round 2 showed prefer_small raised inclusion AP (0.384 vs 0.352) but the mAP loss came from scratches (0.622 vs 0.712); scoping prefer_small to inclusion only should capture the inclusion gain while protecting scratches. Confirmed if inclusion AP50 >= 0.38 and scratches AP50 >= 0.69; if inclusion does not rise, source-size selection is not the lever and I keep uniform.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Several missed inclusions are clustered multi-blob defects (val images 6, 10, 15 show multiple dark spots in one region); raising inclusion max_overlap from 0.15 to 0.30 lets pastes cluster into multi-blob shapes resembling them. Confirmed if inclusion AP50 and small-tertile recall rise vs control; if inclusion drops, overlap creates unrealistic blends and I keep 0.15.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.3, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+  },
+  {
+   "step": "choose1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 759,
+    "prompt_tokens": 12301,
+    "total_tokens": 13060,
+    "prompt_tokens_details": {
+     "cached_tokens": 9349
+    }
+   },
+   "reasoning_chars": 1191,
+   "elapsed_seconds": 41.59,
+   "content": "{\n  \"analysis\": \"C1 (inclusion scale 0.3-0.8) wins decisively: mAP 0.6325 vs control 0.6012, inclusion AP 0.4066 (from 0.3516), and it also lifted scratches to 0.7414; patches dipped slightly (0.7497) but within noise. This confirms the mid-size hypothesis — covering the mid-tertile (recall was only 0.50) by widening the upper scale bound helped. C2 (prefer_small inclusion-only) still dragged scratches down to 0.6314, so source-size selection is not a safe lever. C3 (max_overlap 0.30) collapsed inclusion to 0.2935, so clustered/overlapping pastes create unrealistic blends that hurt.\",\n  \"choice\": 1,\n  \"lesson\": \"Widening inclusion scale to 0.3-0.8 was the winning final-round lever (inclusion 0.352→0.407, mAP 0.612→0.633), confirming mid-size coverage matters as much as the small end. prefer_small (even scoped to inclusion only) keeps destabilizing scratches, and high max_overlap (0.30) destroys inclusion AP — avoid both. If iterating further, the scale band is the productive knob; allocation and source-size selection are exhausted.\"\n}"
+  }
+ ],
+ "design_errors": [],
+ "lab_table": [
+  {
+   "candidate": 1,
+   "control": false,
+   "hypothesis": "Mid-size inclusions are under-covered (mid-tertile recall 0.50 vs high 0.80) and 0.3-0.5 was too small while 0.3-0.7 worked; widening inclusion scale to 0.3-0.8 adds mid-size pastes (~63-72px from ~90px sources) without touching the small end. Confirmed if inclusion AP50 > 0.36 and mAP50 >= 0.61 vs control; if inclusion drops, the upper end is irrelevant and 0.3-0.7 stands.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6325,
+    "map50_95": 0.3092,
+    "worst_class_ap50": 0.4066,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4066,
+      "recall": 0.352,
+      "precision": 0.6769
+     },
+     "patches": {
+      "ap50": 0.7497,
+      "recall": 0.6442,
+      "precision": 0.8579
+     },
+     "scratches": {
+      "ap50": 0.7414,
+      "recall": 0.7212,
+      "precision": 0.6671
+     }
+    }
+   },
+   "delta_map50_vs_before": 0.0209,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.055,
+    "patches": -0.022,
+    "scratches": 0.0298
+   }
+  },
+  {
+   "candidate": 2,
+   "control": false,
+   "hypothesis": "Round 2 showed prefer_small raised inclusion AP (0.384 vs 0.352) but the mAP loss came from scratches (0.622 vs 0.712); scoping prefer_small to inclusion only should capture the inclusion gain while protecting scratches. Confirmed if inclusion AP50 >= 0.38 and scratches AP50 >= 0.69; if inclusion does not rise, source-size selection is not the lever and I keep uniform.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.5968,
+    "map50_95": 0.2805,
+    "worst_class_ap50": 0.4019,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.4019,
+      "recall": 0.3296,
+      "precision": 0.6326
+     },
+     "patches": {
+      "ap50": 0.7572,
+      "recall": 0.6933,
+      "precision": 0.7718
+     },
+     "scratches": {
+      "ap50": 0.6314,
+      "recall": 0.6538,
+      "precision": 0.6176
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0148,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0503,
+    "patches": -0.0145,
+    "scratches": -0.0802
+   }
+  },
+  {
+   "candidate": 3,
+   "control": false,
+   "hypothesis": "Several missed inclusions are clustered multi-blob defects (val images 6, 10, 15 show multiple dark spots in one region); raising inclusion max_overlap from 0.15 to 0.30 lets pastes cluster into multi-blob shapes resembling them. Confirmed if inclusion AP50 and small-tertile recall rise vs control; if inclusion drops, overlap creates unrealistic blends and I keep 0.15.",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.5959,
+    "map50_95": 0.2887,
+    "worst_class_ap50": 0.2935,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.2935,
+      "recall": 0.2741,
+      "precision": 0.5979
+     },
+     "patches": {
+      "ap50": 0.7486,
+      "recall": 0.7067,
+      "precision": 0.7761
+     },
+     "scratches": {
+      "ap50": 0.7455,
+      "recall": 0.7212,
+      "precision": 0.6751
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0157,
+   "delta_ap50_vs_before": {
+    "inclusion": -0.0581,
+    "patches": -0.0231,
+    "scratches": 0.0339
+   }
+  },
+  {
+   "candidate": 4,
+   "control": true,
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation_reached": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "val": {
+    "map50": 0.6012,
+    "map50_95": 0.2856,
+    "worst_class_ap50": 0.3722,
+    "per_class": {
+     "inclusion": {
+      "ap50": 0.3722,
+      "recall": 0.3338,
+      "precision": 0.599
+     },
+     "patches": {
+      "ap50": 0.7643,
+      "recall": 0.6867,
+      "precision": 0.7949
+     },
+     "scratches": {
+      "ap50": 0.6671,
+      "recall": 0.5769,
+      "precision": 0.6893
+     }
+    }
+   },
+   "delta_map50_vs_before": -0.0104,
+   "delta_ap50_vs_before": {
+    "inclusion": 0.0206,
+    "patches": -0.0074,
+    "scratches": -0.0445
+   }
+  }
+ ],
+ "argmax_map50": 1,
+ "candidates": [
+  {
+   "hypothesis": "Mid-size inclusions are under-covered (mid-tertile recall 0.50 vs high 0.80) and 0.3-0.5 was too small while 0.3-0.7 worked; widening inclusion scale to 0.3-0.8 adds mid-size pastes (~63-72px from ~90px sources) without touching the small end. Confirmed if inclusion AP50 > 0.36 and mAP50 >= 0.61 vs control; if inclusion drops, the upper end is irrelevant and 0.3-0.7 stands.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Round 2 showed prefer_small raised inclusion AP (0.384 vs 0.352) but the mAP loss came from scratches (0.622 vs 0.712); scoping prefer_small to inclusion only should capture the inclusion gain while protecting scratches. Confirmed if inclusion AP50 >= 0.38 and scratches AP50 >= 0.69; if inclusion does not rise, source-size selection is not the lever and I keep uniform.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Several missed inclusions are clustered multi-blob defects (val images 6, 10, 15 show multiple dark spots in one region); raising inclusion max_overlap from 0.15 to 0.30 lets pastes cluster into multi-blob shapes resembling them. Confirmed if inclusion AP50 and small-tertile recall rise vs control; if inclusion drops, overlap creates unrealistic blends and I keep 0.15.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.3,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "CONTROL (added by the lab): repeat your last kept plan (allocation projected onto this round's constraints).",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "control": true,
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "kept": 1,
+ "lesson": "Widening inclusion scale to 0.3-0.8 was the winning final-round lever (inclusion 0.352→0.407, mAP 0.612→0.633), confirming mid-size coverage matters as much as the small end. prefer_small (even scoped to inclusion only) keeps destabilizing scratches, and high max_overlap (0.30) destroys inclusion AP — avoid both. If iterating further, the scale band is the productive knob; allocation and source-size selection are exhausted.",
+ "extra_trainings": 3,
+ "observation": {
+  "round_index": 3,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.2905027932960894,
+    "precision": 0.6413733541263381,
+    "ap50": 0.3515673233102403,
+    "ap50_95": 0.11172437361811968
+   },
+   "patches": {
+    "recall": 0.6917009414342566,
+    "precision": 0.8452184248359078,
+    "ap50": 0.7717361769437767,
+    "ap50_95": 0.4424350439215169
+   },
+   "scratches": {
+    "recall": 0.6442307692307693,
+    "precision": 0.7385233174436122,
+    "ap50": 0.7115885404985258,
+    "ap50_95": 0.32311401522954286
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.268,
+    "missed": 131,
+    "misclassified_as": {
+     "patches": 1,
+     "scratches": 2
+    },
+    "false_positives_per_image": 0.213,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.8,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.185,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.5,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.8,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.279,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.707,
+    "missed": 44,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.153,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 48.5,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.567,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.864,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.947,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.414,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.667,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.824,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.635,
+    "missed": 38,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.18,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.4,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.558,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.842,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.511,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.805,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.556,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 50,
+   "patches": 30,
+   "scratches": 20
+  },
+  "headroom_this_round": {
+   "inclusion": 55,
+   "patches": 75,
+   "scratches": 85
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 51,
+    "accepted": 50,
+    "rejects": {
+     "no_placement": 1
+    }
+   },
+   "patches": {
+    "candidates": 30,
+    "accepted": 30,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 23,
+    "accepted": 20,
+    "rejects": {
+     "no_placement": 3
+    }
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 25,
+     "patches": 15,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.2905027932960894,
+      "ap50": 0.3863674649249832
+     },
+     "patches": {
+      "recall": 0.7,
+      "ap50": 0.7605423103986515
+     },
+     "scratches": {
+      "recall": 0.6442307692307693,
+      "ap50": 0.6531326079561999
+     }
+    }
+   },
+   {
+    "round": 2,
+    "allocation": {
+     "inclusion": 25,
+     "patches": 15,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.2905027932960894,
+      "ap50": 0.3515673233102403
+     },
+     "patches": {
+      "recall": 0.6917009414342566,
+      "ap50": 0.7717361769437767
+     },
+     "scratches": {
+      "recall": 0.6442307692307693,
+      "ap50": 0.7115885404985258
+     }
+    }
+   }
+  ]
+ }
+}

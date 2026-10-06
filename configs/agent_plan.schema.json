@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DefectAug Agent generation plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["round", "accepted_budget", "actions", "reason"],
+  "properties": {
+    "round": {"type": "integer", "minimum": 1, "maximum": 3},
+    "accepted_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inclusion", "patches", "scratches"],
+      "properties": {
+        "inclusion": {"type": "integer", "minimum": 0, "maximum": 50},
+        "patches": {"type": "integer", "minimum": 0, "maximum": 50},
+        "scratches": {"type": "integer", "minimum": 0, "maximum": 50}
+      }
+    },
+    "actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inclusion", "patches", "scratches"],
+      "properties": {
+        "inclusion": {"$ref": "#/$defs/action"},
+        "patches": {"$ref": "#/$defs/action"},
+        "scratches": {"$ref": "#/$defs/action"}
+      }
+    },
+    "reason": {"type": "string", "minLength": 1, "maxLength": 1000}
+  },
+  "$defs": {
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "prompt_template", "modifier", "mask_expand_px", "mask_blur_px", "control_strength", "steps", "source_image_ids", "seeds", "max_retries_per_seed"],
+      "properties": {
+        "tool": {"enum": ["qwen_mask_inpaint", "sdxl_mask_inpaint"]},
+        "prompt_template": {"enum": ["base"]},
+        "modifier": {"type": "string", "minLength": 1, "maxLength": 100},
+        "mask_expand_px": {"type": "integer", "minimum": 0, "maximum": 8},
+        "mask_blur_px": {"type": "integer", "minimum": 0, "maximum": 4},
+        "control_strength": {"type": "number", "minimum": 0.5, "maximum": 1.5},
+        "steps": {"type": "integer", "minimum": 10, "maximum": 40},
+        "source_image_ids": {
+          "type": "array",
+          "maxItems": 60,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^(inclusion|patches|scratches)_[0-9]+$"}
+        },
+        "seeds": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"type": "integer", "minimum": 0, "maximum": 4294967295}
+        },
+        "max_retries_per_seed": {"type": "integer", "minimum": 0, "maximum": 2}
+      }
+    }
+  }
+}

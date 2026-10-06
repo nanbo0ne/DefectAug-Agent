@@ -1,0 +1,67 @@
+{
+  "derived_from": "data/splits/v2",
+  "test_draw_seed_label": "defectaug-v3|test-split",
+  "test_draw_seed": 133173676,
+  "rule": "per class: sorted(v2 unused) -> random.Random(seed).shuffle -> first 50",
+  "carried_over_unchanged": [
+    "train_fewshot",
+    "val",
+    "quarantine",
+    "train_fewshot_repeat_matched",
+    "retired_test_v1"
+  ],
+  "retired": "v2 test (150, evaluated once 2026-10-01) -> retired_test_v2.txt, excluded from every v3 role",
+  "counts": {
+    "train_fewshot": {
+      "inclusion": 10,
+      "patches": 30,
+      "scratches": 60,
+      "total": 100
+    },
+    "val": {
+      "inclusion": 50,
+      "patches": 50,
+      "scratches": 50,
+      "total": 150
+    },
+    "test": {
+      "inclusion": 50,
+      "patches": 50,
+      "scratches": 50,
+      "total": 150
+    },
+    "unused": {
+      "inclusion": 90,
+      "patches": 68,
+      "scratches": 39,
+      "total": 197
+    },
+    "quarantine": {
+      "patches": 2,
+      "scratches": 1,
+      "total": 3
+    },
+    "retired_test_v1": {
+      "inclusion": 50,
+      "patches": 50,
+      "scratches": 50,
+      "total": 150
+    },
+    "retired_test_v2": {
+      "inclusion": 50,
+      "patches": 50,
+      "scratches": 50,
+      "total": 150
+    }
+  },
+  "file_sha256": {
+    "quarantine.txt": "a57084b30e01e442d91faed9faaf03dcd8b61591a7a2ccad836e26fa5e02aa06",
+    "retired_test_v1.txt": "eb819b4418a44f5af3025438b7ed2775a4567845f60eaa42058006bbf9439610",
+    "retired_test_v2.txt": "a0f6181c9856463645ad664b3b9a53cda99cdcaabd78085692c3524d66cac66b",
+    "test.txt": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+    "train_fewshot.txt": "4069e82e845b3bfe9a57c96a6a6db5b921310ef8e12eecc1369c0c4b703719f5",
+    "train_fewshot_repeat_matched.txt": "56a557a45f0dd99393dddf9803253926cc3a37813a12be0025517d68a3fc1077",
+    "unused.txt": "190779be9898eb8aa989255b3fee39007fa1a29a2dc8a0980544d6db17434634",
+    "val.txt": "f294a33d48aca86afd9490822fb09b54bfa1b2467ecd27d630b62e23449462e2"
+  }
+}

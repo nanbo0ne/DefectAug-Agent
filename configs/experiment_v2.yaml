@@ -1,0 +1,153 @@
+experiment:
+  id: defectaug_sd900_v2
+  research_title_zh: 面向小样本目标检测的检测器反馈闭环智能体数据增强方法
+  research_title_en: Detector-Feedback Closed-Loop Agentic Data Augmentation for Few-Shot Object Detection
+  protocol_version: 2.0
+  # draft -> frozen_final only after every code fix is merged and tests pass.
+  # The test gate (final_test_access) refuses to open unless frozen_final.
+  status: frozen_final
+  # Frozen 2026-10-01 after all 30 val-driven runs finished (pytest green).
+  # Artifact hashes (final weights, data yamls, content locks) are recorded in
+  # reports/v2/final/protocol_freeze.json; this file must not change afterwards.
+  frozen_at: 2026-10-01
+  supersedes: configs/experiment_v1.yaml   # v1 results deleted 2026-09-28; v1 test split retired
+  # Seeds are derived from fixed labels: sha256(label)[:4] little-endian & 0x7FFFFFFF
+  seed_labels: ["defectaug-v2|train-seed|0", "defectaug-v2|train-seed|1", "defectaug-v2|train-seed|2"]
+  final_seeds: [2070104565, 131089835, 393704235]
+
+dataset:
+  splits_dir: data/splits/v2
+  split_summary: data/splits/v2/split_v2_summary.json
+  yaml: configs/dataset_sd900_3class_v2.yaml
+  content_lock: data/manifests/dataset_content_lock_v2.json
+  content_lock_sha256: 72adb28a856607eab586cfe3dbd8032a724576e76cba4ac4e1236ef0bfb635d3
+  classes: [inclusion, patches, scratches]
+  real_fewshot_images: {inclusion: 10, patches: 30, scratches: 60}
+  val_images_per_primary_class: 50
+  test_images_per_primary_class: 50
+  test_locked: true
+  retired_test_manifest: data/splits/v2/retired_test_v1.txt   # never used in any v2 role
+  generation_sources: train_fewshot_only
+
+detector:
+  package: ultralytics
+  package_version: 8.4.123
+  model: yolo11n.pt
+  pretrained_sha256: 0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1
+  imgsz: 640
+  # Every round trains the full schedule; no proxy training.  For multi-round
+  # conditions the round-3 model is the final model.
+  epochs_per_round: 100
+  batch: 16
+  workers: 4
+  deterministic: true
+  early_stopping: false
+  pretrained_start_each_run: true
+  optimizer: SGD
+  lr0: 0.01
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  amp: true
+  # Weights evaluated for feedback and for the final test: best.pt selected on val.
+  eval_weights: best.pt
+
+generation:
+  formal_generator: patch_copy_gauss5
+  accepted_budget_total: 150
+  fairness_unit: accepted_images
+  candidate_budget_total_max: 450
+  candidate_budget_equal_ceiling_across_methods: true
+  max_candidates_per_source: 12
+  max_accepted_derivatives_per_source: 8
+  source_selection: deterministic_round_robin
+  # A shortfall is topped up inside the same round's remaining candidate
+  # ceiling; if the ceiling is exhausted the run fails (never silently accepted).
+  shortfall_policy: top_up_within_round_ceiling_else_fail
+  # Added 2026-10-01 after formula_multi_round s2070104565 r3 (inclusion 25/26):
+  # source_capacity is an upper bound, rejected candidates can exhaust a class
+  # early.  A class with no live source keeps what it reached and the deficit
+  # is re-projected by the shared `project` onto classes with headroom (round
+  # total unchanged).  Applies identically to every augmented condition; every
+  # spill is logged in the decision JSON (generation_spill, final_reached).
+  exhausted_class_policy: freeze_and_reproject_with_shared_project
+  placement:
+    scale_range: [0.6, 1.4]
+    rotations_deg: [0, 90, 180, 270]
+    flips: [horizontal, vertical]
+    target: random_train_image_same_class
+    max_overlap_fraction: 0.15
+    background_shift_clip: 48
+  feather:
+    ring_radius_px: 5
+    sigma_px: 2.5
+
+quality_control:
+  status: enforced
+  # Invariants checked in code for every accepted sample:
+  core_pixels_unchanged_after_feather: true
+  pixels_beyond_mask_dilated_by_ring_unchanged: true
+  # Calibrated on train-only candidates (reports/calibration/inside_change_v2.json,
+  # 522 valid, minimum 0.778).  Fraction of inserted-mask pixels changed by >= 3.
+  inside_mask_changed_fraction_min: 0.50
+  min_source_component_pixels: 32
+  min_inserted_pixels: 16
+  # Labels derive from the transformed real mask (box IoU with the mask is 1 by
+  # construction).  source_mask_xml_iou_min applies at dataset build time, to
+  # decide which real images may be few-shot sources.
+  source_mask_xml_iou_min_at_split_build: 0.50
+  human_review_fraction: 0.0
+
+# One constraint set, read by every augmented condition via
+# src/defectaug/allocation.py.  The formula and the agent cannot diverge.
+allocation_constraints:
+  maximum_fraction_per_class: 0.70
+  final_minimum_per_class: 10
+  infeasible_proposal: validate_then_retry_then_deterministic_project
+
+formula_policy:
+  recall_weight: 0.50
+  ap50_weight: 0.30
+  rarity_weight: 0.20
+  allocation: largest_remainder
+  # Weights have no pilot basis: they are an a-priori ordering (recall is the
+  # quantity quota most directly targets, AP50 second, rarity a weak prior),
+  # frozen before any v2 run and shared by both formula conditions.
+
+agent_policy:
+  model: qwen3.8-27b@q5_k_m
+  weights: Qwen3.8-27B-Q5_K_M.gguf
+  host: 192.168.31.102 (user-run LM Studio, no API key)
+  endpoint: http://192.168.31.102:1234/v1
+  # Backend switch (2026-10-01, user decision): seeds 2070104565 and 131089835
+  # ran on the LAN LM Studio endpoint above; seed 393704235 runs on the hosted
+  # endpoint below, which serves the same Qwen3.8-27B Q5_K_M weights (per user)
+  # under the model id "Qwen3.8-27B". Key comes from LENS_API_KEY, never logged.
+  # Each decision file records served_model, so the split stays auditable.
+  endpoint_seed_393704235: https://api.iamhc.cn/v1
+  model_seed_393704235: Qwen3.8-27B
+  max_tokens: 4096                        # covers reasoning_content + answer
+  temperature: 0.0
+  max_attempts_per_round: 3
+  observation: [per_class_val_metrics, allocation_history, quality_receipts, headroom]
+  log_server_identity: true
+
+conditions:
+  - {name: real_only,                rounds: 1, augmented: false}
+  - {name: real_only_repeat_matched, rounds: 1, augmented: false,
+     train_manifest: data/splits/v2/train_fewshot_repeat_matched.txt,
+     train_manifest_sha256: 56a557a45f0dd99393dddf9803253926cc3a37813a12be0025517d68a3fc1077,
+     dataset_yaml: configs/dataset_sd900_3class_realmatch_v2.yaml,
+     content_lock: data/manifests/dataset_content_lock_realmatch_v2.json,
+     content_lock_sha256: aa8ca2d8c6dcf236617fb3ec0907e0f215e72fac83e8abf5519b45a3bcfaaffd}
+  - {name: uniform_fixed,            rounds: 1, augmented: true, proposer: uniform}
+  - {name: formula_one_shot,         rounds: 1, augmented: true, proposer: formula}
+  - {name: formula_multi_round,      rounds: 3, augmented: true, proposer: formula}
+  - {name: agent_multi_round,        rounds: 3, augmented: true, proposer: agent}
+
+final_test_access:
+  enabled: true
+  required_experiment_status: frozen_final
+  unlock_token: FINAL_TEST_EVALUATION
+  audit_log: reports/test_access_audit_v2.jsonl

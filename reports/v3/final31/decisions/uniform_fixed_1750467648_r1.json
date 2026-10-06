@@ -1,0 +1,50 @@
+{
+ "condition": "uniform_fixed",
+ "seed": 1750467648,
+ "round": 1,
+ "proposal": {
+  "inclusion": 50,
+  "patches": 50,
+  "scratches": 50
+ },
+ "final": {
+  "inclusion": 50,
+  "patches": 50,
+  "scratches": 50
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "patches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "scratches": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  }
+ },
+ "params_source": "default"
+}

@@ -1,0 +1,27 @@
+# Isolated SDXL inpainting environment (Windows, NVIDIA CUDA 12.8).
+#
+# Recommended setup from the project root:
+#   py -3.10 -m venv .venv-generation
+#   .\.venv-generation\Scripts\python.exe -m pip install --upgrade pip
+#   .\.venv-generation\Scripts\python.exe -m pip install -r requirements-generation.txt
+#
+# Keep this environment separate from .venv (Ultralytics/YOLO). The exact pins
+# below are the package snapshot used to make generation runs reproducible.
+
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+
+diffusers==0.39.0
+transformers==5.15.1
+accelerate==1.14.0
+huggingface-hub==1.28.0
+safetensors==0.8.0
+numpy==2.2.6
+Pillow==12.3.0
+
+# Optional acceleration only. PyTorch 2.x SDPA is the default and needs no
+# xformers package. Install xformers in the generation venv only after checking
+# that its wheel is compatible with the pinned PyTorch build, then pass
+# --xformers to run_sdxl_inpaint.py.
+# xformers==0.0.35

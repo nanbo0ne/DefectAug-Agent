@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Shrinking pasted defects into the missed size band (0.3-0.7x source size) will raise recall on small instances, especially inclusion. Confirmed if inclusion AP50 jumps and small-tertile recall improves relative to C2 and control.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation alone (more inclusion images at normal scale) improves inclusion AP. If C2 ~= C1, scale is irrelevant and allocation is the lever; if C2 < C1, small-scale pasting is the key factor.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Pasting defects onto cross-class backgrounds (any_class) increases background/contrast diversity and helps the low-contrast misses (patches low-contrast recall 0.21) without hurting. Confirmed if C3 beats the balanced default-scale control on mAP or worst-class AP.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "any_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Inclusion is the bottleneck (AP50 0.138; 146/179 val inclusions fall in the low size tertile with recall 0.027; missed median 37px vs train median 90px). Patches and scratches also miss small instances (low-tertile recall ~0.42, missed medians 52/42px vs train 85/73px). Common thread: size mismatch. Round-1 design is a clean factorial: C1 = small-scale pastes (0.3-0.7x) + inclusion-heavy allocation (main hypothesis); C2 = same allocation but default scale (isolates scale effect from allocation effect); C3 = balanced allocation + cross-class backgrounds (isolates background-diversity effect vs control). Control = balanced + default recipe.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Shrinking pasted defects into the missed size band (0.3-0.7x source size) will raise recall on small instances, especially inclusion. Confirmed if inclusion AP50 jumps and small-tertile recall improves relative to C2 and control.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation alone (more inclusion images at normal scale) improves inclusion AP. If C2 ~= C1, scale is irrelevant and allocation is the lever; if C2 < C1, small-scale pasting is the key factor.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Pasting defects onto cross-class backgrounds (any_class) increases background/contrast diversity and helps the low-contrast misses (patches low-contrast recall 0.21) without hurting. Confirmed if C3 beats the balanced default-scale control on mAP or worst-class AP.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 6616,
+     "prompt_tokens": 5540,
+     "total_tokens": 12156,
+     "prompt_tokens_details": {
+      "cached_tokens": 572
+     }
+    },
+    "reasoning_chars": 19618,
+    "elapsed_seconds": 119.97,
+    "content": "{\n  \"analysis\": \"Inclusion is the bottleneck (AP50 0.138; 146/179 val inclusions fall in the low size tertile with recall 0.027; missed median 37px vs train median 90px). Patches and scratches also miss small instances (low-tertile recall ~0.42, missed medians 52/42px vs train 85/73px). Common thread: size mismatch. Round-1 design is a clean factorial: C1 = small-scale pastes (0.3-0.7x) + inclusion-heavy allocation (main hypothesis); C2 = same allocation but default scale (isolates scale effect from allocation effect); C3 = balanced allocation + cross-class backgrounds (isolates background-diversity effect vs control). Control = balanced + default recipe.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Shrinking pasted defects into the missed size band (0.3-0.7x source size) will raise recall on small instances, especially inclusion. Confirmed if inclusion AP50 jumps and small-tertile recall improves relative to C2 and control.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation alone (more inclusion images at normal scale) improves inclusion AP. If C2 ~= C1, scale is irrelevant and allocation is the lever; if C2 < C1, small-scale pasting is the key factor.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Pasting defects onto cross-class backgrounds (any_class) increases background/contrast diversity and helps the low-contrast misses (patches low-contrast recall 0.21) without hurting. Confirmed if C3 beats the balanced default-scale control on mAP or worst-class AP.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"any_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

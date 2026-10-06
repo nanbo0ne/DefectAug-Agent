@@ -1,0 +1,222 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 20,
+   "patches": 15,
+   "scratches": 15
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 1.0,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_150",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_50",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.22346368715083798,
+    "ap50": 0.21057568978945188
+   },
+   "patches": {
+    "recall": 0.6733333333333333,
+    "ap50": 0.7427791637152369
+   },
+   "scratches": {
+    "recall": 0.5961538461538461,
+    "ap50": 0.6200919484678595
+   }
+  }
+ },
+ {
+  "round": 2,
+  "allocation": {
+   "inclusion": 25,
+   "patches": 12,
+   "scratches": 13
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.6,
+    "scale_max": 1.4,
+    "target_pool": "any_class",
+    "source_weighting": "uniform",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "patches": {
+    "scale_min": 0.5,
+    "scale_max": 1.0,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.5,
+    "scale_max": 1.2,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_100",
+     "scratches_104",
+     "scratches_106",
+     "scratches_107",
+     "scratches_112",
+     "scratches_125",
+     "scratches_134",
+     "scratches_179",
+     "scratches_180",
+     "scratches_181",
+     "scratches_182",
+     "scratches_184",
+     "scratches_185",
+     "scratches_187",
+     "scratches_191",
+     "scratches_192",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_257",
+     "scratches_258",
+     "scratches_259",
+     "scratches_291",
+     "scratches_299",
+     "scratches_41",
+     "scratches_52",
+     "scratches_53",
+     "scratches_59",
+     "scratches_60",
+     "scratches_61",
+     "scratches_63",
+     "scratches_64",
+     "scratches_98",
+     "scratches_99"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.27283208605646747,
+    "ap50": 0.29449362603701806
+   },
+   "patches": {
+    "recall": 0.7,
+    "ap50": 0.7553949566586535
+   },
+   "scratches": {
+    "recall": 0.6826923076923077,
+    "ap50": 0.6888971152600432
+   }
+  }
+ },
+ {
+  "round": 3,
+  "allocation": {
+   "inclusion": 30,
+   "patches": 10,
+   "scratches": 10
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.3,
+    "scale_max": 0.7,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_106",
+     "inclusion_150",
+     "inclusion_297",
+     "inclusion_50",
+     "inclusion_131"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_19",
+     "scratches_20",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_193",
+     "scratches_76",
+     "scratches_91",
+     "scratches_96",
+     "scratches_103",
+     "scratches_169",
+     "scratches_170",
+     "scratches_187",
+     "scratches_191",
+     "scratches_192",
+     "scratches_35",
+     "scratches_36",
+     "scratches_37",
+     "scratches_42",
+     "scratches_43",
+     "scratches_44",
+     "scratches_57",
+     "scratches_58",
+     "scratches_72"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.24177536795095822,
+    "ap50": 0.32903042436330243
+   },
+   "patches": {
+    "recall": 0.6333333333333333,
+    "ap50": 0.7198842631788185
+   },
+   "scratches": {
+    "recall": 0.6923076923076923,
+    "ap50": 0.6487212963851587
+   }
+  }
+ }
+]

@@ -1,0 +1,609 @@
+{
+ "condition": "agent_vision_multi_round",
+ "seed": 1057047533,
+ "round": 3,
+ "proposal": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 30,
+  "patches": 10,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 45,
+  "patches": 27,
+  "scratches": 28
+ },
+ "source_capacity": {
+  "inclusion": 195,
+  "patches": 693,
+  "scratches": 1412
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "inclusion_11",
+    "inclusion_106",
+    "inclusion_150",
+    "inclusion_297",
+    "inclusion_50",
+    "inclusion_131"
+   ]
+  },
+  "patches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "scratches_19",
+    "scratches_20",
+    "scratches_200",
+    "scratches_201",
+    "scratches_203",
+    "scratches_193",
+    "scratches_76",
+    "scratches_91",
+    "scratches_96",
+    "scratches_103",
+    "scratches_169",
+    "scratches_170",
+    "scratches_187",
+    "scratches_191",
+    "scratches_192",
+    "scratches_35",
+    "scratches_36",
+    "scratches_37",
+    "scratches_42",
+    "scratches_43",
+    "scratches_44",
+    "scratches_57",
+    "scratches_58",
+    "scratches_72"
+   ]
+  }
+ },
+ "params_source": "agent_vision",
+ "calls": [
+  {
+   "step": "plan1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 5638,
+    "prompt_tokens": 5383,
+    "total_tokens": 11021,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 12969,
+   "elapsed_seconds": 163.15,
+   "content": "{\n  \"analysis\": \"Inclusion is the failing class (recall 0.27, 136/179 missed) and the misses are overwhelmingly small (median 33.7px vs 90.5px train median; low-size tertile recall 0.14). Round 2's inclusion plan used scale 0.6-1.4 (too big) and uniform weighting, so it only nudged recall up. The missed inclusions look like small dark vertical blobs/streaks and a few speckled clusters, matching sources 11, 106, 150, 287, 50, 131. Patches (recall 0.70) and scratches (0.68) are decent but still miss small/low-contrast instances (median missed 49.6 and 39.1px), so keep small-scale prefer_small pastes, with thin bright-line scratch sources matching the missed thin lines.\",\n  \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 106, 150, 287, 50, 131]},\n    \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [19, 20, 200, 201, 203, 193, 76, 91, 96, 103, 169, 170, 187, 191, 192, 35, 36, 37, 42, 43, 44, 57, 58, 72]}\n  },\n  \"rationale\": \"Shift inclusion to the scale band that actually matches its missed size (0.3-0.7, prefer_small) using compact-blob sources, and give it the largest share (30) since it has 136 misses and is far below the others; cumulative 75 stays under the 105 cap and near the ~80 diminishing-return zone. Patches and scratches keep small-scale prefer_small pastes (10 each) to cover their small/low-contrast misses without starving the shared detector; scratch sources restricted to thin bright lines matching the missed thin scratches.\"\n}"
+  },
+  {
+   "step": "plan2",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1340,
+    "prompt_tokens": 6145,
+    "total_tokens": 7485,
+    "prompt_tokens_details": {
+     "cached_tokens": 5379
+    }
+   },
+   "reasoning_chars": 1372,
+   "elapsed_seconds": 35.33,
+   "content": "{\n  \"analysis\": \"Inclusion is the failing class (recall 0.27, 136/179 missed) and the misses are overwhelmingly small (median 33.7px vs 90.5px train median; low-size tertile recall 0.14). Round 2's inclusion plan used scale 0.6-1.4 (too big) and uniform weighting, so it only nudged recall up. The missed inclusions look like small dark vertical blobs/streaks and a few speckled clusters, matching sources 11, 106, 150, 297, 50, 131. Patches (recall 0.70) and scratches (0.68) are decent but still miss small/low-contrast instances (median missed 49.6 and 39.1px), so keep small-scale prefer_small pastes, with thin bright-line scratch sources matching the missed thin lines.\",\n  \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 106, 150, 297, 50, 131]},\n    \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [19, 20, 200, 201, 203, 193, 76, 91, 96, 103, 169, 170, 187, 191, 192, 35, 36, 37, 42, 43, 44, 57, 58, 72]}\n  },\n  \"rationale\": \"Shift inclusion to the scale band that actually matches its missed size (0.3-0.7, prefer_small) using compact-blob sources, and give it the largest share (30) since it has 136 misses and is far below the others; cumulative 75 stays under the 105 cap and near the ~80 diminishing-return zone. Patches and scratches keep small-scale prefer_small pastes (10 each) to cover their small/low-contrast misses without starving the shared detector; scratch sources restricted to thin bright lines matching the missed thin scratches.\"\n}"
+  },
+  {
+   "step": "revise1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1993,
+    "prompt_tokens": 7278,
+    "total_tokens": 9271,
+    "prompt_tokens_details": {
+     "cached_tokens": 6141
+    }
+   },
+   "reasoning_chars": 4308,
+   "elapsed_seconds": 57.56,
+   "content": "The preview matches the missed defects well: inclusion pastes are small dark blobs/streaks (and one on a speckled background) consistent with the tiny low-contrast missed inclusions; patches are dark irregular blobs of appropriate size; scratches are thin bright lines matching the missed thin scratches. Sizes and looks are realistic and targeted at the missed size band. No class is wasted. Repeating the same plan.\n\n{\n  \"analysis\": \"Inclusion is the failing class (recall 0.27, 136/179 missed) and the misses are overwhelmingly small (median 33.7px vs 90.5px train median; low-size tertile recall 0.14). Round 2's inclusion plan used scale 0.6-1.4 (too big) and uniform weighting, so it only nudged recall up. The missed inclusions look like small dark vertical blobs/streaks and a few speckled clusters, matching sources 11, 106, 150, 297, 50, 131. Patches (recall 0.70) and scratches (0.68) are decent but still miss small/low-contrast instances (median missed 49.6 and 39.1px), so keep small-scale prefer_small pastes, with thin bright-line scratch sources matching the missed thin lines. Preview confirms small dark inclusion marks, dark patch blobs, and thin bright scratch lines all match the misses.\",\n  \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 106, 150, 297, 50, 131]},\n    \"patches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.4, \"scale_max\": 0.9, \"target_pool\": \"any_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [19, 20, 200, 201, 203, 193, 76, 91, 96, 103, 169, 170, 187, 191, 192, 35, 36, 37, 42, 43, 44, 57, 58, 72]}\n  },\n  \"rationale\": \"Shift inclusion to the scale band that actually matches its missed size (0.3-0.7, prefer_small) using compact-blob sources, and give it the largest share (30) since it has 136 misses and is far below the others; cumulative 75 stays under the 105 cap and near the ~80 diminishing-return zone. Patches and scratches keep small-scale prefer_small pastes (10 each) to cover their small/low-contrast misses without starving the shared detector; scratch sources restricted to thin bright lines matching the missed thin scratches. Preview verified: pastes look realistic and matched to the misses.\"\n}"
+  }
+ ],
+ "plans": [
+  {
+   "step": "plan",
+   "plan": {
+    "analysis": "Inclusion is the failing class (recall 0.27, 136/179 missed) and the misses are overwhelmingly small (median 33.7px vs 90.5px train median; low-size tertile recall 0.14). Round 2's inclusion plan used scale 0.6-1.4 (too big) and uniform weighting, so it only nudged recall up. The missed inclusions look like small dark vertical blobs/streaks and a few speckled clusters, matching sources 11, 106, 150, 297, 50, 131. Patches (recall 0.70) and scratches (0.68) are decent but still miss small/low-contrast instances (median missed 49.6 and 39.1px), so keep small-scale prefer_small pastes, with thin bright-line scratch sources matching the missed thin lines.",
+    "allocation": {
+     "inclusion": 30,
+     "patches": 10,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       106,
+       150,
+       297,
+       50,
+       131
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       19,
+       20,
+       200,
+       201,
+       203,
+       193,
+       76,
+       91,
+       96,
+       103,
+       169,
+       170,
+       187,
+       191,
+       192,
+       35,
+       36,
+       37,
+       42,
+       43,
+       44,
+       57,
+       58,
+       72
+      ]
+     }
+    },
+    "rationale": "Shift inclusion to the scale band that actually matches its missed size (0.3-0.7, prefer_small) using compact-blob sources, and give it the largest share (30) since it has 136 misses and is far below the others; cumulative 75 stays under the 105 cap and near the ~80 diminishing-return zone. Patches and scratches keep small-scale prefer_small pastes (10 each) to cover their small/low-contrast misses without starving the shared detector; scratch sources restricted to thin bright lines matching the missed thin scratches."
+   }
+  },
+  {
+   "step": "revise",
+   "plan": {
+    "analysis": "Inclusion is the failing class (recall 0.27, 136/179 missed) and the misses are overwhelmingly small (median 33.7px vs 90.5px train median; low-size tertile recall 0.14). Round 2's inclusion plan used scale 0.6-1.4 (too big) and uniform weighting, so it only nudged recall up. The missed inclusions look like small dark vertical blobs/streaks and a few speckled clusters, matching sources 11, 106, 150, 297, 50, 131. Patches (recall 0.70) and scratches (0.68) are decent but still miss small/low-contrast instances (median missed 49.6 and 39.1px), so keep small-scale prefer_small pastes, with thin bright-line scratch sources matching the missed thin lines. Preview confirms small dark inclusion marks, dark patch blobs, and thin bright scratch lines all match the misses.",
+    "allocation": {
+     "inclusion": 30,
+     "patches": 10,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       106,
+       150,
+       297,
+       50,
+       131
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       19,
+       20,
+       200,
+       201,
+       203,
+       193,
+       76,
+       91,
+       96,
+       103,
+       169,
+       170,
+       187,
+       191,
+       192,
+       35,
+       36,
+       37,
+       42,
+       43,
+       44,
+       57,
+       58,
+       72
+      ]
+     }
+    },
+    "rationale": "Shift inclusion to the scale band that actually matches its missed size (0.3-0.7, prefer_small) using compact-blob sources, and give it the largest share (30) since it has 136 misses and is far below the others; cumulative 75 stays under the 105 cap and near the ~80 diminishing-return zone. Patches and scratches keep small-scale prefer_small pastes (10 each) to cover their small/low-contrast misses without starving the shared detector; scratch sources restricted to thin bright lines matching the missed thin scratches. Preview verified: pastes look realistic and matched to the misses."
+   }
+  }
+ ],
+ "revised": false,
+ "observation": {
+  "round_index": 3,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.27283208605646747,
+    "precision": 0.5436098226677172,
+    "ap50": 0.29449362603701806,
+    "ap50_95": 0.10674790826330008
+   },
+   "patches": {
+    "recall": 0.7,
+    "precision": 0.8015448834125414,
+    "ap50": 0.7553949566586535,
+    "ap50_95": 0.44811941938758826
+   },
+   "scratches": {
+    "recall": 0.6826923076923077,
+    "precision": 0.6551252579999721,
+    "ap50": 0.6888971152600432,
+    "ap50_95": 0.27738787863786574
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.24,
+    "missed": 136,
+    "misclassified_as": {
+     "patches": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.213,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.7,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.137,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.556,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.867,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.25,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.667,
+    "missed": 50,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.073,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 49.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.5,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.864,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.947,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.345,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.583,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.812,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.683,
+    "missed": 33,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.193,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 39.1,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.571,
+      "n": 77
+     },
+     "mid": {
+      "recall": 1.0,
+      "n": 19
+     },
+     "high": {
+      "recall": 1.0,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.578,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.732,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.833,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 45,
+   "patches": 27,
+   "scratches": 28
+  },
+  "headroom_this_round": {
+   "inclusion": 60,
+   "patches": 78,
+   "scratches": 77
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 46,
+    "accepted": 45,
+    "rejects": {
+     "no_placement": 1
+    }
+   },
+   "patches": {
+    "candidates": 27,
+    "accepted": 27,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 30,
+    "accepted": 28,
+    "rejects": {
+     "inside_change_below_gate": 1,
+     "no_placement": 1
+    }
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 20,
+     "patches": 15,
+     "scratches": 15
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 1.0,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       "inclusion_11",
+       "inclusion_150",
+       "inclusion_268",
+       "inclusion_277",
+       "inclusion_50",
+       "inclusion_100",
+       "inclusion_106",
+       "inclusion_131"
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.22346368715083798,
+      "ap50": 0.21057568978945188
+     },
+     "patches": {
+      "recall": 0.6733333333333333,
+      "ap50": 0.7427791637152369
+     },
+     "scratches": {
+      "recall": 0.5961538461538461,
+      "ap50": 0.6200919484678595
+     }
+    }
+   },
+   {
+    "round": 2,
+    "allocation": {
+     "inclusion": 25,
+     "patches": 12,
+     "scratches": 13
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.6,
+      "scale_max": 1.4,
+      "target_pool": "any_class",
+      "source_weighting": "uniform",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "patches": {
+      "scale_min": 0.5,
+      "scale_max": 1.0,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.5,
+      "scale_max": 1.2,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       "scratches_100",
+       "scratches_104",
+       "scratches_106",
+       "scratches_107",
+       "scratches_112",
+       "scratches_125",
+       "scratches_134",
+       "scratches_179",
+       "scratches_180",
+       "scratches_181",
+       "scratches_182",
+       "scratches_184",
+       "scratches_185",
+       "scratches_187",
+       "scratches_191",
+       "scratches_192",
+       "scratches_200",
+       "scratches_201",
+       "scratches_203",
+       "scratches_257",
+       "scratches_258",
+       "scratches_259",
+       "scratches_291",
+       "scratches_299",
+       "scratches_41",
+       "scratches_52",
+       "scratches_53",
+       "scratches_59",
+       "scratches_60",
+       "scratches_61",
+       "scratches_63",
+       "scratches_64",
+       "scratches_98",
+       "scratches_99"
+      ]
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.27283208605646747,
+      "ap50": 0.29449362603701806
+     },
+     "patches": {
+      "recall": 0.7,
+      "ap50": 0.7553949566586535
+     },
+     "scratches": {
+      "recall": 0.6826923076923077,
+      "ap50": 0.6888971152600432
+     }
+    }
+   }
+  ]
+ }
+}

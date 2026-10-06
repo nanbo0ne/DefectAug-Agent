@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 10,
+    "scratches": 15
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.8,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Final round. Evidence so far: (1) inclusion AP is flat at ~0.46 for 25-30 images and default scale (0.4678 @25 default, R2 C4) slightly beats small scale (0.4629 @30 small, R2 C2) — small pastes did NOT fix small-inclusion misses; (2) patches AP responds to allocation: 17→0.791 (R1 C4) vs 10-12→0.749-0.773 (R2), and patches are the most starved class (only 22 synthetic so far); (3) scratches need small scale (0.793 @10 small vs ~0.66 default) and 10 small-scale images already reached the best scratches AP, so extra scratches allocation is the uncertain lever. Design: three candidates that split the 50-image budget differently around the proven base (same_class, uniform sources, 0.15 overlap, scratches small-scale): C1 keeps the kept allocation but fixes inclusion scale (30/10/10); C2 shifts 5 images to patches (25/15/10) — my best bet; C3 shifts 5 to scratches (25/10/15) as the unsure alternative. All within headroom (inclusion ≤50, patches ≤83, scratches ≤82) and cumulative caps (max 85/37/38 ≤105).\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 9045,
+     "prompt_tokens": 9453,
+     "total_tokens": 18498,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 21430,
+    "elapsed_seconds": 183.41,
+    "content": "{\n  \"analysis\": \"Final round. Evidence so far: (1) inclusion AP is flat at ~0.46 for 25-30 images and default scale (0.4678 @25 default, R2 C4) slightly beats small scale (0.4629 @30 small, R2 C2) — small pastes did NOT fix small-inclusion misses; (2) patches AP responds to allocation: 17→0.791 (R1 C4) vs 10-12→0.749-0.773 (R2), and patches are the most starved class (only 22 synthetic so far); (3) scratches need small scale (0.793 @10 small vs ~0.66 default) and 10 small-scale images already reached the best scratches AP, so extra scratches allocation is the uncertain lever. Design: three candidates that split the 50-image budget differently around the proven base (same_class, uniform sources, 0.15 overlap, scratches small-scale): C1 keeps the kept allocation but fixes inclusion scale (30/10/10); C2 shifts 5 images to patches (25/15/10) — my best bet; C3 shifts 5 to scratches (25/10/15) as the unsure alternative. All within headroom (inclusion ≤50, patches ≤83, scratches ≤82) and cumulative caps (max 85/37/38 ≤105).\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Inclusion scale at fixed allocation: R2 showed small scale (0.3-0.8) is neutral for inclusion (0.4629 @30) while default scale gave the best inclusion AP (0.4678 @25, R2 C4). Keeping the kept plan's allocation (30/10/10) but switching inclusion to default scale should hold inclusion AP50 >= 0.465 and mAP >= 0.670. Confirmed if inclusion >= 0.465 and mAP beats the control; if inclusion drops below 0.45, small scale was actually helping inclusion.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation rebalance to patches: patches AP50 rises with allocation (17 -> 0.791 in R1 C4; 10-12 -> 0.749-0.773 in R2) while inclusion is flat between 25 and 30 (~0.46), and patches are the most starved class (22 synthetic so far). Shifting 5 images from inclusion to patches (25/15/10, inclusion default scale, scratches small scale) should lift patches AP50 to >= 0.77 and beat C1 on mAP. Confirmed if patches >= 0.77 and mAP is highest; if patches stay <= 0.76, the R1 0.791 was noise and inclusion should keep 30.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Scratches allocation at small scale: small scale is proven for scratches (0.793 @10 small vs ~0.66 default) but the allocation effect at small scale is untested (R1 C1: 16 small -> 0.746, confounded by other changes). Giving scratches 15 small-scale images (25/10/15) tests whether scratches AP50 can exceed 0.795 or whether 10 images was already the ceiling, and whether inclusion tolerates dropping to 25. Confirmed if scratches AP50 > 0.795 with mAP within 0.005 of the best; if scratches stay <= 0.79, extra small scratches are wasted budget.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 10, \"scratches\": 15},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.8, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

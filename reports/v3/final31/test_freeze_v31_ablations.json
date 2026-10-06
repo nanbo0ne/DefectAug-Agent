@@ -1,0 +1,129 @@
+{
+ "protocol": "configs/experiment_v31.yaml",
+ "protocol_sha256": "d52180d91c9aa70e9e309ac2e1a28a5bdc3488e281946aa553cf02c978b0c461",
+ "experiment_status": "frozen_final",
+ "test_split_sha256": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+ "models": [
+  {
+   "condition": "agent_multi_round",
+   "seed": 1057047533,
+   "run": "v3_final31_agent_multi_round_s1057047533_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_multi_round_s1057047533_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_multi_round_s1057047533_r3/weights/best.pt",
+   "weights_sha256": "7be7d3ef287588f92c9686084eda0969499e5cdf8814b32e4e273b8475e2adaf",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_multi_round_1057047533_r3.yaml",
+   "data_yaml_sha256": "0ff932b570713bfd1c9eb6fdc796496c5188e9f33bde42eea9c00682903bc22c",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_multi_round_1057047533_r3.json",
+   "content_lock_sha256": "2a652dddb5c2ac81168be27f5ce6a4732ca76b0b342e8fe1194900e3b5d7f432"
+  },
+  {
+   "condition": "agent_vision_multi_round",
+   "seed": 1057047533,
+   "run": "v3_final31_agent_vision_multi_round_s1057047533_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_vision_multi_round_s1057047533_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_vision_multi_round_s1057047533_r3/weights/best.pt",
+   "weights_sha256": "5ed8d08c1d7643205147ee1b9d372cb41cefb4b9b913f5ef5acac7c434cd4139",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_vision_multi_round_1057047533_r3.yaml",
+   "data_yaml_sha256": "204c37dcd401a959903abcc8a8f44dd6cbe510cbee096bf3c2fcd8bec5d13645",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_vision_multi_round_1057047533_r3.json",
+   "content_lock_sha256": "34d72f703e08b529c7ad40482d2b9c73580fdfe82eae0160b4b3c8c685da4040"
+  },
+  {
+   "condition": "agent_multi_round",
+   "seed": 562453141,
+   "run": "v3_final31_agent_multi_round_s562453141_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_multi_round_s562453141_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_multi_round_s562453141_r3/weights/best.pt",
+   "weights_sha256": "b085b7a87379d76ad3d442514647f8a13e8a2a91e7e711e01d98b9468f4d3e7f",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_multi_round_562453141_r3.yaml",
+   "data_yaml_sha256": "f643472c21cdd01666ed8eb845343186cb8ec70b916b20ffd2837e739d9e80c2",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_multi_round_562453141_r3.json",
+   "content_lock_sha256": "4646aad89f65884db5e2e699e13d384b302979258ddc7504818b546f374e9c6d"
+  },
+  {
+   "condition": "agent_vision_multi_round",
+   "seed": 562453141,
+   "run": "v3_final31_agent_vision_multi_round_s562453141_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_vision_multi_round_s562453141_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_vision_multi_round_s562453141_r3/weights/best.pt",
+   "weights_sha256": "7ef58427ae9044dcbb1aae9f3b5cb38602b1fe8cfb839006f095126284457e8c",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_vision_multi_round_562453141_r3.yaml",
+   "data_yaml_sha256": "039217cc19856ac4ff20bc9d6e5d0534bcf963da80a4505f76812601ef576018",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_vision_multi_round_562453141_r3.json",
+   "content_lock_sha256": "1e1fb325d8f51e0312ac589f8655db5ce19ab615e6cd7ca960e9e0a2c8af35d5"
+  },
+  {
+   "condition": "agent_multi_round",
+   "seed": 979960960,
+   "run": "v3_final31_agent_multi_round_s979960960_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_multi_round_s979960960_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_multi_round_s979960960_r3/weights/best.pt",
+   "weights_sha256": "46057bd5f86d75dbcb40c3d4ac0721863d0575169ad12fff1202a026725a7de7",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_multi_round_979960960_r3.yaml",
+   "data_yaml_sha256": "ea2cfb7dc4d9982add000594582ddc912a637bbb1f77330b628f1563c7b68447",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_multi_round_979960960_r3.json",
+   "content_lock_sha256": "c1927eb407187281f88a7e6470e90aeb89b2c0566b5efd26ba3287dc3a61bd04"
+  },
+  {
+   "condition": "agent_vision_multi_round",
+   "seed": 979960960,
+   "run": "v3_final31_agent_vision_multi_round_s979960960_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_vision_multi_round_s979960960_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_vision_multi_round_s979960960_r3/weights/best.pt",
+   "weights_sha256": "332117483a454518fed5b1ec90a78894328a59ca9d1649c5357f9e273742ff0b",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_vision_multi_round_979960960_r3.yaml",
+   "data_yaml_sha256": "0d9d78be8012ab9aef603dbebf020a60933d2ccbb6bfd361fec344dfe9992764",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_vision_multi_round_979960960_r3.json",
+   "content_lock_sha256": "2d434226093e3793dbf7725b6c911e41f2263328469d632c5ecc8145e759801f"
+  },
+  {
+   "condition": "agent_multi_round",
+   "seed": 1750467648,
+   "run": "v3_final31_agent_multi_round_s1750467648_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_multi_round_s1750467648_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_multi_round_s1750467648_r3/weights/best.pt",
+   "weights_sha256": "e891d25611c9f6dee932e14e3760141a332292637c04943b141a82db6b9da87f",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_multi_round_1750467648_r3.yaml",
+   "data_yaml_sha256": "b9766f907a225cce54e6e24aadf2e9f4870507479fe8d88bd2f26961924199f9",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_multi_round_1750467648_r3.json",
+   "content_lock_sha256": "714c0ed6d6560262fae3d796792186818986bea19459437a06cad5e28f0721dd"
+  },
+  {
+   "condition": "agent_vision_multi_round",
+   "seed": 1750467648,
+   "run": "v3_final31_agent_vision_multi_round_s1750467648_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_vision_multi_round_s1750467648_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_vision_multi_round_s1750467648_r3/weights/best.pt",
+   "weights_sha256": "e7cf31424aedeca4ee997ad763bea38a2f9030e1ff91fc01f62c4bf6c400bceb",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_vision_multi_round_1750467648_r3.yaml",
+   "data_yaml_sha256": "e7b601e145a290960f9a02fde9c721756c1677fa10bf01b441dc1e361b471142",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_vision_multi_round_1750467648_r3.json",
+   "content_lock_sha256": "c0f4118e1d15b8a37df210f854ef6cb7f18087c43d03814d546feeb948a193d5"
+  },
+  {
+   "condition": "agent_multi_round",
+   "seed": 1686439348,
+   "run": "v3_final31_agent_multi_round_s1686439348_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_multi_round_s1686439348_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_multi_round_s1686439348_r3/weights/best.pt",
+   "weights_sha256": "ddb3da5cd8fa3b30aa8850f561639adc06ed927c22bd5d1584c9d76b8af7a873",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_multi_round_1686439348_r3.yaml",
+   "data_yaml_sha256": "3ca368d28648a98f5c65878442ae0d02932d839ca24c13d6ea9d8e2f544477ad",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_multi_round_1686439348_r3.json",
+   "content_lock_sha256": "862e9efe7f10deb10938ef55f8329c96e0765ebf51d37a32969616a28b685725"
+  },
+  {
+   "condition": "agent_vision_multi_round",
+   "seed": 1686439348,
+   "run": "v3_final31_agent_vision_multi_round_s1686439348_r3",
+   "val_metrics": "reports/v3/final31/yolo_eval/v3_final31_agent_vision_multi_round_s1686439348_r3_val/metrics.json",
+   "weights": "runs/yolo/v3_final31_agent_vision_multi_round_s1686439348_r3/weights/best.pt",
+   "weights_sha256": "aef468ba6667014bbff965e450d3362bf62ab8e72dcdf4d45a66b00a799da1ad",
+   "data_yaml": "configs/generated/dataset_v3_final31_agent_vision_multi_round_1686439348_r3.yaml",
+   "data_yaml_sha256": "c4ee02561f9a8f6d5b5e18ac3c8128bee380a7620af1ee7c7faa0ea9878cc005",
+   "content_lock": "data/manifests/dataset_content_lock_v3_final31_agent_vision_multi_round_1686439348_r3.json",
+   "content_lock_sha256": "7ecd4e5bb17b08da3f67ac7da894b4f74da6b521b5d916fa312be317d02c5494"
+  }
+ ],
+ "frozen_at": "2026-10-06T19:35:52+0800"
+}

@@ -1,0 +1,159 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Size-matching: missed defects are far smaller than what default scale 0.6-1.4 produces. Shrinking pastes to 0.3-0.7 (matching the missed size distribution) should raise low-size-tertile recall and overall mAP50 across all classes. Confirmed if A beats control on mAP50 with the gain concentrated in the small-tertile classes (esp. inclusion).",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Allocation to the worst class: inclusion has only 10 real train images and AP50 0.16, so it is most data-starved. Skewing 30/50 of the budget to inclusion (vs balanced) should lift inclusion AP50 more than the per-image gain in the other classes. Confirmed if B's inclusion AP50 gain exceeds what A/control give inclusion, even at default scale.",
+   "allocation": {
+    "inclusion": 30,
+    "patches": 10,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Source appearance matching: copy-paste quality depends on the source looking like the target. Curating sources that resemble the missed defects (small dark blobs for patches, thin bright lines for scratches, small dark streaks for inclusion) at default scale should improve mAP50 over the all-source default. Confirmed if C beats control while A (scale) does not, isolating source selection as the lever.",
+   "allocation": {
+    "inclusion": 17,
+    "patches": 17,
+    "scratches": 16
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": [
+      "inclusion_11",
+      "inclusion_150",
+      "inclusion_268",
+      "inclusion_277",
+      "inclusion_50",
+      "inclusion_100"
+     ]
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": [
+      "patches_39",
+      "patches_94",
+      "patches_64",
+      "patches_63",
+      "patches_62",
+      "patches_106",
+      "patches_14",
+      "patches_240"
+     ]
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": [
+      "scratches_133",
+      "scratches_134",
+      "scratches_180",
+      "scratches_181",
+      "scratches_182",
+      "scratches_191",
+      "scratches_192",
+      "scratches_200",
+      "scratches_201",
+      "scratches_35",
+      "scratches_36",
+      "scratches_41",
+      "scratches_42",
+      "scratches_52",
+      "scratches_53"
+     ]
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"All three classes miss small, low-contrast defects: missed median size is ~2-3x smaller than train median (inclusion 37 vs 90px, patches 50 vs 85, scratches 41 vs 73), and low-size tertile recall is worst (inclusion 0.03, patches 0.40, scratches 0.40). Default min scale 0.6 still yields pastes larger than the missed median, so size-matching is the top hypothesis. Inclusion is also the most data-starved (10 real imgs, AP50 0.16), so allocation skew is a second lever. Source appearance matching is a third, independent lever. I test each in isolation against the balanced/default control: A=small scale, B=inclusion skew, C=curated sources.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Size-matching: missed defects are far smaller than what default scale 0.6-1.4 produces. Shrinking pastes to 0.3-0.7 (matching the missed size distribution) should raise low-size-tertile recall and overall mAP50 across all classes. Confirmed if A beats control on mAP50 with the gain concentrated in the small-tertile classes (esp. inclusion).\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation to the worst class: inclusion has only 10 real train images and AP50 0.16, so it is most data-starved. Skewing 30/50 of the budget to inclusion (vs balanced) should lift inclusion AP50 more than the per-image gain in the other classes. Confirmed if B's inclusion AP50 gain exceeds what A/control give inclusion, even at default scale.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Source appearance matching: copy-paste quality depends on the source looking like the target. Curating sources that resemble the missed defects (small dark blobs for patches, thin bright lines for scratches, small dark streaks for inclusion) at default scale should improve mAP50 over the all-source default. Confirmed if C beats control while A (scale) does not, isolating source selection as the lever.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [11, 150, 268, 277, 50, 100]},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [39, 94, 64, 63, 62, 106, 14, 240]},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [133, 134, 180, 181, 182, 191, 192, 200, 201, 35, 36, 41, 42, 52, 53]}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 7586,
+     "prompt_tokens": 5531,
+     "total_tokens": 13117,
+     "prompt_tokens_details": {
+      "cached_tokens": 572
+     }
+    },
+    "reasoning_chars": 19562,
+    "elapsed_seconds": 146.69,
+    "content": "{\n  \"analysis\": \"All three classes miss small, low-contrast defects: missed median size is ~2-3x smaller than train median (inclusion 37 vs 90px, patches 50 vs 85, scratches 41 vs 73), and low-size tertile recall is worst (inclusion 0.03, patches 0.40, scratches 0.40). Default min scale 0.6 still yields pastes larger than the missed median, so size-matching is the top hypothesis. Inclusion is also the most data-starved (10 real imgs, AP50 0.16), so allocation skew is a second lever. Source appearance matching is a third, independent lever. I test each in isolation against the balanced/default control: A=small scale, B=inclusion skew, C=curated sources.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Size-matching: missed defects are far smaller than what default scale 0.6-1.4 produces. Shrinking pastes to 0.3-0.7 (matching the missed size distribution) should raise low-size-tertile recall and overall mAP50 across all classes. Confirmed if A beats control on mAP50 with the gain concentrated in the small-tertile classes (esp. inclusion).\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Allocation to the worst class: inclusion has only 10 real train images and AP50 0.16, so it is most data-starved. Skewing 30/50 of the budget to inclusion (vs balanced) should lift inclusion AP50 more than the per-image gain in the other classes. Confirmed if B's inclusion AP50 gain exceeds what A/control give inclusion, even at default scale.\",\n      \"allocation\": {\"inclusion\": 30, \"patches\": 10, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Source appearance matching: copy-paste quality depends on the source looking like the target. Curating sources that resemble the missed defects (small dark blobs for patches, thin bright lines for scratches, small dark streaks for inclusion) at default scale should improve mAP50 over the all-source default. Confirmed if C beats control while A (scale) does not, isolating source selection as the lever.\",\n      \"allocation\": {\"inclusion\": 17, \"patches\": 17, \"scratches\": 16},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [11, 150, 268, 277, 50, 100]},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [39, 94, 64, 63, 62, 106, 14, 240]},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": [133, 134, 180, 181, 182, 191, 192, 200, 201, 35, 36, 41, 42, 52, 53]}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

@@ -1,0 +1,37 @@
+gate:
+  id: patch_copy_vs_boundary_ring_blending_v2
+  status: engineering_quality_calibration
+  baseline: data/synthetic/patch_copy_pilot_v2
+  source_scope: train_fewshot_only
+  task_count: 9
+  formal_generation_allowed: false
+  validation_images_allowed: false
+  locked_test_images_allowed: false
+
+fairness:
+  same_source_target_transform_seed: true
+  defect_core_pixels_fixed_to_A: true
+  inherited_yolo_label_fixed_to_A: true
+  total_tasks: 9
+
+variants:
+  ring_radius_pixels: [3, 4, 5]
+  poisson:
+    clone_modes: [normal, mixed]
+  gaussian:
+    sigma: "max(0.8, ring_radius_pixels / 2)"
+
+automatic_qc:
+  core_changed_vs_A_pixels_max: 0
+  outside_dilated_ring_changed_vs_target_pixels_max: 0
+  all_tasks_hard_invariants_required: true
+  positive_seam_reduction_count_min: 6
+  median_seam_score_reduction_fraction_min: 0.05
+  ring_changed_vs_target_is_diagnostic_only: true
+  semantic_acceptance: human_blind_review_required
+
+outputs:
+  records: data/synthetic/boundary_blend_gate_v2/records.jsonl
+  summary: data/synthetic/boundary_blend_gate_v2/summary.json
+  selected_preview: reports/boundary_blend_gate_v2.png
+  variant_preview: reports/boundary_blend_variants_v2.png

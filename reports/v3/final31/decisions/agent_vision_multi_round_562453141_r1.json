@@ -1,0 +1,388 @@
+{
+ "condition": "agent_vision_multi_round",
+ "seed": 562453141,
+ "round": 1,
+ "proposal": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "final": {
+  "inclusion": 25,
+  "patches": 15,
+  "scratches": 10
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 0,
+  "patches": 0,
+  "scratches": 0
+ },
+ "source_capacity": {
+  "inclusion": 240,
+  "patches": 720,
+  "scratches": 1440
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.8,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": [
+    "inclusion_11",
+    "inclusion_150",
+    "inclusion_297",
+    "inclusion_50",
+    "inclusion_268",
+    "inclusion_277"
+   ]
+  },
+  "patches": {
+   "scale_min": 0.4,
+   "scale_max": 0.9,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": []
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.15,
+   "sources": []
+  }
+ },
+ "params_source": "agent_vision",
+ "calls": [
+  {
+   "step": "plan1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 4396,
+    "prompt_tokens": 4355,
+    "total_tokens": 8751,
+    "prompt_tokens_details": {
+     "cached_tokens": 4351
+    }
+   },
+   "reasoning_chars": 11319,
+   "elapsed_seconds": 450.46,
+   "content": "{\n  \"analysis\": \"Inclusion is the failing class (recall 0.20, 148/179 missed): misses are tiny (median 34.7px vs 90.5px train), faint, thin vertical streaks; low-size tertile recall is 0.075 and nearly all misses are low-contrast. Patches (recall 0.61) and scratches (recall 0.54) both lose mainly on the small/low-contrast tertile (0.47 and 0.40 recall), with missed medians 51px and 41.6px. So all three classes need small, low-contrast synthetic examples; inclusion needs the biggest share.\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 150, 287, 50, 268, 277]},\n    \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n  },\n  \"rationale\": \"Inclusion gets 25 images from the faint/thin vertical streak sources (11, 150, 287, 50, 268, 277) scaled to 0.3-0.8x to hit the ~35px missed size band, since the detector almost never sees small low-contrast inclusions. Patches (15) use prefer_small over all blob sources at 0.4-0.9x to produce ~35-75px low-contrast blobs matching the 51px missed median. Scratches (10) use prefer_small at 0.3-0.7x to shorten the long bright lines into the short thin ~40px strokes that are being missed. All classes stay well under the 80-image diminishing-return zone and above the 10-image floor, and same-class backgrounds keep paste texture realistic.\"\n}"
+  },
+  {
+   "step": "plan2",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1257,
+    "prompt_tokens": 5035,
+    "total_tokens": 6292,
+    "prompt_tokens_details": {
+     "cached_tokens": 4351
+    }
+   },
+   "reasoning_chars": 1721,
+   "elapsed_seconds": 162.0,
+   "content": "{\n  \"analysis\": \"Inclusion is the failing class (recall 0.20, 148/179 missed): misses are tiny (median 34.7px vs 90.5px train), faint, thin vertical streaks; low-size tertile recall is 0.075 and nearly all misses are low-contrast. Patches (recall 0.61) and scratches (recall 0.54) both lose mainly on the small/low-contrast tertile (0.47 and 0.40 recall), with missed medians 51px and 41.6px. So all three classes need small, low-contrast synthetic examples; inclusion needs the biggest share. Corrected the invalid inclusion source 287 to the valid 297.\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 150, 297, 50, 268, 277]},\n    \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n  },\n  \"rationale\": \"Inclusion gets 25 images from the faint/thin vertical streak sources (11, 150, 297, 50, 268, 277) scaled to 0.3-0.8x to hit the ~35px missed size band, since the detector almost never sees small low-contrast inclusions. Patches (15) use prefer_small over all blob sources at 0.4-0.9x to produce ~35-75px low-contrast blobs matching the 51px missed median. Scratches (10) use prefer_small at 0.3-0.7x to shorten the long bright lines into the short thin ~40px strokes that are being missed. All classes stay well under the 80-image diminishing-return zone and above the 10-image floor, and same-class backgrounds keep paste texture realistic.\"\n}"
+  },
+  {
+   "step": "revise1",
+   "finish_reason": "stop",
+   "usage": {
+    "completion_tokens": 1844,
+    "prompt_tokens": 6104,
+    "total_tokens": 7948,
+    "prompt_tokens_details": {
+     "cached_tokens": 5031
+    }
+   },
+   "reasoning_chars": 4626,
+   "elapsed_seconds": 118.22,
+   "content": "The previews look correct: inclusion pastes are faint thin streaks at small scale matching the ~35px low-contrast missed streaks; patches are dark irregular blobs at small-to-mid scale matching the ~51px missed blobs; scratches are short thin bright lines matching the ~40px missed strokes. All sit on realistic same-class steel backgrounds with feathered edges, no useless or unrealistic pastes. Repeating the same plan.\n\n{\n  \"analysis\": \"Inclusion is the failing class (recall 0.20, 148/179 missed): misses are tiny (median 34.7px vs 90.5px train), faint, thin vertical streaks; low-size tertile recall is 0.075 and nearly all misses are low-contrast. Patches (recall 0.61) and scratches (recall 0.54) both lose mainly on the small/low-contrast tertile (0.47 and 0.40 recall), with missed medians 51px and 41.6px. Preview confirms the plan: inclusion pastes are faint thin streaks at small scale, patches are dark small blobs, scratches are short thin bright lines — all matching the missed appearance on realistic same-class backgrounds.\",\n  \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n  \"params\": {\n    \"inclusion\": {\"scale_min\": 0.30, \"scale_max\": 0.80, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": [11, 150, 297, 50, 268, 277]},\n    \"patches\": {\"scale_min\": 0.40, \"scale_max\": 0.90, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n    \"scratches\": {\"scale_min\": 0.30, \"scale_max\": 0.70, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []}\n  },\n  \"rationale\": \"Preview matches the misses, so keep the plan. Inclusion (25) from faint/thin streak sources (11, 150, 297, 50, 268, 277) at 0.3-0.8x hits the ~35px low-contrast band the detector almost never sees. Patches (15) prefer_small at 0.4-0.9x yield ~35-75px dark blobs matching the 51px missed median. Scratches (10) prefer_small at 0.3-0.7x shorten long bright lines into the short thin ~40px strokes being missed. All classes stay under the 80-image diminishing-return zone and above the 10-image floor; same-class backgrounds keep pastes realistic.\"\n}"
+  }
+ ],
+ "plans": [
+  {
+   "step": "plan",
+   "plan": {
+    "analysis": "Inclusion is the failing class (recall 0.20, 148/179 missed): misses are tiny (median 34.7px vs 90.5px train), faint, thin vertical streaks; low-size tertile recall is 0.075 and nearly all misses are low-contrast. Patches (recall 0.61) and scratches (recall 0.54) both lose mainly on the small/low-contrast tertile (0.47 and 0.40 recall), with missed medians 51px and 41.6px. So all three classes need small, low-contrast synthetic examples; inclusion needs the biggest share. Corrected the invalid inclusion source 287 to the valid 297.",
+    "allocation": {
+     "inclusion": 25,
+     "patches": 15,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       150,
+       297,
+       50,
+       268,
+       277
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "rationale": "Inclusion gets 25 images from the faint/thin vertical streak sources (11, 150, 297, 50, 268, 277) scaled to 0.3-0.8x to hit the ~35px missed size band, since the detector almost never sees small low-contrast inclusions. Patches (15) use prefer_small over all blob sources at 0.4-0.9x to produce ~35-75px low-contrast blobs matching the 51px missed median. Scratches (10) use prefer_small at 0.3-0.7x to shorten the long bright lines into the short thin ~40px strokes that are being missed. All classes stay well under the 80-image diminishing-return zone and above the 10-image floor, and same-class backgrounds keep paste texture realistic."
+   }
+  },
+  {
+   "step": "revise",
+   "plan": {
+    "analysis": "Inclusion is the failing class (recall 0.20, 148/179 missed): misses are tiny (median 34.7px vs 90.5px train), faint, thin vertical streaks; low-size tertile recall is 0.075 and nearly all misses are low-contrast. Patches (recall 0.61) and scratches (recall 0.54) both lose mainly on the small/low-contrast tertile (0.47 and 0.40 recall), with missed medians 51px and 41.6px. Preview confirms the plan: inclusion pastes are faint thin streaks at small scale, patches are dark small blobs, scratches are short thin bright lines — all matching the missed appearance on realistic same-class backgrounds.",
+    "allocation": {
+     "inclusion": 25,
+     "patches": 15,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.8,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": [
+       11,
+       150,
+       297,
+       50,
+       268,
+       277
+      ]
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15,
+      "sources": []
+     }
+    },
+    "rationale": "Preview matches the misses, so keep the plan. Inclusion (25) from faint/thin streak sources (11, 150, 297, 50, 268, 277) at 0.3-0.8x hits the ~35px low-contrast band the detector almost never sees. Patches (15) prefer_small at 0.4-0.9x yield ~35-75px dark blobs matching the 51px missed median. Scratches (10) prefer_small at 0.3-0.7x shorten long bright lines into the short thin ~40px strokes being missed. All classes stay under the 80-image diminishing-return zone and above the 10-image floor; same-class backgrounds keep pastes realistic."
+   }
+  }
+ ],
+ "revised": false,
+ "observation": {
+  "round_index": 1,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.2011173184357542,
+    "precision": 0.5035672176805799,
+    "ap50": 0.1790301596087617,
+    "ap50_95": 0.057641538947687386
+   },
+   "patches": {
+    "recall": 0.6246737401872103,
+    "precision": 0.776303625878664,
+    "ap50": 0.7130651126351712,
+    "ap50_95": 0.4274352508298448
+   },
+   "scratches": {
+    "recall": 0.6057692307692307,
+    "precision": 0.7154626686396078,
+    "ap50": 0.5653728780063545,
+    "ap50_95": 0.21770344433331207
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.173,
+    "missed": 148,
+    "misclassified_as": {
+     "patches": 1,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.153,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 34.7,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.075,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.556,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.667,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.18,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.613,
+    "missed": 58,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.1,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 51.0,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.467,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.773,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.868,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.276,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.556,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.753,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.538,
+    "missed": 48,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 0
+    },
+    "false_positives_per_image": 0.12,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 41.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.403,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 0.875,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.444,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.659,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.5,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 0,
+   "patches": 0,
+   "scratches": 0
+  },
+  "headroom_this_round": {
+   "inclusion": 105,
+   "patches": 105,
+   "scratches": 105
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "patches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 0,
+    "accepted": 0,
+    "rejects": {}
+   }
+  },
+  "history": []
+ }
+}

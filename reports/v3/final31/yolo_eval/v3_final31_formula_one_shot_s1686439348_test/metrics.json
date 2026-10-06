@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0",
+  "started_at": "2026-10-05T10:53:07.584290+08:00",
+  "completed_at": "2026-10-05T10:53:11.028957+08:00",
+  "elapsed_seconds": 3.444888699999865,
+  "evaluation": {
+    "split": "test",
+    "test_access_authorized": true,
+    "test_access_authorization": {
+      "authorized": true,
+      "protocol_path": "D:\\AI Paper\\DefectAug-Agent-GG38\\configs\\experiment_v31.yaml",
+      "protocol_sha256": "d52180d91c9aa70e9e309ac2e1a28a5bdc3488e281946aa553cf02c978b0c461",
+      "audit_log": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\test_access_audit_v31.jsonl",
+      "event_id": "00582593bb99bfaf"
+    },
+    "runtime_dataset_yaml": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_formula_one_shot_s1686439348_test\\selected_split.runtime.yaml",
+    "runtime_dataset_yaml_sha256": "680911bb56030fc575d8bef6644f5947a7e98f0da25afa4dc1df645fee9d1c63",
+    "ultralytics_save_dir": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_formula_one_shot_s1686439348_test\\ultralytics"
+  },
+  "inputs": {
+    "weights": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\runs\\yolo\\v3_final31_formula_one_shot_s1686439348\\weights\\best.pt",
+      "sha256": "5292551a51a0e7c61fe4464cbdf69fd6425ce7446741c1a3d4ab0b31760fe19f"
+    },
+    "data_yaml": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\configs\\generated\\dataset_v3_final31_formula_one_shot_1686439348_r1.yaml",
+      "sha256": "53f262f470311acd24c847382657ee9c854d2f24e7d9835b7f067e4d8d85ba94"
+    },
+    "selected_split": {
+      "name": "test",
+      "sha256": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+      "entries": 150,
+      "manifests": [
+        {
+          "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\data\\splits\\v3\\test.txt",
+          "sha256": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+          "entries": 150
+        }
+      ]
+    },
+    "class_names": {
+      "0": "inclusion",
+      "1": "patches",
+      "2": "scratches"
+    },
+    "content_lock": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\data\\manifests\\dataset_content_lock_v3_final31_formula_one_shot_1686439348_r1.json",
+      "sha256": "eb1ff47d1e2eccec4968f7b303e5c8da15584e80ff951e4172a9c2d5ebe8157a",
+      "content_digest": "e581b02908164e4cf8dede4bf4ff9c9d3bc01586678457e87c49bf0d21dd28dc",
+      "verified_splits": [
+        "test"
+      ],
+      "verified_items": 150,
+      "verified_files": 452
+    }
+  },
+  "parameters": {
+    "data": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_formula_one_shot_s1686439348_test\\selected_split.runtime.yaml",
+    "split": "test",
+    "imgsz": 640,
+    "batch": 16,
+    "device": "0",
+    "workers": 4,
+    "seed": 1686439348,
+    "deterministic": true,
+    "conf": 0.001,
+    "iou": 0.7,
+    "max_det": 300,
+    "quantize": null,
+    "augment": false,
+    "rect": true,
+    "plots": false,
+    "save_json": false,
+    "save_txt": false,
+    "project": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_formula_one_shot_s1686439348_test",
+    "name": "ultralytics",
+    "exist_ok": true,
+    "verbose": false
+  },
+  "environment": {
+    "python": "3.10.11",
+    "python_executable": "D:\\AI Paper\\DefectAug-Agent-GG38\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "cudnn": 91900,
+    "cuda_available": true,
+    "cuda_devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+        "total_memory_bytes": 102613057536,
+        "compute_capability": "12.0"
+      }
+    ],
+    "ultralytics": "8.4.123",
+    "numpy": "2.2.6",
+    "pillow": "12.3.0",
+    "pyyaml": "6.0.3",
+    "git_commit": null
+  },
+  "metrics": {
+    "overall": {
+      "precision": 0.7664688156581249,
+      "recall": 0.5037943570789327,
+      "ap50": 0.5855185608912952,
+      "ap50_95": 0.27014736386942934,
+      "declared_classes": 3,
+      "evaluated_classes": 3
+    },
+    "per_class": [
+      {
+        "class_id": 0,
+        "class_name": "inclusion",
+        "evaluated": true,
+        "images": 65,
+        "instances": 189,
+        "precision": 0.6869250908600879,
+        "recall": 0.24867724867724866,
+        "ap50": 0.3347733927448492,
+        "ap50_95": 0.12653587548543954
+      },
+      {
+        "class_id": 1,
+        "class_name": "patches",
+        "evaluated": true,
+        "images": 50,
+        "instances": 151,
+        "precision": 0.8360274667540006,
+        "recall": 0.5740265772765306,
+        "ap50": 0.6940362480625772,
+        "ap50_95": 0.35901419786671634
+      },
+      {
+        "class_id": 2,
+        "class_name": "scratches",
+        "evaluated": true,
+        "images": 50,
+        "instances": 106,
+        "precision": 0.7764538893602863,
+        "recall": 0.6886792452830188,
+        "ap50": 0.7277460418664589,
+        "ap50_95": 0.324892018256132
+      }
+    ],
+    "worst_class": {
+      "criterion": "ap50",
+      "class_id": 0,
+      "class_name": "inclusion",
+      "precision": 0.6869250908600879,
+      "recall": 0.24867724867724866,
+      "ap50": 0.3347733927448492,
+      "ap50_95": 0.12653587548543954
+    },
+    "class_metric_std": {
+      "definition": "population standard deviation across evaluated classes (ddof=0)",
+      "evaluated_classes": 3,
+      "precision": 0.06127890282378652,
+      "recall": 0.1863685646233988,
+      "ap50": 0.1778368954241819,
+      "ap50_95": 0.10249967636450652
+    },
+    "speed_ms_per_image": {
+      "preprocess": 0.5855506667527758,
+      "inference": 0.8685206666511174,
+      "loss": 0.00023600007504379997,
+      "postprocess": 0.6050086667043313
+    }
+  }
+}

@@ -1,0 +1,381 @@
+{
+ "condition": "agent_multi_round",
+ "seed": 1686439348,
+ "round": 3,
+ "proposal": {
+  "inclusion": 45,
+  "patches": 5,
+  "scratches": 0
+ },
+ "final": {
+  "inclusion": 45,
+  "patches": 5,
+  "scratches": 0
+ },
+ "repaired": false,
+ "allocated_before": {
+  "inclusion": 60,
+  "patches": 22,
+  "scratches": 18
+ },
+ "source_capacity": {
+  "inclusion": 180,
+  "patches": 698,
+  "scratches": 1422
+ },
+ "params": {
+  "inclusion": {
+   "scale_min": 0.3,
+   "scale_max": 0.6,
+   "target_pool": "any_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.1
+  },
+  "patches": {
+   "scale_min": 0.3,
+   "scale_max": 0.7,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.1
+  },
+  "scratches": {
+   "scale_min": 0.3,
+   "scale_max": 0.6,
+   "target_pool": "same_class",
+   "source_weighting": "prefer_small",
+   "max_overlap": 0.1
+  }
+ },
+ "params_source": "agent",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response": {
+    "content": "{\n  \"allocation\": {\n    \"inclusion\": 45,\n    \"patches\": 5,\n    \"scratches\": 0\n  },\n  \"params\": {\n    \"inclusion\": {\n      \"scale_min\": 0.3,\n      \"scale_max\": 0.6,\n      \"target_pool\": \"any_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.1\n    },\n    \"patches\": {\n      \"scale_min\": 0.3,\n      \"scale_max\": 0.7,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.1\n    },\n    \"scratches\": {\n      \"scale_min\": 0.3,\n      \"scale_max\": 0.6,\n      \"target_pool\": \"same_class\",\n      \"source_weighting\": \"prefer_small\",\n      \"max_overlap\": 0.1\n    }\n  },\n  \"rationale\": \"Use final budget to maximize inclusion coverage for small/low-contrast misses, with a small patch boost for low-contrast misses; keep scales small and overlap low.\"\n}",
+    "usage": {
+     "completion_tokens": 4665,
+     "prompt_tokens": 3083,
+     "total_tokens": 7748,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "finish_reason": "stop",
+    "served_model": "lens-main",
+    "reasoning_chars": 15513,
+    "elapsed_seconds": 126.15
+   },
+   "prompt": "OBSERVATION (JSON):\n{\n \"round_index\": 3,\n \"total_rounds\": 3,\n \"round_budget\": 50,\n \"total_budget\": 150,\n \"real_fewshot_images\": {\n  \"inclusion\": 10,\n  \"patches\": 30,\n  \"scratches\": 60\n },\n \"previous_validation\": {\n  \"inclusion\": {\n   \"recall\": 0.35895423115424585,\n   \"precision\": 0.5089160140826035,\n   \"ap50\": 0.34207814703909656,\n   \"ap50_95\": 0.12491938106917269\n  },\n  \"patches\": {\n   \"recall\": 0.6866666666666666,\n   \"precision\": 0.8325239854495258,\n   \"ap50\": 0.7414203448454852,\n   \"ap50_95\": 0.4080885580222895\n  },\n  \"scratches\": {\n   \"recall\": 0.6923076923076923,\n   \"precision\": 0.6660735011270537,\n   \"ap50\": 0.7010668909587302,\n   \"ap50_95\": 0.31310739757368644\n  }\n },\n \"previous_val_miss_analysis\": {\n  \"inclusion\": {\n   \"gt_instances\": 179,\n   \"recall\": 0.251,\n   \"missed\": 134,\n   \"misclassified_as\": {\n    \"patches\": 2,\n    \"scratches\": 0\n   },\n   \"false_positives_per_image\": 0.233,\n   \"train_median_size_px\": 90.5,\n   \"median_missed_size_px\": 33.6,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.185,\n     \"n\": 146\n    },\n    \"mid\": {\n     \"recall\": 0.389,\n     \"n\": 18\n    },\n    \"high\": {\n     \"recall\": 0.733,\n     \"n\": 15\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.262,\n     \"n\": 172\n    },\n    \"mid\": {\n     \"recall\": 0.0,\n     \"n\": 4\n    },\n    \"high\": {\n     \"recall\": 0.0,\n     \"n\": 3\n    }\n   }\n  },\n  \"patches\": {\n   \"gt_instances\": 150,\n   \"recall\": 0.607,\n   \"missed\": 59,\n   \"misclassified_as\": {\n    \"inclusion\": 0,\n    \"scratches\": 0\n   },\n   \"false_positives_per_image\": 0.087,\n   \"train_median_size_px\": 85.1,\n   \"median_missed_size_px\": 52.0,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.444,\n     \"n\": 90\n    },\n    \"mid\": {\n     \"recall\": 0.818,\n     \"n\": 22\n    },\n    \"high\": {\n     \"recall\": 0.868,\n     \"n\": 38\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.276,\n     \"n\": 29\n    },\n    \"mid\": {\n     \"recall\": 0.528,\n     \"n\": 36\n    },\n    \"high\": {\n     \"recall\": 0.753,\n     \"n\": 85\n    }\n   }\n  },\n  \"scratches\": {\n   \"gt_instances\": 104,\n   \"recall\": 0.625,\n   \"missed\": 39,\n   \"misclassified_as\": {\n    \"inclusion\": 0,\n    \"patches\": 1\n   },\n   \"false_positives_per_image\": 0.187,\n   \"train_median_size_px\": 73.3,\n   \"median_missed_size_px\": 40.2,\n   \"recall_by_size_tertile\": {\n    \"low\": {\n     \"recall\": 0.506,\n     \"n\": 77\n    },\n    \"mid\": {\n     \"recall\": 0.947,\n     \"n\": 19\n    },\n    \"high\": {\n     \"recall\": 1.0,\n     \"n\": 8\n    }\n   },\n   \"recall_by_contrast_tertile\": {\n    \"low\": {\n     \"recall\": 0.533,\n     \"n\": 45\n    },\n    \"mid\": {\n     \"recall\": 0.707,\n     \"n\": 41\n    },\n    \"high\": {\n     \"recall\": 0.667,\n     \"n\": 18\n    }\n   }\n  }\n },\n \"allocated_so_far\": {\n  \"inclusion\": 60,\n  \"patches\": 22,\n  \"scratches\": 18\n },\n \"headroom_this_round\": {\n  \"inclusion\": 45,\n  \"patches\": 83,\n  \"scratches\": 87\n },\n \"default_params\": {\n  \"scale_min\": 0.6,\n  \"scale_max\": 1.4,\n  \"target_pool\": \"same_class\",\n  \"source_weighting\": \"uniform\",\n  \"max_overlap\": 0.15\n },\n \"quality_receipts\": {\n  \"inclusion\": {\n   \"candidates\": 61,\n   \"accepted\": 60,\n   \"rejects\": {\n    \"no_placement\": 1\n   }\n  },\n  \"patches\": {\n   \"candidates\": 22,\n   \"accepted\": 22,\n   \"rejects\": {}\n  },\n  \"scratches\": {\n   \"candidates\": 18,\n   \"accepted\": 18,\n   \"rejects\": {}\n  }\n },\n \"history\": [\n  {\n   \"round\": 1,\n   \"allocation\": {\n    \"inclusion\": 28,\n    \"patches\": 12,\n    \"scratches\": 10\n   },\n   \"params\": {\n    \"inclusion\": {\n     \"scale_min\": 0.3,\n     \"scale_max\": 0.9,\n     \"target_pool\": \"any_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.1\n    },\n    \"patches\": {\n     \"scale_min\": 0.3,\n     \"scale_max\": 1.0,\n     \"target_pool\": \"any_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.15\n    },\n    \"scratches\": {\n     \"scale_min\": 0.3,\n     \"scale_max\": 0.9,\n     \"target_pool\": \"any_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.15\n    }\n   },\n   \"resulting\": {\n    \"inclusion\": {\n     \"recall\": 0.1787709497206704,\n     \"ap50\": 0.26077025501850243\n    },\n    \"patches\": {\n     \"recall\": 0.6722960513840256,\n     \"ap50\": 0.7596228753190464\n    },\n    \"scratches\": {\n     \"recall\": 0.6826923076923077,\n     \"ap50\": 0.6426559877736135\n    }\n   }\n  },\n  {\n   \"round\": 2,\n   \"allocation\": {\n    \"inclusion\": 32,\n    \"patches\": 10,\n    \"scratches\": 8\n   },\n   \"params\": {\n    \"inclusion\": {\n     \"scale_min\": 0.3,\n     \"scale_max\": 0.7,\n     \"target_pool\": \"any_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.1\n    },\n    \"patches\": {\n     \"scale_min\": 0.4,\n     \"scale_max\": 0.9,\n     \"target_pool\": \"same_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.1\n    },\n    \"scratches\": {\n     \"scale_min\": 0.3,\n     \"scale_max\": 0.7,\n     \"target_pool\": \"same_class\",\n     \"source_weighting\": \"prefer_small\",\n     \"max_overlap\": 0.1\n    }\n   },\n   \"resulting\": {\n    \"inclusion\": {\n     \"recall\": 0.35895423115424585,\n     \"ap50\": 0.34207814703909656\n    },\n    \"patches\": {\n     \"recall\": 0.6866666666666666,\n     \"ap50\": 0.7414203448454852\n    },\n    \"scratches\": {\n     \"recall\": 0.6923076923076923,\n     \"ap50\": 0.7010668909587302\n    }\n   }\n  }\n ]\n}\n\nCONSTRAINTS (checked by code; a violating plan is rejected):\n- Round 3 of 3. Allocate exactly 50 new images in total.\n- No class may exceed headroom_this_round: {\"inclusion\": 45, \"patches\": 83, \"scratches\": 87}.\n- Cumulative per-class total can never exceed 105; after the last round every class needs >= 10.\n- params, per class: 0.3 <= scale_min < scale_max <= 1.4, scale_max - scale_min >= 0.2; target_pool in ['same_class', 'any_class']; source_weighting in ['uniform', 'prefer_small', 'prefer_large']; 0.0 <= max_overlap <= 0.3.\n- scale multiplies the source defect size; scales above what fits the image are capped.\n- Respond with one JSON object only, schema:\n  {\"allocation\": {\"inclusion\": int, \"patches\": int, \"scratches\": int},\n   \"params\": {\"<class>\": {\"scale_min\": float, \"scale_max\": float, \"target_pool\": str,\n              \"source_weighting\": str, \"max_overlap\": float}, ... all three classes},\n   \"rationale\": \"short string\"}",
+   "allocation": {
+    "inclusion": 45,
+    "patches": 5,
+    "scratches": 0
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.6,
+     "target_pool": "any_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.1
+    },
+    "patches": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.1
+    },
+    "scratches": {
+     "scale_min": 0.3,
+     "scale_max": 0.6,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.1
+    }
+   }
+  }
+ ],
+ "rationale": "Use final budget to maximize inclusion coverage for small/low-contrast misses, with a small patch boost for low-contrast misses; keep scales small and overlap low.",
+ "observation": {
+  "round_index": 3,
+  "total_rounds": 3,
+  "round_budget": 50,
+  "total_budget": 150,
+  "real_fewshot_images": {
+   "inclusion": 10,
+   "patches": 30,
+   "scratches": 60
+  },
+  "previous_validation": {
+   "inclusion": {
+    "recall": 0.35895423115424585,
+    "precision": 0.5089160140826035,
+    "ap50": 0.34207814703909656,
+    "ap50_95": 0.12491938106917269
+   },
+   "patches": {
+    "recall": 0.6866666666666666,
+    "precision": 0.8325239854495258,
+    "ap50": 0.7414203448454852,
+    "ap50_95": 0.4080885580222895
+   },
+   "scratches": {
+    "recall": 0.6923076923076923,
+    "precision": 0.6660735011270537,
+    "ap50": 0.7010668909587302,
+    "ap50_95": 0.31310739757368644
+   }
+  },
+  "previous_val_miss_analysis": {
+   "inclusion": {
+    "gt_instances": 179,
+    "recall": 0.251,
+    "missed": 134,
+    "misclassified_as": {
+     "patches": 2,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.233,
+    "train_median_size_px": 90.5,
+    "median_missed_size_px": 33.6,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.185,
+      "n": 146
+     },
+     "mid": {
+      "recall": 0.389,
+      "n": 18
+     },
+     "high": {
+      "recall": 0.733,
+      "n": 15
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.262,
+      "n": 172
+     },
+     "mid": {
+      "recall": 0.0,
+      "n": 4
+     },
+     "high": {
+      "recall": 0.0,
+      "n": 3
+     }
+    }
+   },
+   "patches": {
+    "gt_instances": 150,
+    "recall": 0.607,
+    "missed": 59,
+    "misclassified_as": {
+     "inclusion": 0,
+     "scratches": 0
+    },
+    "false_positives_per_image": 0.087,
+    "train_median_size_px": 85.1,
+    "median_missed_size_px": 52.0,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.444,
+      "n": 90
+     },
+     "mid": {
+      "recall": 0.818,
+      "n": 22
+     },
+     "high": {
+      "recall": 0.868,
+      "n": 38
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.276,
+      "n": 29
+     },
+     "mid": {
+      "recall": 0.528,
+      "n": 36
+     },
+     "high": {
+      "recall": 0.753,
+      "n": 85
+     }
+    }
+   },
+   "scratches": {
+    "gt_instances": 104,
+    "recall": 0.625,
+    "missed": 39,
+    "misclassified_as": {
+     "inclusion": 0,
+     "patches": 1
+    },
+    "false_positives_per_image": 0.187,
+    "train_median_size_px": 73.3,
+    "median_missed_size_px": 40.2,
+    "recall_by_size_tertile": {
+     "low": {
+      "recall": 0.506,
+      "n": 77
+     },
+     "mid": {
+      "recall": 0.947,
+      "n": 19
+     },
+     "high": {
+      "recall": 1.0,
+      "n": 8
+     }
+    },
+    "recall_by_contrast_tertile": {
+     "low": {
+      "recall": 0.533,
+      "n": 45
+     },
+     "mid": {
+      "recall": 0.707,
+      "n": 41
+     },
+     "high": {
+      "recall": 0.667,
+      "n": 18
+     }
+    }
+   }
+  },
+  "allocated_so_far": {
+   "inclusion": 60,
+   "patches": 22,
+   "scratches": 18
+  },
+  "headroom_this_round": {
+   "inclusion": 45,
+   "patches": 83,
+   "scratches": 87
+  },
+  "default_params": {
+   "scale_min": 0.6,
+   "scale_max": 1.4,
+   "target_pool": "same_class",
+   "source_weighting": "uniform",
+   "max_overlap": 0.15
+  },
+  "quality_receipts": {
+   "inclusion": {
+    "candidates": 61,
+    "accepted": 60,
+    "rejects": {
+     "no_placement": 1
+    }
+   },
+   "patches": {
+    "candidates": 22,
+    "accepted": 22,
+    "rejects": {}
+   },
+   "scratches": {
+    "candidates": 18,
+    "accepted": 18,
+    "rejects": {}
+   }
+  },
+  "history": [
+   {
+    "round": 1,
+    "allocation": {
+     "inclusion": 28,
+     "patches": 12,
+     "scratches": 10
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.1
+     },
+     "patches": {
+      "scale_min": 0.3,
+      "scale_max": 1.0,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.9,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.15
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.1787709497206704,
+      "ap50": 0.26077025501850243
+     },
+     "patches": {
+      "recall": 0.6722960513840256,
+      "ap50": 0.7596228753190464
+     },
+     "scratches": {
+      "recall": 0.6826923076923077,
+      "ap50": 0.6426559877736135
+     }
+    }
+   },
+   {
+    "round": 2,
+    "allocation": {
+     "inclusion": 32,
+     "patches": 10,
+     "scratches": 8
+    },
+    "params": {
+     "inclusion": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "any_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.1
+     },
+     "patches": {
+      "scale_min": 0.4,
+      "scale_max": 0.9,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.1
+     },
+     "scratches": {
+      "scale_min": 0.3,
+      "scale_max": 0.7,
+      "target_pool": "same_class",
+      "source_weighting": "prefer_small",
+      "max_overlap": 0.1
+     }
+    },
+    "resulting": {
+     "inclusion": {
+      "recall": 0.35895423115424585,
+      "ap50": 0.34207814703909656
+     },
+     "patches": {
+      "recall": 0.6866666666666666,
+      "ap50": 0.7414203448454852
+     },
+     "scratches": {
+      "recall": 0.6923076923076923,
+      "ap50": 0.7010668909587302
+     }
+    }
+   }
+  ]
+ }
+}

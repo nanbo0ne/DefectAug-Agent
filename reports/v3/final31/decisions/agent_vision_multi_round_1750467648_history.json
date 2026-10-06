@@ -1,0 +1,289 @@
+[
+ {
+  "round": 1,
+  "allocation": {
+   "inclusion": 25,
+   "patches": 10,
+   "scratches": 15
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.35,
+    "scale_max": 0.95,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_50",
+     "inclusion_99",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131",
+     "inclusion_150",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_297"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 1.0,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "patches_14",
+     "patches_106",
+     "patches_161",
+     "patches_164",
+     "patches_219",
+     "patches_241",
+     "patches_251",
+     "patches_272",
+     "patches_65",
+     "patches_70",
+     "patches_82",
+     "patches_86",
+     "patches_96",
+     "patches_240",
+     "patches_39",
+     "patches_63",
+     "patches_94"
+    ]
+   },
+   "scratches": {
+    "scale_min": 0.3,
+    "scale_max": 0.8,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_19",
+     "scratches_20",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_76",
+     "scratches_91",
+     "scratches_96",
+     "scratches_193",
+     "scratches_103",
+     "scratches_112",
+     "scratches_133",
+     "scratches_134",
+     "scratches_149",
+     "scratches_169",
+     "scratches_170",
+     "scratches_179",
+     "scratches_180",
+     "scratches_181",
+     "scratches_182",
+     "scratches_184",
+     "scratches_185",
+     "scratches_187",
+     "scratches_191",
+     "scratches_192"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.3407821229050279,
+    "ap50": 0.35595438268937757
+   },
+   "patches": {
+    "recall": 0.727371334294707,
+    "ap50": 0.8157365087911365
+   },
+   "scratches": {
+    "recall": 0.6851077897452548,
+    "ap50": 0.687480243562911
+   }
+  }
+ },
+ {
+  "round": 2,
+  "allocation": {
+   "inclusion": 30,
+   "patches": 8,
+   "scratches": 12
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.45,
+    "scale_max": 1.1,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_50",
+     "inclusion_100",
+     "inclusion_106",
+     "inclusion_131",
+     "inclusion_150",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_297"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.4,
+    "scale_max": 1.0,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "patches_14",
+     "patches_39",
+     "patches_63",
+     "patches_64",
+     "patches_65",
+     "patches_70",
+     "patches_82",
+     "patches_86",
+     "patches_94",
+     "patches_96",
+     "patches_103",
+     "patches_106",
+     "patches_153",
+     "patches_161",
+     "patches_164",
+     "patches_170",
+     "patches_182",
+     "patches_20",
+     "patches_219",
+     "patches_240",
+     "patches_241",
+     "patches_251",
+     "patches_272"
+    ]
+   },
+   "scratches": {
+    "scale_min": 0.4,
+    "scale_max": 1.0,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "scratches_19",
+     "scratches_20",
+     "scratches_200",
+     "scratches_201",
+     "scratches_203",
+     "scratches_76",
+     "scratches_91",
+     "scratches_96",
+     "scratches_193",
+     "scratches_103",
+     "scratches_112",
+     "scratches_133",
+     "scratches_134",
+     "scratches_149",
+     "scratches_169",
+     "scratches_170",
+     "scratches_179",
+     "scratches_180",
+     "scratches_181",
+     "scratches_182",
+     "scratches_184",
+     "scratches_185",
+     "scratches_187",
+     "scratches_191",
+     "scratches_192",
+     "scratches_104",
+     "scratches_106",
+     "scratches_107",
+     "scratches_249",
+     "scratches_254",
+     "scratches_255",
+     "scratches_257",
+     "scratches_258",
+     "scratches_259",
+     "scratches_291",
+     "scratches_299",
+     "scratches_59",
+     "scratches_60",
+     "scratches_61",
+     "scratches_63",
+     "scratches_64",
+     "scratches_98",
+     "scratches_99"
+    ]
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.35870931075210233,
+    "ap50": 0.35754870806417205
+   },
+   "patches": {
+    "recall": 0.72,
+    "ap50": 0.7611027941004613
+   },
+   "scratches": {
+    "recall": 0.6826923076923077,
+    "ap50": 0.6802091513467254
+   }
+  }
+ },
+ {
+  "round": 3,
+  "allocation": {
+   "inclusion": 30,
+   "patches": 10,
+   "scratches": 10
+  },
+  "params": {
+   "inclusion": {
+    "scale_min": 0.4,
+    "scale_max": 0.9,
+    "target_pool": "any_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": [
+     "inclusion_11",
+     "inclusion_150",
+     "inclusion_268",
+     "inclusion_277",
+     "inclusion_297",
+     "inclusion_50",
+     "inclusion_99",
+     "inclusion_100",
+     "inclusion_106"
+    ]
+   },
+   "patches": {
+    "scale_min": 0.35,
+    "scale_max": 0.95,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   },
+   "scratches": {
+    "scale_min": 0.35,
+    "scale_max": 0.9,
+    "target_pool": "same_class",
+    "source_weighting": "prefer_small",
+    "max_overlap": 0.15,
+    "sources": []
+   }
+  },
+  "resulting": {
+   "inclusion": {
+    "recall": 0.35195530726256985,
+    "ap50": 0.3700346699116961
+   },
+   "patches": {
+    "recall": 0.66,
+    "ap50": 0.735512356858369
+   },
+   "scratches": {
+    "recall": 0.7403846153846154,
+    "ap50": 0.7773518067944652
+   }
+  }
+ }
+]

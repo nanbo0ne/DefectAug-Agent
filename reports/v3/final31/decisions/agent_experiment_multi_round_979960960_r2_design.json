@@ -1,0 +1,127 @@
+{
+ "candidates": [
+  {
+   "hypothesis": "Stack the confirmed skew with downscaling for inclusion: missed inclusion are ~33px, far below the 90px train median, so scaling inclusion sources to 0.3-0.7 (yielding ~27-63px pastes) while keeping the inclusion-heavy allocation should lift inclusion AP50 beyond 0.357. Confirmed if inclusion AP50 rises by >=0.05 and mAP50 beats the 30/10/10 control, with the gain concentrated in inclusion's low-size tertile.",
+   "allocation": {
+    "inclusion": 35,
+    "patches": 10,
+    "scratches": 5
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.3,
+     "scale_max": 0.7,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Diminishing returns on inclusion: after 30 cumulative inclusion synthetics, inclusion may be saturating, so shifting budget to patches (which dropped to 0.708 when starved to 10 in R1) and scratches should raise overall mAP50 more than more inclusion. Confirmed if mAP50 beats the skew candidates and patches AP50 recovers toward >=0.74 while inclusion AP50 does not collapse.",
+   "allocation": {
+    "inclusion": 25,
+    "patches": 15,
+    "scratches": 10
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  },
+  {
+   "hypothesis": "Alternative small-paste mechanism for inclusion: instead of downscaling (C1), select smaller source defects via prefer_small weighting at default scale, producing naturally small, high-fidelity pastes that match the missed 33px inclusion without the blur/contrast loss of aggressive downscaling. At identical allocation to C1, confirmed if inclusion AP50 exceeds C1's, isolating source-size selection as the better lever.",
+   "allocation": {
+    "inclusion": 35,
+    "patches": 10,
+    "scratches": 5
+   },
+   "params": {
+    "inclusion": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "prefer_small",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "patches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    },
+    "scratches": {
+     "scale_min": 0.6,
+     "scale_max": 1.4,
+     "target_pool": "same_class",
+     "source_weighting": "uniform",
+     "max_overlap": 0.15,
+     "sources": []
+    }
+   }
+  }
+ ],
+ "reply": "{\n  \"analysis\": \"Inclusion is still the weak class (AP50 0.357, recall 0.396) and its misses are small (median 33px vs 90px train) and low-contrast. R1 confirmed ALLOCATION skew as the only solid lever; small-scale and source-curation were neutral, but only under BALANCED allocation, so their interaction with the skew is untested. R1-A also hinted at per-class scale sensitivity (patches 0.767 vs 0.740 at small scale; scratches 0.653 vs 0.697, i.e. small scale hurt scratches). So this round I (C1) stack downscaling onto the confirmed skew for inclusion, (C2) test whether inclusion has diminishing returns by rebalancing budget to patches, and (C3) test prefer_small source selection as an alternative way to get small, natural inclusion pastes. Scratches gets a low floor (5) since it has 60 real images and tolerated 10 in R1; patches kept at 10 to avoid the R1 starvation drop. C1 vs C3 isolate the inclusion small-paste mechanism (downscale vs prefer_small sources) at identical allocation; C1/C3 vs C2 isolate allocation skew vs rebalance.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Stack the confirmed skew with downscaling for inclusion: missed inclusion are ~33px, far below the 90px train median, so scaling inclusion sources to 0.3-0.7 (yielding ~27-63px pastes) while keeping the inclusion-heavy allocation should lift inclusion AP50 beyond 0.357. Confirmed if inclusion AP50 rises by >=0.05 and mAP50 beats the 30/10/10 control, with the gain concentrated in inclusion's low-size tertile.\",\n      \"allocation\": {\"inclusion\": 35, \"patches\": 10, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Diminishing returns on inclusion: after 30 cumulative inclusion synthetics, inclusion may be saturating, so shifting budget to patches (which dropped to 0.708 when starved to 10 in R1) and scratches should raise overall mAP50 more than more inclusion. Confirmed if mAP50 beats the skew candidates and patches AP50 recovers toward >=0.74 while inclusion AP50 does not collapse.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Alternative small-paste mechanism for inclusion: instead of downscaling (C1), select smaller source defects via prefer_small weighting at default scale, producing naturally small, high-fidelity pastes that match the missed 33px inclusion without the blur/contrast loss of aggressive downscaling. At identical allocation to C1, confirmed if inclusion AP50 exceeds C1's, isolating source-size selection as the better lever.\",\n      \"allocation\": {\"inclusion\": 35, \"patches\": 10, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}",
+ "info": {
+  "calls": [
+   {
+    "step": "design1",
+    "finish_reason": "stop",
+    "usage": {
+     "completion_tokens": 7758,
+     "prompt_tokens": 7581,
+     "total_tokens": 15339,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 21659,
+    "elapsed_seconds": 169.19,
+    "content": "{\n  \"analysis\": \"Inclusion is still the weak class (AP50 0.357, recall 0.396) and its misses are small (median 33px vs 90px train) and low-contrast. R1 confirmed ALLOCATION skew as the only solid lever; small-scale and source-curation were neutral, but only under BALANCED allocation, so their interaction with the skew is untested. R1-A also hinted at per-class scale sensitivity (patches 0.767 vs 0.740 at small scale; scratches 0.653 vs 0.697, i.e. small scale hurt scratches). So this round I (C1) stack downscaling onto the confirmed skew for inclusion, (C2) test whether inclusion has diminishing returns by rebalancing budget to patches, and (C3) test prefer_small source selection as an alternative way to get small, natural inclusion pastes. Scratches gets a low floor (5) since it has 60 real images and tolerated 10 in R1; patches kept at 10 to avoid the R1 starvation drop. C1 vs C3 isolate the inclusion small-paste mechanism (downscale vs prefer_small sources) at identical allocation; C1/C3 vs C2 isolate allocation skew vs rebalance.\",\n  \"candidates\": [\n    {\n      \"hypothesis\": \"Stack the confirmed skew with downscaling for inclusion: missed inclusion are ~33px, far below the 90px train median, so scaling inclusion sources to 0.3-0.7 (yielding ~27-63px pastes) while keeping the inclusion-heavy allocation should lift inclusion AP50 beyond 0.357. Confirmed if inclusion AP50 rises by >=0.05 and mAP50 beats the 30/10/10 control, with the gain concentrated in inclusion's low-size tertile.\",\n      \"allocation\": {\"inclusion\": 35, \"patches\": 10, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.3, \"scale_max\": 0.7, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Diminishing returns on inclusion: after 30 cumulative inclusion synthetics, inclusion may be saturating, so shifting budget to patches (which dropped to 0.708 when starved to 10 in R1) and scratches should raise overall mAP50 more than more inclusion. Confirmed if mAP50 beats the skew candidates and patches AP50 recovers toward >=0.74 while inclusion AP50 does not collapse.\",\n      \"allocation\": {\"inclusion\": 25, \"patches\": 15, \"scratches\": 10},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    },\n    {\n      \"hypothesis\": \"Alternative small-paste mechanism for inclusion: instead of downscaling (C1), select smaller source defects via prefer_small weighting at default scale, producing naturally small, high-fidelity pastes that match the missed 33px inclusion without the blur/contrast loss of aggressive downscaling. At identical allocation to C1, confirmed if inclusion AP50 exceeds C1's, isolating source-size selection as the better lever.\",\n      \"allocation\": {\"inclusion\": 35, \"patches\": 10, \"scratches\": 5},\n      \"params\": {\n        \"inclusion\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"prefer_small\", \"max_overlap\": 0.15, \"sources\": []},\n        \"patches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []},\n        \"scratches\": {\"scale_min\": 0.6, \"scale_max\": 1.4, \"target_pool\": \"same_class\", \"source_weighting\": \"uniform\", \"max_overlap\": 0.15, \"sources\": []}\n      }\n    }\n  ]\n}"
+   }
+  ],
+  "design_errors": []
+ }
+}

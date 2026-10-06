@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0",
+  "started_at": "2026-10-05T10:53:25.716982+08:00",
+  "completed_at": "2026-10-05T10:53:29.139492+08:00",
+  "elapsed_seconds": 3.422286400000303,
+  "evaluation": {
+    "split": "test",
+    "test_access_authorized": true,
+    "test_access_authorization": {
+      "authorized": true,
+      "protocol_path": "D:\\AI Paper\\DefectAug-Agent-GG38\\configs\\experiment_v31.yaml",
+      "protocol_sha256": "d52180d91c9aa70e9e309ac2e1a28a5bdc3488e281946aa553cf02c978b0c461",
+      "audit_log": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\test_access_audit_v31.jsonl",
+      "event_id": "0a966f386c437bd3"
+    },
+    "runtime_dataset_yaml": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_agent_experiment_multi_round_s1686439348_r3_test\\selected_split.runtime.yaml",
+    "runtime_dataset_yaml_sha256": "680911bb56030fc575d8bef6644f5947a7e98f0da25afa4dc1df645fee9d1c63",
+    "ultralytics_save_dir": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_agent_experiment_multi_round_s1686439348_r3_test\\ultralytics"
+  },
+  "inputs": {
+    "weights": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\runs\\yolo\\v3_final31_agent_experiment_trial_1_s1686439348_r3\\weights\\best.pt",
+      "sha256": "1876a7834a898de54b56b3bb94c6df75007ed8d2e22ce7eb3395440fe63250b6"
+    },
+    "data_yaml": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\configs\\generated\\dataset_v3_final31_agent_experiment_trial_1_1686439348_r3.yaml",
+      "sha256": "836bc0627075a34b37b700890ea4a9a5c5ca2057b9e9b52c18ff74890ac15066"
+    },
+    "selected_split": {
+      "name": "test",
+      "sha256": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+      "entries": 150,
+      "manifests": [
+        {
+          "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\data\\splits\\v3\\test.txt",
+          "sha256": "1f269bdc0f8ac441a57d0d57148173abad1fd0674f61b825f65a4a683a8b1d90",
+          "entries": 150
+        }
+      ]
+    },
+    "class_names": {
+      "0": "inclusion",
+      "1": "patches",
+      "2": "scratches"
+    },
+    "content_lock": {
+      "path": "D:\\AI Paper\\DefectAug-Agent-GG38\\data\\manifests\\dataset_content_lock_v3_final31_agent_experiment_trial_1_1686439348_r3.json",
+      "sha256": "894e3da33e0cb959d293258e54b49d2b451786789599eea7e2188d0927fa9e51",
+      "content_digest": "80b3372808b687f6c19f3b8203e8df58fe0ac851118756341a571c1590e886b7",
+      "verified_splits": [
+        "test"
+      ],
+      "verified_items": 150,
+      "verified_files": 452
+    }
+  },
+  "parameters": {
+    "data": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_agent_experiment_multi_round_s1686439348_r3_test\\selected_split.runtime.yaml",
+    "split": "test",
+    "imgsz": 640,
+    "batch": 16,
+    "device": "0",
+    "workers": 4,
+    "seed": 1686439348,
+    "deterministic": true,
+    "conf": 0.001,
+    "iou": 0.7,
+    "max_det": 300,
+    "quantize": null,
+    "augment": false,
+    "rect": true,
+    "plots": false,
+    "save_json": false,
+    "save_txt": false,
+    "project": "D:\\AI Paper\\DefectAug-Agent-GG38\\reports\\v3\\final31\\yolo_eval\\v3_final31_agent_experiment_multi_round_s1686439348_r3_test",
+    "name": "ultralytics",
+    "exist_ok": true,
+    "verbose": false
+  },
+  "environment": {
+    "python": "3.10.11",
+    "python_executable": "D:\\AI Paper\\DefectAug-Agent-GG38\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "cudnn": 91900,
+    "cuda_available": true,
+    "cuda_devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+        "total_memory_bytes": 102613057536,
+        "compute_capability": "12.0"
+      }
+    ],
+    "ultralytics": "8.4.123",
+    "numpy": "2.2.6",
+    "pillow": "12.3.0",
+    "pyyaml": "6.0.3",
+    "git_commit": null
+  },
+  "metrics": {
+    "overall": {
+      "precision": 0.6957998892972436,
+      "recall": 0.5408940616018715,
+      "ap50": 0.6073090486406217,
+      "ap50_95": 0.29476202619418934,
+      "declared_classes": 3,
+      "evaluated_classes": 3
+    },
+    "per_class": [
+      {
+        "class_id": 0,
+        "class_name": "inclusion",
+        "evaluated": true,
+        "images": 65,
+        "instances": 189,
+        "precision": 0.6604082150685073,
+        "recall": 0.32275132275132273,
+        "ap50": 0.39327159888251667,
+        "ap50_95": 0.14252097003906114
+      },
+      {
+        "class_id": 1,
+        "class_name": "patches",
+        "evaluated": true,
+        "images": 50,
+        "instances": 151,
+        "precision": 0.7772623558071474,
+        "recall": 0.5546478431863672,
+        "ap50": 0.6724289487091129,
+        "ap50_95": 0.38549696620630425
+      },
+      {
+        "class_id": 2,
+        "class_name": "scratches",
+        "evaluated": true,
+        "images": 50,
+        "instances": 106,
+        "precision": 0.6497290970160763,
+        "recall": 0.7452830188679245,
+        "ap50": 0.7562265983302356,
+        "ap50_95": 0.3562681423372026
+      }
+    ],
+    "worst_class": {
+      "criterion": "ap50",
+      "class_id": 0,
+      "class_name": "inclusion",
+      "precision": 0.6604082150685073,
+      "recall": 0.32275132275132273,
+      "ap50": 0.39327159888251667,
+      "ap50_95": 0.14252097003906114
+    },
+    "class_metric_std": {
+      "definition": "population standard deviation across evaluated classes (ddof=0)",
+      "evaluated_classes": 3,
+      "precision": 0.05776741283227844,
+      "recall": 0.1727717828749795,
+      "ap50": 0.15516557596047978,
+      "ap50_95": 0.10831000391042499
+    },
+    "speed_ms_per_image": {
+      "preprocess": 0.58071933327786,
+      "inference": 0.8661200000157503,
+      "loss": 0.0002500000118743628,
+      "postprocess": 0.6159379999250328
+    }
+  }
+}

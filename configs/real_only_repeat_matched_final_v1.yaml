@@ -1,0 +1,78 @@
+protocol:
+  id: real_only_repeat_matched_final_v1
+  purpose: formal_optimization_exposure_control_before_locked_final_test
+  created_at: 2026-09-03
+  status: frozen_for_train_and_validation
+
+data:
+  source_real_images: 100
+  train_rows: 250
+  construction: deterministic_cyclic_repeat_of_real_rows
+  repeated_class_rows:
+    inclusion: 25
+    patches: 75
+    scratches: 150
+  validation_split: val
+  validation_images: 150
+  validation_images_per_primary_class: 50
+  synthetic_pixels: false
+  test_access: forbidden
+  train_manifest: data/splits/v1/train_fewshot_repeat_matched.txt
+  train_manifest_sha256: 56a557a45f0dd99393dddf9803253926cc3a37813a12be0025517d68a3fc1077
+  source_dataset_yaml: configs/dataset_sd900_3class_realmatch_v1.yaml
+  source_dataset_yaml_sha256: a89386b084462600756b454d5aa8fbffae741fe88502d6c5bd0f1d27a8824616
+  source_content_lock: data/manifests/dataset_content_lock_realmatch_v1.json
+  source_content_lock_sha256: 317da3b03c808e6e4f1541d7eab67ad42f2d0924602cdc09a1510abb739fe6e2
+  runtime_dataset_yaml: configs/dataset_repeat_matched_v1.yaml
+  runtime_content_lock: data/manifests/dataset_repeat_matched_trainval_lock_v1.json
+  runtime_hashes: recorded_by_reports/repeat_matched_machine_setup.json
+
+detector:
+  implementation: ultralytics
+  implementation_version: 8.4.123
+  initial_weights: yolo11n.pt
+  initial_weights_sha256: 0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1
+  epochs: 100
+  imgsz: 640
+  batch: 16
+  optimizer: SGD
+  lr0: 0.01
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 3.0
+  amp: true
+  patience: 0
+  deterministic: true
+  workers: 4
+  seeds: [20260820, 20260821, 20260822]
+  native_augmentation:
+    hsv_h: 0.0
+    hsv_s: 0.0
+    hsv_v: 0.20
+    degrees: 5.0
+    translate: 0.05
+    scale: 0.20
+    shear: 0.0
+    perspective: 0.0
+    flipud: 0.0
+    fliplr: 0.5
+    mosaic: 0.0
+    mixup: 0.0
+    copy_paste: 0.0
+
+evaluation:
+  split: val
+  conf: 0.001
+  iou: 0.7
+  max_det: 300
+  locked_test_access: forbidden
+
+reporting:
+  aggregate_over_seeds: true
+  preserve:
+    - launch_metadata
+    - best_and_last_weights
+    - results_csv
+    - independent_validation_metrics
+    - environment_versions
